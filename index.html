@@ -212,7 +212,7 @@ function code(){
   return /^[A-Za-z0-9]{32,128}$/.test(c)?c:'';
 }
 function state(kind){
-  var s=$('#state');$('#page').hidden=true;s.hidden=false;
+  var s=$('#state');$('#page').hidden=true;s.hidden=false;document.title='Sunset Luxury Yacht';
   var head='<div class="brand">Sunset Luxury Yacht</div>';
   if(kind==='load') s.innerHTML=head+'<div class="ring" role="status" aria-label="'+esc(L.loading)+'"></div>';
   else if(kind==='net') s.innerHTML=head+'<h1>'+esc(L.netTitle)+'</h1><p>'+esc(L.netText)+'</p><button class="btn" data-retry>'+esc(L.retry)+'</button>';
