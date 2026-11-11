@@ -1,0 +1,346 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow,noarchive">
+<meta name="referrer" content="no-referrer">
+<meta name="theme-color" content="#0B2B3C">
+<title>Sunset Luxury Yacht</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Lora:ital,wght@0,500;0,600;1,500&display=swap">
+<style>
+:root{
+  --bg:#F1F4F5; --surface:#FFFFFF; --ink:#0B2B3C; --muted:#586A75; --line:#D9E0E4;
+  --hero:#0B2B3C; --hero2:#134158; --hero-ink:#F4EFE9; --hero-muted:#B7C6CE;
+  --bronze:#8D6440; --bronze-soft:#F2EAE2; --sun:#C99A72;
+  --btn:#0B2B3C; --btn-ink:#FFFFFF;
+  --red:#A8261D; --red-bg:#FBE8E6; --amber:#7D5200; --amber-bg:#FFF1CF; --green:#1C6A43; --green-bg:#E2F2E8;
+  --display:"Lora",Georgia,serif; --body:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --shadow:0 1px 2px rgba(11,43,60,.05),0 8px 24px -12px rgba(11,43,60,.18);
+}
+@media (prefers-color-scheme: dark){ :root{
+  --bg:#06181F; --surface:#0E2A38; --ink:#E9EFF2; --muted:#9DB0BA; --line:#1F4253;
+  --hero:#0B2B3C; --hero2:#134158;
+  --bronze:#D0A27B; --bronze-soft:#1B3441;
+  --btn:#D0A27B; --btn-ink:#06181F;
+  --red:#FF9A90; --red-bg:#3B1E1B; --amber:#F3C870; --amber-bg:#3A2D10; --green:#86D5A8; --green-bg:#143426;
+  --shadow:none; color-scheme:dark } }
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.5;padding-bottom:calc(76px + env(safe-area-inset-bottom,0px))}
+.wrap{max-width:600px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+button,a.btn,a.copy{font:inherit;cursor:pointer;text-decoration:none}
+button{color:inherit}
+:focus-visible{outline:2px solid var(--bronze);outline-offset:2px}
+h1,h2{font-family:var(--display);font-weight:600;text-wrap:balance;margin:0}
+h2{font-size:21px;letter-spacing:-.005em}
+p{margin:0}
+[hidden]{display:none!important}
+
+.hero{background:linear-gradient(160deg,var(--hero) 0%,var(--hero2) 100%);color:var(--hero-ink);position:relative;overflow:hidden}
+.hero .wrap{padding-block:26px 0;position:relative;display:flex;flex-direction:column;gap:16px}
+.hero .sun{position:absolute;right:-84px;top:-96px;width:320px;height:320px;opacity:.6;pointer-events:none}
+.brand{font-family:var(--display);letter-spacing:.24em;font-size:11.5px;text-transform:uppercase;color:var(--hero-muted)}
+.eyebrow{font-size:13px;color:var(--sun);letter-spacing:.04em;font-weight:500}
+.hero h1{font-size:clamp(30px,8vw,40px);line-height:1.08;letter-spacing:-.01em}
+.hero h1 em{font-style:italic;font-weight:500}
+.facts{display:flex;flex-wrap:wrap;gap:6px 8px;font-size:13px}
+.facts span{border:1px solid rgba(244,239,233,.26);border-radius:999px;padding:4px 11px;background:rgba(244,239,233,.05)}
+.count{display:flex;align-items:baseline;gap:10px;font-size:13.5px;color:var(--hero-muted)}
+.count strong{font-family:var(--display);font-size:44px;line-height:1;color:var(--hero-ink);font-weight:600;font-variant-numeric:tabular-nums}
+.wave{display:block;width:100%;height:34px;margin-top:10px;color:var(--bg)}
+
+main.wrap{display:flex;flex-direction:column;gap:30px;padding-block:18px 22px}
+section{display:flex;flex-direction:column;gap:12px;scroll-margin-top:14px}
+.sub{color:var(--muted);font-size:13.5px}
+.card,.rows,details{background:var(--surface);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow)}
+.card{padding:16px;display:flex;flex-direction:column;gap:12px}
+.card .top{display:flex;gap:10px;align-items:flex-start}
+.pill{flex:none;font-size:11.5px;font-weight:600;letter-spacing:.03em;border-radius:999px;padding:3px 9px;white-space:nowrap}
+.pill.red{background:var(--red-bg);color:var(--red)} .pill.amber{background:var(--amber-bg);color:var(--amber)} .pill.green{background:var(--green-bg);color:var(--green)} .pill.grey{background:var(--bg);color:var(--muted);border:1px solid var(--line)}
+.what{font-weight:600;min-width:0}
+.when{font-size:13.5px;color:var(--muted)}
+.btn{align-self:flex-start;display:inline-block;background:var(--btn);color:var(--btn-ink);border:0;border-radius:11px;padding:11px 17px;font-weight:600;font-size:14px}
+.btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
+.okbox{background:var(--green-bg);color:var(--green);border-radius:16px;padding:18px;font-weight:600;font-family:var(--display);font-size:19px}
+.note{background:var(--bronze-soft);border-left:3px solid var(--bronze);border-radius:10px;padding:12px 14px;font-size:14px}
+.note b{font-weight:600}
+details summary{padding:13px 16px;cursor:pointer;font-weight:500;list-style:none;display:flex;justify-content:space-between;gap:10px}
+details summary::-webkit-details-marker{display:none}
+details summary::after{content:"+";color:var(--bronze);font-weight:600}
+details[open] summary::after{content:"–"}
+details .in{padding:0 16px 14px;color:var(--muted);font-size:14px;display:flex;flex-direction:column;gap:6px}
+.rows{overflow:hidden}
+.row{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:13px 16px;border-top:1px solid var(--line)}
+.row:first-child{border-top:0}
+.row .l{min-width:0}
+.row small{display:block;color:var(--muted);font-size:12.5px}
+.row .r{text-align:right;flex:none;font-variant-numeric:tabular-nums}
+.row .r small{margin-top:3px}
+.mono{font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+.copy{border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:9px;padding:5px 11px;font-size:12.5px;display:inline-block}
+.choice{display:flex;gap:8px}
+.choice>*{flex:1;text-align:center;text-decoration:none;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:11px;padding:11px;font-weight:600;font-size:14px}
+.choice>.go{background:var(--btn);color:var(--btn-ink);border-color:var(--btn)}
+.foot{color:var(--muted);font-size:12.5px;text-align:center;display:flex;flex-direction:column;gap:10px;align-items:center}
+nav{position:fixed;left:0;right:0;bottom:0;background:color-mix(in srgb,var(--surface) 92%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom,0px);z-index:5}
+nav .wrap{display:flex}
+nav button{flex:1;background:none;border:0;padding:13px 2px;font-size:12.5px;font-weight:500;color:var(--muted)}
+nav button:hover{color:var(--ink)}
+#toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(74px + env(safe-area-inset-bottom,0px));background:var(--ink);color:var(--bg);padding:10px 14px;border-radius:10px;font-size:13px;max-width:min(92vw,480px);z-index:9;text-align:center}
+
+.state{min-height:100vh;min-height:100dvh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;text-align:center;background:linear-gradient(160deg,var(--hero),var(--hero2));color:var(--hero-ink);padding:32px 24px;margin-bottom:calc(-76px - env(safe-area-inset-bottom,0px))}
+.state h1{font-size:28px;max-width:16em}
+.state p{color:var(--hero-muted);max-width:26em}
+.state .btn{align-self:center;background:var(--sun);color:#06181F}
+.ring{width:54px;height:54px;border-radius:50%;border:1.5px solid rgba(201,154,114,.3);border-top-color:var(--sun)}
+@media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}.ring{animation:spin 1.1s linear infinite}main>section{animation:rise .5s both}main>section:nth-child(2){animation-delay:.06s}main>section:nth-child(3){animation-delay:.12s}main>section:nth-child(4){animation-delay:.18s}}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@media (min-width:720px){.hero .wrap{padding-top:40px}.hero h1{font-size:44px}main.wrap{padding-top:26px}}
+</style>
+</head>
+<body>
+<div id="state" class="state"><div class="brand">Sunset Luxury Yacht</div><div class="ring" role="status" aria-label="Loading"></div></div>
+<div id="page" hidden>
+  <div class="hero"><div class="wrap" id="hero"></div>
+    <svg class="wave" viewBox="0 0 1200 34" preserveAspectRatio="none" aria-hidden="true"><path fill="currentColor" d="M0 20c150-18 300-18 450-4s300 16 450 2 200-14 300-8v24H0z"/></svg>
+  </div>
+  <main class="wrap" id="app"></main>
+  <nav id="nav"><div class="wrap"></div></nav>
+</div>
+<div id="toast" hidden role="status"></div>
+
+<script>
+(function(){
+'use strict';
+/* Punt de lectura (AEB-ZONA-08). Ara mateix: PILOT amb dades inventades. */
+var API='https://script.google.com/macros/s/AKfycbz3pp6h_6JozTxGfAr7klB_wD0N7ejjjJafGsrTdfNG4BYZW7gQQagEQkIBs9F9672q/exec';
+var WA='34662969099', WA_SHOW='+34 662 96 90 99', MAIL='info@sunsetluxuryyacht.com';
+var CARD_FEE=1.5;
+
+var T={
+es:{locale:'es-ES',loading:'Cargando tu viaje…',
+ badTitle:'Este enlace no está disponible',badText:'Puede que haya caducado o que esté incompleto. Escríbenos y te enviamos el enlace correcto.',write:'Escribir a Sunset',
+ netTitle:'No hemos podido cargar tu viaje',netText:'Comprueba la conexión y vuelve a intentarlo.',retry:'Volver a intentar',
+ eyebrow:'Tu chárter',people:'personas',skYes:'Con patrón',skNo:'Sin patrón',
+ d0:'¡Embarcáis hoy!',d1:'día para embarcar',dn:'días para embarcar',sailing:'Estáis navegando. Buen viento.',checkin:'check-in a las',
+ nav:['Viaje','Preparar','Pagos','Base','Ayuda'],
+ miss1:'Te falta 1 cosa',missN:function(n){return 'Te faltan '+n+' cosas'},allSet:'Todo preparado',allSetBox:'Todo listo. Ahora solo queda disfrutar del viaje.',
+ done:'Ya hecho',overdue:'Vencido',urgent:'Urgente',pending:'Pendiente',received:'Recibido',toConfirm:'Por confirmar',complete:'Completa',
+ before:function(d,n){return 'Antes del '+d+' · '+(n===1?'queda 1 día':'quedan '+n+' días')},dueToday:'Vence hoy',was:function(d){return 'Venció el '+d},noDate:'Te avisaremos de la fecha límite',
+ payN:function(n,t){return 'Pago '+n+' de '+t},howPay:'Ver cómo pagar',
+ tCrew:'Lista de tripulantes: los datos de cada pasajero',tCrewCta:'Completar la lista',tPref:'Preference list: comida, bebida y preferencias a bordo',tPrefCta:'Ver cómo enviarla',
+ prep:'Preparar el viaje',crew:'Lista de tripulantes',
+ crewLink:'Se rellena en la plataforma del armador. Cada pasajero puede entrar desde aquí y poner sus datos.',crewOpen:'Abrir la lista de tripulantes',
+ crewNo:'Te enviaremos el formulario del armador. Si ya lo tienes, devuélvenoslo completado por correo o WhatsApp.',crewDone:'El armador ya tiene la lista completa.',crewWait:'La habéis rellenado; falta que el armador la confirme.',
+ crewFaq:'¿Puedo cambiar un pasajero?',crewFaqA:'Sí: vuelve a entrar y cámbialo hasta la fecha límite. Después, escríbenos y lo gestionamos con el armador.',
+ pref:'Preference list',prefTxt:'La tripulación la necesita para hacer la compra y preparar el barco a vuestro gusto. Envíanosla por correo o WhatsApp.',prefDone:'Recibida. La tripulación ya la tiene.',
+ pays:'Pagos',total:'Total del chárter',
+ direct:'En esta reserva los pagos se hacen directamente al propietario del barco, según el contrato. Si tienes dudas sobre un importe o una fecha, escríbenos.',
+ byTransfer:'Pagar por transferencia',holder:'Titular',bank:'Banco',concept:'Concepto',copy:'Copiar',copied:'Copiado',selectCopy:'Seleccionado: cópialo',
+ anyone:'Puede pagar cualquier persona del grupo. Cuando llegue a nuestra cuenta lo verás aquí como «Recibido».',
+ sent:'Ya he hecho la transferencia',sentMsg:function(v){return 'Hola, ya he hecho la transferencia del pago de '+v+'.'},
+ byCard:'Pagar con tarjeta',cardAsk:'Quiero pagar con tarjeta',cardInfo:function(a,b){return '<strong>Con tarjeta: '+a+'</strong> ('+b+' + '+String(CARD_FEE).replace('.',',')+' %). Al confirmar nos lo pides por WhatsApp y te enviamos el enlace de pago seguro en un máximo de 48 h.'},
+ confirm:'Confirmar',cancel:'Cancelar',cardMsg:function(v,a){return 'Hola, quiero pagar con tarjeta el pago de '+v+'. Importe con tarjeta: '+a+'.'},
+ atBase:'Se paga en la base',deposit:'¿Qué es la fianza?',depositA:'Una garantía que el armador bloquea en una tarjeta al embarcar y libera al devolver el barco sin daños. No es un pago.',
+ base:'La base',route:'Cómo llegar',emb:'Embarque',dis:'Desembarque',contact:'Contacto en la base',
+ crewTitle:'Tu tripulación',late:'¿Y si mi vuelo se retrasa?',lateA:'Avisa al contacto de la base: ellos organizan vuestra llegada. Si no contestan, escríbenos.',
+ bring:'¿Qué llevamos?',bringA:'Bolsas blandas en lugar de maletas rígidas, calzado de suela clara y protección solar.',
+ extras:'Extras',docs:'Documentos',open:'Abrir',
+ payNote:'<b>Los pagos se hacen siempre a Sunset</b>, a la cuenta que ves en «Pagos». No pagues a la cuenta bancaria que pueda aparecer en el contrato.',
+ whyOwner:'¿Por qué el contrato está a nombre de otra empresa?',whyOwnerA:'El contrato se firma siempre con el propietario del barco. Sunset es el intermediario: recibimos vuestros pagos y se los transmitimos al propietario.',
+ help:'Ayuda',helpL:'Sunset · WhatsApp, 24 h durante el viaje',helpS:'Antes del viaje te respondemos en el día',wa:'WhatsApp',
+ share:'Compartir con el grupo',shareTxt:'Toda la información de nuestro chárter:',linkCopied:'Enlace copiado: envíalo al grupo',updated:'Actualizado',
+ histTitle:'Tu historial con Sunset',histSub:'Viaje terminado',again:'¿Repetimos?',againTxt:'Dinos fechas y zona y te preparamos una propuesta en 24 h.',againMsg:'Hola, me gustaría volver a navegar con Sunset.'},
+en:{locale:'en-GB',loading:'Loading your trip…',
+ badTitle:'This link is not available',badText:'It may have expired or be incomplete. Message us and we will send you the right link.',write:'Message Sunset',
+ netTitle:'We could not load your trip',netText:'Check your connection and try again.',retry:'Try again',
+ eyebrow:'Your charter',people:'guests',skYes:'With skipper',skNo:'Bareboat',
+ d0:'You board today!',d1:'day to boarding',dn:'days to boarding',sailing:'You are sailing. Fair winds.',checkin:'check-in at',
+ nav:['Trip','Prepare','Payments','Base','Help'],
+ miss1:'1 thing left to do',missN:function(n){return n+' things left to do'},allSet:'All set',allSetBox:'Everything is ready. Now just enjoy the trip.',
+ done:'Already done',overdue:'Overdue',urgent:'Urgent',pending:'Pending',received:'Received',toConfirm:'To be confirmed',complete:'Complete',
+ before:function(d,n){return 'By '+d+' · '+(n===1?'1 day left':n+' days left')},dueToday:'Due today',was:function(d){return 'Was due on '+d},noDate:'We will let you know the deadline',
+ payN:function(n,t){return 'Payment '+n+' of '+t},howPay:'See how to pay',
+ tCrew:'Crew list: the details of each guest',tCrewCta:'Complete the list',tPref:'Preference list: food, drinks and wishes on board',tPrefCta:'See how to send it',
+ prep:'Prepare the trip',crew:'Crew list',
+ crewLink:'It is filled in on the owner\'s platform. Every guest can open it from here and enter their details.',crewOpen:'Open the crew list',
+ crewNo:'We will send you the owner\'s form. If you already have it, return it completed by email or WhatsApp.',crewDone:'The owner already has the complete list.',crewWait:'You have filled it in; the owner still has to confirm it.',
+ crewFaq:'Can I change a guest?',crewFaqA:'Yes: open it again and change it until the deadline. After that, message us and we will sort it out with the owner.',
+ pref:'Preference list',prefTxt:'The crew needs it to do the shopping and prepare the yacht the way you like. Send it to us by email or WhatsApp.',prefDone:'Received. The crew already has it.',
+ pays:'Payments',total:'Charter total',
+ direct:'For this booking, payments are made directly to the yacht owner, as stated in the contract. If you have any doubt about an amount or a date, message us.',
+ byTransfer:'Pay by bank transfer',holder:'Account holder',bank:'Bank',concept:'Reference',copy:'Copy',copied:'Copied',selectCopy:'Selected: copy it',
+ anyone:'Anyone in the group can pay. Once it reaches our account you will see it here as “Received”.',
+ sent:'I have made the transfer',sentMsg:function(v){return 'Hello, I have made the transfer for the payment of '+v+'.'},
+ byCard:'Pay by card',cardAsk:'I want to pay by card',cardInfo:function(a,b){return '<strong>By card: '+a+'</strong> ('+b+' + '+CARD_FEE+'%). When you confirm, you ask us by WhatsApp and we send you the secure payment link within 48 h.'},
+ confirm:'Confirm',cancel:'Cancel',cardMsg:function(v,a){return 'Hello, I would like to pay by card the payment of '+v+'. Card amount: '+a+'.'},
+ atBase:'Paid at the base',deposit:'What is the security deposit?',depositA:'A guarantee the owner blocks on a card at boarding and releases when the yacht is returned without damage. It is not a payment.',
+ base:'The base',route:'Directions',emb:'Boarding',dis:'Disembarking',contact:'Contact at the base',
+ crewTitle:'Your crew',late:'What if my flight is delayed?',lateA:'Tell the contact at the base: they organise your arrival. If they do not answer, message us.',
+ bring:'What should we bring?',bringA:'Soft bags instead of hard suitcases, light-soled shoes and sun protection.',
+ extras:'Extras',docs:'Documents',open:'Open',
+ payNote:'<b>Payments are always made to Sunset</b>, to the account shown under “Payments”. Do not pay to any bank account that may appear in the contract.',
+ whyOwner:'Why is the contract in another company\'s name?',whyOwnerA:'The contract is always signed with the yacht owner. Sunset is the broker: we receive your payments and pass them on to the owner.',
+ help:'Help',helpL:'Sunset · WhatsApp, 24 h during the trip',helpS:'Before the trip we reply the same day',wa:'WhatsApp',
+ share:'Share with the group',shareTxt:'All the details of our charter:',linkCopied:'Link copied: send it to the group',updated:'Updated',
+ histTitle:'Your history with Sunset',histSub:'Trip completed',again:'Shall we do it again?',againTxt:'Tell us dates and area and we will prepare a proposal within 24 h.',againMsg:'Hello, I would like to sail with Sunset again.'}
+};
+
+var $=function(s){return document.querySelector(s)};
+var L=T.en, D=null, ui={};
+function esc(v){return String(v==null?'':v).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
+function https(u){u=String(u||'');return /^https:\/\/[^\s"'<>\\]+$/.test(u)?u:''}
+function tel(t){return String(t||'').replace(/[^\d+]/g,'')}
+function date(iso){var m=/^(\d{4})-(\d{2})-(\d{2})$/.exec(String(iso||''));return m?new Date(+m[1],+m[2]-1,+m[3]):null}
+function today(){var n=new Date();return new Date(n.getFullYear(),n.getMonth(),n.getDate())}
+function left(d){return Math.round((d-today())/864e5)}
+function f(d,o){return d?d.toLocaleDateString(L.locale,o||{day:'numeric',month:'long'}):''}
+function fy(d){return f(d,{day:'numeric',month:'long',year:'numeric'})}
+function fw(d){return f(d,{weekday:'long',day:'numeric',month:'long'})}
+function eur(n){return Number(n).toLocaleString('de-DE',{minimumFractionDigits:2,maximumFractionDigits:2})+' €'}
+function cap(s){return s?s.charAt(0).toUpperCase()+s.slice(1):s}
+function waUrl(msg){return 'https://wa.me/'+WA+(msg?'?text='+encodeURIComponent(msg):'')}
+function toast(t){var e=$('#toast');e.textContent=t;e.hidden=false;clearTimeout(toast.t);toast.t=setTimeout(function(){e.hidden=true},3200)}
+
+function code(){
+  var h=location.hash.replace(/^#/,''), q=new URLSearchParams(location.search).get('r')||'';
+  var c=h||q;
+  return /^[A-Za-z0-9]{32,128}$/.test(c)?c:'';
+}
+function state(kind){
+  var s=$('#state');$('#page').hidden=true;s.hidden=false;
+  var head='<div class="brand">Sunset Luxury Yacht</div>';
+  if(kind==='load') s.innerHTML=head+'<div class="ring" role="status" aria-label="'+esc(L.loading)+'"></div>';
+  else if(kind==='net') s.innerHTML=head+'<h1>'+esc(L.netTitle)+'</h1><p>'+esc(L.netText)+'</p><button class="btn" data-retry>'+esc(L.retry)+'</button>';
+  else s.innerHTML=head+'<h1>'+esc(L.badTitle)+'</h1><p>'+esc(L.badText)+'</p><a class="btn" href="'+waUrl()+'" rel="noopener">'+esc(L.write)+'</a>';
+}
+function load(){
+  var nav=(navigator.language||'en').slice(0,2).toLowerCase(); L=T[nav]||T.en;
+  var c=code(); if(!c){state('bad');return}
+  state('load');
+  var ctl=new AbortController(), to=setTimeout(function(){ctl.abort()},25000);
+  fetch(API+'?r='+c,{credentials:'omit',cache:'no-store',redirect:'follow',referrerPolicy:'no-referrer',signal:ctl.signal})
+    .then(function(r){if(!r.ok) throw new Error('http');return r.json()})
+    .then(function(j){clearTimeout(to); if(!j||j.ok!==true||!j.viaje){state('bad');return} D=j; L=T[j.idioma]||T.en; document.documentElement.lang=T[j.idioma]?j.idioma:'en'; render()})
+    .catch(function(){clearTimeout(to);state('net')});
+}
+
+function pill(due){ if(!due) return ['amber',L.pending]; var d=left(due); return d<0?['red',L.overdue]:d<=7?['red',L.urgent]:['amber',L.pending]}
+function when(due){ if(!due) return L.noDate; var d=left(due); return d<0?L.was(f(due)):d===0?L.dueToday:L.before(f(due),d)}
+function boatName(b){var m=/«([^»]+)»/.exec(b||'');return m?m[1]:''}
+function sun(){return '<svg class="sun" viewBox="0 0 300 300" aria-hidden="true"><circle cx="150" cy="150" r="64" fill="#C99A72" opacity=".2"/><circle cx="150" cy="150" r="96" fill="none" stroke="#C99A72" stroke-width="1.4"/><circle cx="150" cy="150" r="128" fill="none" stroke="#C99A72" stroke-width=".8" opacity=".6"/><circle cx="150" cy="150" r="160" fill="none" stroke="#C99A72" stroke-width=".5" opacity=".35"/></svg>'}
+function title(v){var n=boatName(v.barco), model=String(v.barco||'').replace(/\s*«[^»]*»\s*/,' ').trim();
+  return '<div><div class="eyebrow">'+esc(L.eyebrow)+(model&&n?' · '+esc(model):'')+'</div><h1>'+(n?'<em>'+esc(n)+'</em>':esc(v.barco))+'</h1></div>'}
+
+function renderDone(){
+  var v=D.viaje, a=date(v.inicio), b=date(v.fin);
+  document.title=L.histTitle+' · Sunset Luxury Yacht';
+  $('#hero').innerHTML=sun()+'<div class="brand">Sunset Luxury Yacht</div><div><div class="eyebrow">'+esc(L.histSub)+'</div><h1>'+esc(L.histTitle)+'</h1></div><div class="facts"><span>'+esc(f(a))+' – '+esc(fy(b))+'</span></div>';
+  $('#app').innerHTML='<section><div class="rows"><div class="row"><div class="l">'+esc(v.barco)+'<small>'+esc(v.base)+'</small></div><div class="r">'+esc(String(a?a.getFullYear():''))+'</div></div></div></section>'+
+    '<section><h2>'+esc(L.again)+'</h2><p class="sub">'+esc(L.againTxt)+'</p><a class="btn" href="'+waUrl(L.againMsg)+'" rel="noopener">'+esc(L.wa)+'</a></section>';
+  $('#nav').hidden=true; document.body.style.paddingBottom='24px';
+}
+
+function render(){
+  $('#state').hidden=true; $('#page').hidden=false;
+  if(D.estado==='terminado'){renderDone();return}
+  var v=D.viaje, c=D.contenido||{}, a=date(v.inicio), b=date(v.fin), d=left(a), pagos=D.pagos||[], directe=D.pagoDirecto===true;
+  document.title=(boatName(v.barco)||v.barco)+' · Sunset Luxury Yacht';
+
+  var facts=['<span>'+esc(f(a))+' – '+esc(fy(b))+'</span>','<span>'+esc(v.base)+'</span>'];
+  if(v.personas) facts.push('<span>'+esc(v.personas)+' '+esc(L.people)+'</span>');
+  if(v.patron==='si') facts.push('<span>'+esc(L.skYes)+'</span>'); else if(v.patron==='no') facts.push('<span>'+esc(L.skNo)+'</span>');
+  var count = d>1 ? '<strong>'+d+'</strong><span>'+esc(L.dn)+(c.checkin?' · '+esc(L.checkin)+' '+esc(c.checkin):'')+'</span>'
+            : d===1 ? '<strong>1</strong><span>'+esc(L.d1)+(c.checkin?' · '+esc(L.checkin)+' '+esc(c.checkin):'')+'</span>'
+            : d===0 ? '<span>'+esc(L.d0)+(c.checkin?' · '+esc(L.checkin)+' '+esc(c.checkin):'')+'</span>' : '<span>'+esc(L.sailing)+'</span>';
+  $('#hero').innerHTML=sun()+'<div class="brand">Sunset Luxury Yacht</div>'+title(v)+'<div class="facts">'+facts.join('')+'</div><p class="count">'+count+'</p>';
+
+  /* Tasques: només les que envia el servidor. */
+  var tasks=(D.tareas||[]).map(function(t){
+    var due=date(t.vence);
+    if(t.clave==='pago') return {due:due,what:L.payN(t.n,pagos.length)+(t.importe?': '+eur(t.importe):''),cta:L.howPay,go:'s-pagos'};
+    if(t.clave==='crew') return {due:due,what:L.tCrew,cta:L.tCrewCta,go:'s-preparar'};
+    if(t.clave==='pref') return {due:due,what:L.tPref,cta:L.tPrefCta,go:'s-preparar'};
+    return null}).filter(Boolean);
+  var done=pagos.filter(function(p){return p.estado==='recibido'}).map(function(p){return L.payN(p.n,pagos.length)+' · '+L.received.toLowerCase()});
+  if(D.crew&&D.crew.estado==='completa') done.push(L.crew+' · '+L.complete.toLowerCase());
+  if(D.pref&&D.pref.necesaria&&D.pref.recibida) done.push(L.pref+' · '+L.received.toLowerCase());
+  var sTasks='<section id="s-viaje"><h2>'+esc(tasks.length?(tasks.length===1?L.miss1:L.missN(tasks.length)):L.allSet)+'</h2>'+
+    (tasks.length?tasks.map(function(t){var p=pill(t.due);return '<div class="card"><div class="top"><span class="pill '+p[0]+'">'+esc(p[1])+'</span><div><div class="what">'+esc(t.what)+'</div><div class="when">'+esc(when(t.due))+'</div></div></div><button class="btn" data-go="'+t.go+'">'+esc(t.cta)+'</button></div>'}).join(''):'<div class="okbox">'+esc(L.allSetBox)+'</div>')+
+    (done.length?'<details><summary>'+esc(L.done)+' ('+done.length+')</summary><div class="in">'+done.map(function(x){return '<div>✓ '+esc(x)+'</div>'}).join('')+'</div></details>':'')+'</section>';
+
+  /* Preparar */
+  var cr=D.crew||{}, cu=https(cr.url);
+  var cst=cr.estado==='completa'?['green',L.complete,L.crewDone]:cr.estado==='por_confirmar'?['grey',L.toConfirm,L.crewWait]:['amber',L.pending,cu?L.crewLink:L.crewNo];
+  var crewBlock='<div class="card"><div class="top"><span class="pill '+cst[0]+'">'+esc(cst[1])+'</span><div><div class="what">'+esc(L.crew)+'</div><div class="when">'+esc(cst[2])+'</div></div></div>'+
+    (cu&&cr.estado!=='completa'?'<a class="btn" href="'+esc(cu)+'" target="_blank" rel="noopener noreferrer">'+esc(L.crewOpen)+'</a><details><summary>'+esc(L.crewFaq)+'</summary><div class="in">'+esc(L.crewFaqA)+'</div></details>':'')+'</div>';
+  var pf=D.pref||{}, prefBlock=pf.necesaria?'<div class="card"><div class="top"><span class="pill '+(pf.recibida?'green':'amber')+'">'+esc(pf.recibida?L.received:L.pending)+'</span><div><div class="what">'+esc(L.pref)+'</div><div class="when">'+esc(pf.recibida?L.prefDone:L.prefTxt)+'</div></div></div>'+(pf.recibida?'':'<a class="btn ghost" href="'+waUrl()+'" rel="noopener">'+esc(L.wa)+'</a>')+'</div>':'';
+  var sPrep='<section id="s-preparar"><h2>'+esc(L.prep)+'</h2>'+crewBlock+prefBlock+'</section>';
+
+  /* Pagaments */
+  var total=pagos.reduce(function(s,p){return s+(p.importe||0)},0), next=pagos.filter(function(p){return p.estado!=='recibido'&&p.importe})[0];
+  var bk=D.banco, ref=(boatName(v.barco)||v.barco)+' · '+f(a,{day:'numeric',month:'short',year:'numeric'});
+  var rowsPay=pagos.map(function(p){var paid=p.estado==='recibido',due=date(p.vence),pl=paid?['green',L.received]:pill(due);
+    return '<div class="row"><div class="l">'+esc(L.payN(p.n,pagos.length))+'<small>'+esc(paid?L.received:(due?when(due):L.noDate))+'</small></div><div class="r">'+(p.importe?eur(p.importe):'—')+'<small><span class="pill '+pl[0]+'">'+esc(pl[1])+'</span></small></div></div>'}).join('');
+  function brow(lbl,id,val,canCopy){return '<div class="row"><div class="l"><small>'+esc(lbl)+'</small><span class="mono" id="'+id+'">'+esc(val)+'</span></div>'+(canCopy?'<div class="r"><button class="copy" data-copy="'+id+'">'+esc(L.copy)+'</button></div>':'')+'</div>'}
+  var payHow='';
+  if(directe) payHow='<div class="note">'+esc(L.direct)+'</div>';
+  else if(next&&bk){
+    payHow='<div class="card"><div class="what">'+esc(L.byTransfer)+'</div><div class="rows" style="box-shadow:none">'+brow(L.holder,'b-tit',bk.titular||'',false)+brow('IBAN','b-iban',bk.iban,true)+
+      (bk.bic||bk.banco?brow('BIC / SWIFT'+(bk.banco?' · '+bk.banco:''),'b-bic',bk.bic||'',!!bk.bic):'')+brow(L.concept,'b-ref',ref,true)+'</div>'+
+      '<div class="when">'+esc(L.anyone)+'</div><a class="btn ghost" href="'+waUrl(L.sentMsg(eur(next.importe)+' ('+ref+')'))+'" rel="noopener">'+esc(L.sent)+'</a></div>'+
+      '<div class="card"><div class="what">'+esc(L.byCard)+'</div>'+
+      (ui.card?'<div class="when">'+L.cardInfo(eur(Math.round(next.importe*(100+CARD_FEE))/100),eur(next.importe))+'</div><div class="choice"><a class="go" href="'+waUrl(L.cardMsg(eur(next.importe)+' ('+ref+')',eur(Math.round(next.importe*(100+CARD_FEE))/100)))+'" rel="noopener">'+esc(L.confirm)+'</a><button data-card="">'+esc(L.cancel)+'</button></div>'
+       :'<button class="btn ghost" data-card="1">'+esc(L.cardAsk)+'</button>')+'</div>';
+  }
+  var enBase=(c.enBase||[]).map(function(x){return '<div class="row"><div class="l">'+esc(x.texto)+'<small>'+esc(L.atBase)+'</small></div><div class="r">'+esc(x.importe||'—')+'</div></div>'}).join('');
+  var sPay='<section id="s-pagos"><h2>'+esc(L.pays)+'</h2>'+(total?'<p class="sub">'+esc(L.total)+': '+eur(total)+'</p>':'')+(rowsPay?'<div class="rows">'+rowsPay+'</div>':'')+payHow+
+    (enBase?'<div class="rows">'+enBase+'</div>':'')+(c.pagoEnBaseNota?'<p class="sub">'+esc(c.pagoEnBaseNota)+'</p>':'')+
+    (enBase?'<details><summary>'+esc(L.deposit)+'</summary><div class="in">'+esc(L.depositA)+'</div></details>':'')+'</section>';
+
+  /* Base, tripulació, extres, documents */
+  var map=https(c.baseMapa), bt=tel(c.baseTelefono);
+  var baseRows='<div class="row"><div class="l">'+esc(v.base)+(c.baseDireccion?'<small>'+esc(c.baseDireccion)+'</small>':'')+'</div>'+(map?'<div class="r"><a class="copy" href="'+esc(map)+'" target="_blank" rel="noopener noreferrer">'+esc(L.route)+'</a></div>':'')+'</div>'+
+    '<div class="row"><div class="l">'+esc(L.emb)+'<small>'+esc(cap(fw(a)))+(c.checkin?', '+esc(c.checkin):'')+'</small></div><div class="r">'+esc(L.dis)+'<small>'+esc(cap(fw(b)))+(c.checkout?', '+esc(c.checkout):'')+'</small></div></div>'+
+    (c.baseContacto||bt?'<div class="row"><div class="l">'+esc(L.contact)+(c.baseContacto?'<small>'+esc(c.baseContacto)+'</small>':'')+'</div>'+(bt?'<div class="r"><a class="copy mono" href="tel:'+esc(bt)+'">'+esc(c.baseTelefono)+'</a></div>':'')+'</div>':'');
+  var trip=(c.tripulacion||[]).map(function(p){var t=tel(p.telefono);return '<div class="row"><div class="l">'+esc(p.rol||'')+(p.nombre?': '+esc(p.nombre):'')+(p.idiomas?'<small>'+esc(p.idiomas)+'</small>':'')+'</div>'+(t?'<div class="r"><a class="copy mono" href="tel:'+esc(t)+'">'+esc(p.telefono)+'</a></div>':'')+'</div>'}).join('');
+  var extras=(c.extras||[]).map(function(x){return '<div class="row"><div class="l">'+esc(x.texto)+(x.donde?'<small>'+esc(x.donde)+'</small>':'')+'</div>'+(x.estado?'<div class="r"><span class="pill green">'+esc(cap(x.estado))+'</span></div>':'')+'</div>'}).join('');
+  var docs=(c.docs||[]).filter(function(x){return https(x.url)}).map(function(x){return '<div class="row"><div class="l">'+esc(x.titulo)+'</div><div class="r"><a class="copy" href="'+esc(x.url)+'" target="_blank" rel="noopener noreferrer">'+esc(L.open)+'</a></div></div>'}).join('');
+  var sBase='<section id="s-base"><h2>'+esc(L.base)+'</h2><div class="rows">'+baseRows+'</div>'+
+    (trip?'<h2>'+esc(L.crewTitle)+'</h2><div class="rows">'+trip+'</div>':'')+
+    '<details><summary>'+esc(L.late)+'</summary><div class="in">'+esc(L.lateA)+'</div></details><details><summary>'+esc(L.bring)+'</summary><div class="in">'+esc(L.bringA)+'</div></details>'+
+    (extras?'<h2>'+esc(L.extras)+'</h2><div class="rows">'+extras+'</div>':'')+
+    (docs?'<h2>'+esc(L.docs)+'</h2>'+(directe?'':'<div class="note">'+L.payNote+'</div>')+'<div class="rows">'+docs+'</div><details><summary>'+esc(L.whyOwner)+'</summary><div class="in">'+esc(L.whyOwnerA)+'</div></details>':'')+'</section>';
+
+  var sHelp='<section id="s-ayuda"><h2>'+esc(L.help)+'</h2><div class="rows"><div class="row"><div class="l">'+esc(L.helpL)+'<small>'+esc(L.helpS)+'</small></div><div class="r"><a class="copy mono" href="'+waUrl()+'" rel="noopener">'+WA_SHOW+'</a></div></div>'+
+    '<div class="row"><div class="l">Email</div><div class="r"><a class="copy" href="mailto:'+MAIL+'">'+MAIL+'</a></div></div></div>'+
+    '<div class="foot"><button class="btn ghost" data-share>'+esc(L.share)+'</button>'+(D.actualizado?'<div>'+esc(L.updated)+' '+esc(D.actualizado)+'</div>':'')+'</div></section>';
+
+  $('#app').innerHTML=sTasks+sPrep+sPay+sBase+sHelp;
+  var ids=['s-viaje','s-preparar','s-pagos','s-base','s-ayuda'];
+  $('#nav .wrap').innerHTML=L.nav.map(function(n,i){return '<button data-go="'+ids[i]+'">'+esc(n)+'</button>'}).join('');
+}
+
+document.addEventListener('click',function(e){
+  var b=e.target.closest('button'); if(!b) return; var d=b.dataset;
+  if('retry' in d) load();
+  else if(d.go){var el=document.getElementById(d.go); if(el) el.scrollIntoView({block:'start'})}
+  else if('card' in d){ui.card=!!d.card;render();var el2=document.getElementById('s-pagos'); if(el2) el2.scrollIntoView({block:'start'})}
+  else if('share' in d){
+    var url=location.href, txt=L.shareTxt;
+    if(navigator.share) navigator.share({title:document.title,text:txt,url:url}).catch(function(){});
+    else (navigator.clipboard?navigator.clipboard.writeText(url):Promise.reject()).then(function(){toast(L.linkCopied)}).catch(function(){toast(url)});
+  }
+  else if(d.copy){var n=document.getElementById(d.copy), t=n.textContent;
+    (navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).then(function(){toast(L.copied)}).catch(function(){var r=document.createRange();r.selectNodeContents(n);var s=getSelection();s.removeAllRanges();s.addRange(r);toast(L.selectCopy)})}
+});
+window.addEventListener('hashchange',load);
+load();
+})();
+</script>
+</body>
+</html>
