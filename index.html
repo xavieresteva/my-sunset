@@ -100,12 +100,32 @@ nav button:hover{color:var(--ink)}
 @keyframes spin{to{transform:rotate(360deg)}}
 @keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 @media (min-width:720px){.hero .wrap{padding-top:40px}.hero h1{font-size:44px}main.wrap{padding-top:26px}}
+.hero.photo{background-size:cover;background-position:center}
+.steps{display:flex;flex-direction:column;gap:6px;font-size:13px;color:var(--hero-muted);max-width:320px}
+.steps i{display:block;height:4px;border-radius:4px;background:rgba(244,239,233,.2);overflow:hidden}
+.steps i b{display:block;height:100%;background:var(--sun);border-radius:4px}
+.demo{background:var(--amber-bg);color:var(--amber);font-size:12.5px;font-weight:600;text-align:center;padding:6px 12px}
+.sum{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:16px;display:flex;flex-direction:column;gap:10px;box-shadow:var(--shadow)}
+.sum .big{font-family:var(--display);font-size:26px;font-weight:600;font-variant-numeric:tabular-nums}
+.sum .l2{display:flex;justify-content:space-between;gap:12px;font-size:14px}
+.sum .l2 span:last-child{font-variant-numeric:tabular-nums;white-space:nowrap}
+.sum hr{border:0;border-top:1px solid var(--line);margin:0}
+.acts{display:flex;flex-wrap:wrap;gap:8px}
+.acts .btn{align-self:auto}
+.field{display:flex;flex-direction:column;gap:4px;font-size:13px;color:var(--muted)}
+.field input{font:inherit;font-size:15px;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:10px 12px}
+.check{display:flex;gap:10px;align-items:flex-start;font-size:14px}
+.check input{margin-top:3px;width:18px;height:18px;flex:none}
+.priv{border:1px dashed var(--bronze);border-radius:16px;padding:16px;display:flex;flex-direction:column;gap:14px;background:var(--bronze-soft)}
+.lang{display:flex;gap:6px}
+.lang .copy[aria-pressed="true"]{background:var(--btn);color:var(--btn-ink);border-color:var(--btn)}
 </style>
 </head>
 <body>
 <div id="state" class="state"><div class="brand">Sunset Luxury Yacht</div><div class="ring" role="status" aria-label="Loading"></div></div>
 <div id="page" hidden>
-  <div class="hero"><div class="wrap" id="hero"></div>
+  <div id="demo" class="demo" hidden></div>
+  <div class="hero" id="heroBox"><div class="wrap" id="hero"></div>
     <svg class="wave" viewBox="0 0 1200 34" preserveAspectRatio="none" aria-hidden="true"><path fill="currentColor" d="M0 20c150-18 300-18 450-4s300 16 450 2 200-14 300-8v24H0z"/></svg>
   </div>
   <main class="wrap" id="app"></main>
@@ -145,7 +165,7 @@ es:{locale:'es-ES',loading:'Cargando tu viaje…',
  sent:'Ya he hecho la transferencia',sentMsg:function(v){return 'Hola, ya he hecho la transferencia del pago de '+v+'.'},
  byCard:'Pagar con tarjeta',cardAsk:'Quiero pagar con tarjeta',cardInfo:function(a,b){return '<strong>Con tarjeta: '+a+'</strong> ('+b+' + '+String(CARD_FEE).replace('.',',')+' %). Al confirmar nos lo pides por WhatsApp y te enviamos el enlace de pago seguro en un máximo de 48 h.'},
  confirm:'Confirmar',cancel:'Cancelar',cardMsg:function(v,a){return 'Hola, quiero pagar con tarjeta el pago de '+v+'. Importe con tarjeta: '+a+'.'},
- atBase:'Se paga en la base',deposit:'¿Qué es la fianza?',depositA:'Una garantía que el armador bloquea en una tarjeta al embarcar y libera al devolver el barco sin daños. No es un pago.',
+ atBase:'Se paga en la base',deposit:'¿Qué es la fianza?',depositA:'En el check-in el armador bloquea el importe en una, dos o hasta tres tarjetas (si la fianza es alta puede hacer falta más de una). No se cobra: solo se bloquea. Al terminar el chárter, si no hay daños, se libera. El desbloqueo puede tardar hasta 10 días: es normal. Si pasados 10 días sigue bloqueada, escríbenos y lo gestionamos directamente con el armador.',
  base:'La base',route:'Cómo llegar',emb:'Embarque',dis:'Desembarque',contact:'Contacto en la base',
  crewTitle:'Tu tripulación',late:'¿Y si mi vuelo se retrasa?',lateA:'Avisa al contacto de la base: ellos organizan vuestra llegada. Si no contestan, escríbenos.',
  bring:'¿Qué llevamos?',bringA:'Bolsas blandas en lugar de maletas rígidas, calzado de suela clara y protección solar.',
@@ -154,7 +174,27 @@ es:{locale:'es-ES',loading:'Cargando tu viaje…',
  whyOwner:'¿Por qué el contrato está a nombre de otra empresa?',whyOwnerA:'El contrato se firma siempre con el propietario del barco. Sunset es el intermediario: recibimos vuestros pagos y se los transmitimos al propietario.',
  help:'Ayuda',helpL:'Sunset · WhatsApp, 24 h durante el viaje',helpS:'Antes del viaje te respondemos en el día',wa:'WhatsApp',
  share:'Compartir con el grupo',shareTxt:'Toda la información de nuestro chárter:',linkCopied:'Enlace copiado: envíalo al grupo',updated:'Actualizado',
- histTitle:'Tu historial con Sunset',histSub:'Viaje terminado',again:'¿Repetimos?',againTxt:'Dinos fechas y zona y te preparamos una propuesta en 24 h.',againMsg:'Hola, me gustaría volver a navegar con Sunset.'},
+ histTitle:'Tu historial con Sunset',histSub:'Viaje terminado',again:'¿Repetimos?',againTxt:'Dinos fechas y zona y te preparamos una propuesta en 24 h.',againMsg:'Hola, me gustaría volver a navegar con Sunset.',
+ steps:function(n,t){return n+' de '+t+' pasos hechos'},demo:'Ejemplo con datos inventados',
+ left2pay:'Qué te queda por pagar',toSunset:'A Sunset',toOwner:'Al propietario',atBaseSum:'En la base, al embarcar',nothingPending:'Nada pendiente',
+ depositLine:'Fianza: se bloquea en tarjeta, no se cobra',
+ early:'¿Y si llegamos antes de la hora?',earlyA:'El barco se entrega a la hora indicada. Si queréis embarcar antes, pedídnoslo con tiempo: depende de la base.',
+ swap:'¿Y si cambia un pasajero?',swapA:'Actualizad la lista de tripulantes antes de la fecha límite. Después, escribidnos y lo gestionamos con el armador.',
+ incident:'¿Y si hay una incidencia a bordo?',incidentA:'Llamad primero al contacto de la base: es quien puede enviar ayuda. Y escribidnos por WhatsApp: estamos disponibles las 24 h durante el viaje.',
+ whatif:'Qué pasa si…',boat:'El barco',
+ skTbd:'Patrón: por asignar',skTbdTxt:'El armador suele asignar al patrón entre una y tres semanas antes del embarque. Te avisaremos en cuanto tengamos su nombre y su teléfono.',
+ offered:'Extras que ofrece el armador',ask:'Pedir',consult:'Consultar',askMsg:function(x){return 'Hola, querría añadir este extra a nuestra reserva: '+x+'.'},
+ transfer:'Traslado',transferTxt:'¿Queréis traslado desde el aeropuerto? Lo organiza el armador; nosotros le pasamos vuestros datos.',transferCta:'Pedir traslado',
+ transferMsg:'Hola, queremos traslado.\nVuelo: \nHora de llegada: \nPersonas: \nMaletas: \nSillas infantiles: ',
+ crewDoneCta:'Ya la hemos completado',crewDoneMsg:'Hola, ya hemos completado la lista de tripulantes.',
+ changes:'Cambios en la reserva',chPax:'Cambiar un pasajero',chExtra:'Añadir un extra',chEarly:'Pedir early check-in',
+ chPaxMsg:'Hola, necesitamos cambiar un pasajero.\nSale: \nEntra: ',chExtraMsg:'Hola, querríamos añadir un extra: ',chEarlyMsg:'Hola, querríamos embarcar antes. Hora aproximada: ',
+ similar:'Quiero un viaje parecido',similarMsg:function(b,base){return 'Hola, me gustaría un viaje parecido al del '+b+' en '+base+'.'},
+ myData:'Mis datos',myDataSub:'Solo los ves tú. El enlace que compartes con el grupo no muestra este apartado.',forInvoice:'Los necesitamos para el contrato y para tu factura.',
+ fName:'Nombre completo',fAddr:'Dirección postal',fDoc:'Número de DNI o pasaporte',fPhone:'Tu número de WhatsApp',
+ waCheck:'Quiero recibir por WhatsApp consejos, avisos de última hora de mi reserva y ayuda 24 h durante el chárter.',
+ nlCheck:'Quiero enterarme antes que nadie de las mejores ofertas de Sunset: early booking, last minute y los barcos que quedan libres en las mejores fechas. Me doy de baja con un clic cuando quiera.',
+ save:'Guardar',preview:'Vista previa: todavía no guarda nada.',langLabel:'Idioma'},
 en:{locale:'en-GB',loading:'Loading your trip…',
  badTitle:'This link is not available',badText:'It may have expired or be incomplete. Message us and we will send you the right link.',write:'Message Sunset',
  netTitle:'We could not load your trip',netText:'Check your connection and try again.',retry:'Try again',
@@ -178,7 +218,7 @@ en:{locale:'en-GB',loading:'Loading your trip…',
  sent:'I have made the transfer',sentMsg:function(v){return 'Hello, I have made the transfer for the payment of '+v+'.'},
  byCard:'Pay by card',cardAsk:'I want to pay by card',cardInfo:function(a,b){return '<strong>By card: '+a+'</strong> ('+b+' + '+CARD_FEE+'%). When you confirm, you ask us by WhatsApp and we send you the secure payment link within 48 h.'},
  confirm:'Confirm',cancel:'Cancel',cardMsg:function(v,a){return 'Hello, I would like to pay by card the payment of '+v+'. Card amount: '+a+'.'},
- atBase:'Paid at the base',deposit:'What is the security deposit?',depositA:'A guarantee the owner blocks on a card at boarding and releases when the yacht is returned without damage. It is not a payment.',
+ atBase:'Paid at the base',deposit:'What is the security deposit?',depositA:'At check-in the owner blocks the amount on one, two or even three cards (a high deposit may need more than one). It is not charged: it is only blocked. At the end of the charter, if there is no damage, it is released. The release can take up to 10 days: this is normal. If it is still blocked after 10 days, message us and we will deal with the owner directly.',
  base:'The base',route:'Directions',emb:'Boarding',dis:'Disembarking',contact:'Contact at the base',
  crewTitle:'Your crew',late:'What if my flight is delayed?',lateA:'Tell the contact at the base: they organise your arrival. If they do not answer, message us.',
  bring:'What should we bring?',bringA:'Soft bags instead of hard suitcases, light-soled shoes and sun protection.',
@@ -187,11 +227,47 @@ en:{locale:'en-GB',loading:'Loading your trip…',
  whyOwner:'Why is the contract in another company\'s name?',whyOwnerA:'The contract is always signed with the yacht owner. Sunset is the broker: we receive your payments and pass them on to the owner.',
  help:'Help',helpL:'Sunset · WhatsApp, 24 h during the trip',helpS:'Before the trip we reply the same day',wa:'WhatsApp',
  share:'Share with the group',shareTxt:'All the details of our charter:',linkCopied:'Link copied: send it to the group',updated:'Updated',
- histTitle:'Your history with Sunset',histSub:'Trip completed',again:'Shall we do it again?',againTxt:'Tell us dates and area and we will prepare a proposal within 24 h.',againMsg:'Hello, I would like to sail with Sunset again.'}
+ histTitle:'Your history with Sunset',histSub:'Trip completed',again:'Shall we do it again?',againTxt:'Tell us dates and area and we will prepare a proposal within 24 h.',againMsg:'Hello, I would like to sail with Sunset again.',
+ steps:function(n,t){return n+' of '+t+' steps done'},demo:'Example with made-up data',
+ left2pay:'What you still have to pay',toSunset:'To Sunset',toOwner:'To the owner',atBaseSum:'At the base, at boarding',nothingPending:'Nothing pending',
+ depositLine:'Security deposit: blocked on a card, not charged',
+ early:'What if we arrive early?',earlyA:'The yacht is handed over at the stated time. If you would like to board earlier, ask us in good time: it depends on the base.',
+ swap:'What if a guest changes?',swapA:'Update the crew list before the deadline. After that, message us and we will sort it out with the owner.',
+ incident:'What if something goes wrong on board?',incidentA:'Call the contact at the base first: they are the ones who can send help. And message us on WhatsApp: we are available 24 h during the trip.',
+ whatif:'What if…',boat:'The yacht',
+ skTbd:'Skipper: to be assigned',skTbdTxt:'Owners usually assign the skipper between one and three weeks before boarding. We will let you know as soon as we have their name and phone number.',
+ offered:'Extras offered by the owner',ask:'Request',consult:'On request',askMsg:function(x){return 'Hello, we would like to add this extra to our booking: '+x+'.'},
+ transfer:'Transfer',transferTxt:'Would you like a transfer from the airport? The owner arranges it; we pass on your details.',transferCta:'Request a transfer',
+ transferMsg:'Hello, we would like a transfer.\nFlight: \nArrival time: \nGuests: \nBags: \nChild seats: ',
+ crewDoneCta:'We have completed it',crewDoneMsg:'Hello, we have completed the crew list.',
+ changes:'Changes to the booking',chPax:'Change a guest',chExtra:'Add an extra',chEarly:'Request early check-in',
+ chPaxMsg:'Hello, we need to change a guest.\nLeaving: \nJoining: ',chExtraMsg:'Hello, we would like to add an extra: ',chEarlyMsg:'Hello, we would like to board earlier. Approximate time: ',
+ similar:'I want a similar trip',similarMsg:function(b,base){return 'Hello, I would like a trip similar to the '+b+' in '+base+'.'},
+ myData:'My details',myDataSub:'Only you can see them. The link you share with the group does not show this section.',forInvoice:'We need them for the contract and for your invoice.',
+ fName:'Full name',fAddr:'Postal address',fDoc:'ID or passport number',fPhone:'Your WhatsApp number',
+ waCheck:'I would like to receive tips, last-minute notices about my booking and 24 h help during the charter by WhatsApp.',
+ nlCheck:'I want to be the first to hear about Sunset\'s best offers: early booking, last minute and the yachts that become free on the best dates. I can unsubscribe with one click at any time.',
+ save:'Save',preview:'Preview: nothing is saved yet.',langLabel:'Language'}
 };
 
 var $=function(s){return document.querySelector(s)};
 var L=T.en, D=null, ui={};
+function iso(days){var d=new Date(Date.now()+days*864e5);return d.getFullYear()+'-'+('0'+(d.getMonth()+1)).slice(-2)+'-'+('0'+d.getDate()).slice(-2)}
+function demoData(titular){
+  var d={ok:true,v:1,demo:true,estado:'activo',idioma:'es',viaje:{barco:'Lagoon 42 «Alisio»',base:'Lefkada (ejemplo)',inicio:iso(150),fin:iso(157),patron:'si',personas:'8'},pagoDirecto:false,
+   pagos:[{n:1,estado:'recibido',importe:4250,vence:iso(-20)},{n:2,estado:'pendiente',importe:4250,vence:iso(105)}],
+   crew:{estado:'pendiente',url:'https://example.com/crew'},pref:{necesaria:false,recibida:false},
+   tareas:[{clave:'pago',n:2,vence:iso(105),importe:4250},{clave:'crew',vence:iso(129)}],
+   contenido:{baseDireccion:'Marina de Lefkada, pantalán D',baseMapa:'https://maps.google.com/?q=38.8303,20.7120',baseContacto:'Oficina del armador (ejemplo)',baseTelefono:'+30 000 000 000',checkin:'17:00',checkout:'09:00',
+    extras:[{texto:'2 paddle surf',donde:'Se pagan en la base',estado:'contratado'}],
+    ofrecidos:[{texto:'Motor fueraborda para el auxiliar',precio:'90 € / semana'},{texto:'Kayak doble',precio:'120 € / semana'},{texto:'Early check-in (13:00)',precio:''}],
+    enBase:[{texto:'Paquete obligatorio (limpieza, ropa de cama, gas)',importe:'350 €'},{texto:'Patrón',importe:'1.400 €'},{texto:'Fianza',importe:'3.000 €'}],
+    barco:[{texto:'4 cabinas dobles y 4 baños'},{texto:'Aire acondicionado y generador'},{texto:'Ropa de cama y toallas incluidas'},{texto:'Wi-Fi a bordo'}],
+    docs:[{titulo:'Contrato del armador (copia sin datos bancarios)',url:'https://example.com/contrato'},{titulo:'Itinerario Sunset · Jónico sur',url:'https://example.com/itinerario'}]},
+   actualizado:'ejemplo',banco:{titular:'Sunset (ejemplo)',iban:'ES00 0000 0000 0000 0000 0000',bic:'XXXXESXXXXX',banco:'Banco de ejemplo'}};
+  if(titular){d.titular={};d.enlaceGrupo=location.href.replace(/#.*$/,'')+'#demo-grupo'}
+  return d;
+}
 function esc(v){return String(v==null?'':v).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
 function https(u){u=String(u||'');return /^https:\/\/[^\s"'<>\\]+$/.test(u)?u:''}
 function tel(t){return String(t||'').replace(/[^\d+]/g,'')}
@@ -220,12 +296,14 @@ function state(kind){
 }
 function load(){
   var nav=(navigator.language||'en').slice(0,2).toLowerCase(); L=T[nav]||T.en;
+  var hh=location.hash.replace(/^#/,'');
+  if(hh==='demo-grupo'||hh==='demo-titular'){D=demoData(hh==='demo-titular');L=T[ui.lang||D.idioma]||T.en;document.documentElement.lang=ui.lang||D.idioma;render();scrollTo(0,0);return}
   var c=code(); if(!c){state('bad');return}
   state('load');
   var ctl=new AbortController(), to=setTimeout(function(){ctl.abort()},25000);
   fetch(API+'?r='+c,{credentials:'omit',cache:'no-store',redirect:'follow',referrerPolicy:'no-referrer',signal:ctl.signal})
     .then(function(r){if(!r.ok) throw new Error('http');return r.json()})
-    .then(function(j){clearTimeout(to); if(!j||j.ok!==true||!j.viaje){state('bad');return} D=j; L=T[j.idioma]||T.en; document.documentElement.lang=T[j.idioma]?j.idioma:'en'; render()})
+    .then(function(j){clearTimeout(to); if(!j||j.ok!==true||!j.viaje){state('bad');return} D=j; L=T[ui.lang||j.idioma]||T.en; document.documentElement.lang=ui.lang||(T[j.idioma]?j.idioma:'en'); render()})
     .catch(function(){clearTimeout(to);state('net')});
 }
 
@@ -241,12 +319,13 @@ function renderDone(){
   document.title=L.histTitle+' · Sunset Luxury Yacht';
   $('#hero').innerHTML=sun()+'<div class="brand">Sunset Luxury Yacht</div><div><div class="eyebrow">'+esc(L.histSub)+'</div><h1>'+esc(L.histTitle)+'</h1></div><div class="facts"><span>'+esc(f(a))+' – '+esc(fy(b))+'</span></div>';
   $('#app').innerHTML='<section><div class="rows"><div class="row"><div class="l">'+esc(v.barco)+'<small>'+esc(v.base)+'</small></div><div class="r">'+esc(String(a?a.getFullYear():''))+'</div></div></div></section>'+
-    '<section><h2>'+esc(L.again)+'</h2><p class="sub">'+esc(L.againTxt)+'</p><a class="btn" href="'+waUrl(L.againMsg)+'" rel="noopener">'+esc(L.wa)+'</a></section>';
+    '<section><h2>'+esc(L.again)+'</h2><p class="sub">'+esc(L.againTxt)+'</p><a class="btn" href="'+waUrl(L.similarMsg(v.barco,v.base))+'" rel="noopener">'+esc(L.similar)+'</a></section>';
   $('#nav').hidden=true; document.body.style.paddingBottom='24px';
 }
 
 function render(){
   $('#state').hidden=true; $('#page').hidden=false;
+  var dm=$('#demo'); dm.hidden=!D.demo; dm.textContent=D.demo?L.demo:'';
   if(D.estado==='terminado'){renderDone();return}
   var v=D.viaje, c=D.contenido||{}, a=date(v.inicio), b=date(v.fin), d=left(a), pagos=D.pagos||[], directe=D.pagoDirecto===true;
   document.title=(boatName(v.barco)||v.barco)+' · Sunset Luxury Yacht';
@@ -258,6 +337,7 @@ function render(){
             : d===1 ? '<strong>1</strong><span>'+esc(L.d1)+(c.checkin?' · '+esc(L.checkin)+' '+esc(c.checkin):'')+'</span>'
             : d===0 ? '<span>'+esc(L.d0)+(c.checkin?' · '+esc(L.checkin)+' '+esc(c.checkin):'')+'</span>' : '<span>'+esc(L.sailing)+'</span>';
   $('#hero').innerHTML=sun()+'<div class="brand">Sunset Luxury Yacht</div>'+title(v)+'<div class="facts">'+facts.join('')+'</div><p class="count">'+count+'</p>';
+  var hb=$('#heroBox'), ph=https(D.foto); hb.classList.toggle('photo',!!ph); hb.style.backgroundImage=ph?'linear-gradient(180deg,rgba(11,43,60,.55),rgba(11,43,60,.88)),url("'+ph+'")':'';
 
   /* Tasques: només les que envia el servidor. */
   var tasks=(D.tareas||[]).map(function(t){
@@ -273,13 +353,19 @@ function render(){
     (tasks.length?tasks.map(function(t){var p=pill(t.due);return '<div class="card"><div class="top"><span class="pill '+p[0]+'">'+esc(p[1])+'</span><div><div class="what">'+esc(t.what)+'</div><div class="when">'+esc(when(t.due))+'</div></div></div><button class="btn" data-go="'+t.go+'">'+esc(t.cta)+'</button></div>'}).join(''):'<div class="okbox">'+esc(L.allSetBox)+'</div>')+
     (done.length?'<details><summary>'+esc(L.done)+' ('+done.length+')</summary><div class="in">'+done.map(function(x){return '<div>✓ '+esc(x)+'</div>'}).join('')+'</div></details>':'')+'</section>';
 
+  var nDone=done.length, nAll=nDone+tasks.length;
+  if(nAll>1) $('#hero').insertAdjacentHTML('beforeend','<div class="steps"><span>'+esc(L.steps(nDone,nAll))+'</span><i><b style="width:'+Math.round(100*nDone/nAll)+'%"></b></i></div>');
+
   /* Preparar */
   var cr=D.crew||{}, cu=https(cr.url);
   var cst=cr.estado==='completa'?['green',L.complete,L.crewDone]:cr.estado==='por_confirmar'?['grey',L.toConfirm,L.crewWait]:['amber',L.pending,cu?L.crewLink:L.crewNo];
   var crewBlock='<div class="card"><div class="top"><span class="pill '+cst[0]+'">'+esc(cst[1])+'</span><div><div class="what">'+esc(L.crew)+'</div><div class="when">'+esc(cst[2])+'</div></div></div>'+
-    (cu&&cr.estado!=='completa'?'<a class="btn" href="'+esc(cu)+'" target="_blank" rel="noopener noreferrer">'+esc(L.crewOpen)+'</a><details><summary>'+esc(L.crewFaq)+'</summary><div class="in">'+esc(L.crewFaqA)+'</div></details>':'')+'</div>';
+    (cu&&cr.estado!=='completa'?'<a class="btn" href="'+esc(cu)+'" target="_blank" rel="noopener noreferrer">'+esc(L.crewOpen)+'</a>'+(cr.estado==='pendiente'?'<a class="btn ghost" href="'+waUrl(L.crewDoneMsg)+'" rel="noopener">'+esc(L.crewDoneCta)+'</a>':'')+'<details><summary>'+esc(L.crewFaq)+'</summary><div class="in">'+esc(L.crewFaqA)+'</div></details>':'')+'</div>';
   var pf=D.pref||{}, prefBlock=pf.necesaria?'<div class="card"><div class="top"><span class="pill '+(pf.recibida?'green':'amber')+'">'+esc(pf.recibida?L.received:L.pending)+'</span><div><div class="what">'+esc(L.pref)+'</div><div class="when">'+esc(pf.recibida?L.prefDone:L.prefTxt)+'</div></div></div>'+(pf.recibida?'':'<a class="btn ghost" href="'+waUrl()+'" rel="noopener">'+esc(L.wa)+'</a>')+'</div>':'';
-  var sPrep='<section id="s-preparar"><h2>'+esc(L.prep)+'</h2>'+crewBlock+prefBlock+'</section>';
+  var sPrep='<section id="s-preparar"><h2>'+esc(L.prep)+'</h2>'+crewBlock+prefBlock+
+    '<div class="card"><div class="what">'+esc(L.transfer)+'</div><div class="when">'+esc(L.transferTxt)+'</div><a class="btn ghost" href="'+waUrl(L.transferMsg)+'" rel="noopener">'+esc(L.transferCta)+'</a></div>'+
+    '<div class="card"><div class="what">'+esc(L.changes)+'</div><div class="acts"><a class="btn ghost" href="'+waUrl(L.chPaxMsg)+'" rel="noopener">'+esc(L.chPax)+'</a><a class="btn ghost" href="'+waUrl(L.chExtraMsg)+'" rel="noopener">'+esc(L.chExtra)+'</a><a class="btn ghost" href="'+waUrl(L.chEarlyMsg)+'" rel="noopener">'+esc(L.chEarly)+'</a></div></div>'+
+    '</section>';
 
   /* Pagaments */
   var total=pagos.reduce(function(s,p){return s+(p.importe||0)},0), next=pagos.filter(function(p){return p.estado!=='recibido'&&p.importe})[0];
@@ -298,8 +384,15 @@ function render(){
        :'<button class="btn ghost" data-card="1">'+esc(L.cardAsk)+'</button>')+'</div>';
   }
   var enBase=(c.enBase||[]).map(function(x){return '<div class="row"><div class="l">'+esc(x.texto)+'<small>'+esc(L.atBase)+'</small></div><div class="r">'+esc(x.importe||'—')+'</div></div>'}).join('');
-  var sPay='<section id="s-pagos"><h2>'+esc(L.pays)+'</h2>'+(total?'<p class="sub">'+esc(L.total)+': '+eur(total)+'</p>':'')+(rowsPay?'<div class="rows">'+rowsPay+'</div>':'')+payHow+
-    (enBase?'<div class="rows">'+enBase+'</div>':'')+(c.pagoEnBaseNota?'<p class="sub">'+esc(c.pagoEnBaseNota)+'</p>':'')+
+  var pend=pagos.filter(function(p){return p.estado!=='recibido'&&p.importe}).reduce(function(s,p){return s+p.importe},0);
+  var isDep=function(x){return /fianza|deposit|kaution|caution|cauzione/i.test(x.texto||'')};
+  var baseItems=(c.enBase||[]).filter(function(x){return !isDep(x)}), depItems=(c.enBase||[]).filter(isDep);
+  var sumCard='<div class="sum"><div class="what">'+esc(L.left2pay)+'</div>'+
+    '<div class="l2"><span>'+esc(directe?L.toOwner:L.toSunset)+'</span><span class="big">'+(pend?eur(pend):esc(L.nothingPending))+'</span></div>'+
+    (baseItems.length?'<hr><div class="when">'+esc(L.atBaseSum)+'</div>'+baseItems.map(function(x){return '<div class="l2"><span>'+esc(x.texto)+'</span><span>'+esc(x.importe||'—')+'</span></div>'}).join(''):'')+
+    (depItems.length?'<hr>'+depItems.map(function(x){return '<div class="l2"><span>'+esc(L.depositLine)+'</span><span>'+esc(x.importe||'—')+'</span></div>'}).join(''):'')+'</div>';
+  var sPay='<section id="s-pagos"><h2>'+esc(L.pays)+'</h2>'+sumCard+(total?'<p class="sub">'+esc(L.total)+': '+eur(total)+'</p>':'')+(rowsPay?'<div class="rows">'+rowsPay+'</div>':'')+payHow+
+    (c.pagoEnBaseNota?'<p class="sub">'+esc(c.pagoEnBaseNota)+'</p>':'')+
     (enBase?'<details><summary>'+esc(L.deposit)+'</summary><div class="in">'+esc(L.depositA)+'</div></details>':'')+'</section>';
 
   /* Base, tripulació, extres, documents */
@@ -310,17 +403,28 @@ function render(){
   var trip=(c.tripulacion||[]).map(function(p){var t=tel(p.telefono);return '<div class="row"><div class="l">'+esc(p.rol||'')+(p.nombre?': '+esc(p.nombre):'')+(p.idiomas?'<small>'+esc(p.idiomas)+'</small>':'')+'</div>'+(t?'<div class="r"><a class="copy mono" href="tel:'+esc(t)+'">'+esc(p.telefono)+'</a></div>':'')+'</div>'}).join('');
   var extras=(c.extras||[]).map(function(x){return '<div class="row"><div class="l">'+esc(x.texto)+(x.donde?'<small>'+esc(x.donde)+'</small>':'')+'</div>'+(x.estado?'<div class="r"><span class="pill green">'+esc(cap(x.estado))+'</span></div>':'')+'</div>'}).join('');
   var docs=(c.docs||[]).filter(function(x){return https(x.url)}).map(function(x){return '<div class="row"><div class="l">'+esc(x.titulo)+'</div><div class="r"><a class="copy" href="'+esc(x.url)+'" target="_blank" rel="noopener noreferrer">'+esc(L.open)+'</a></div></div>'}).join('');
+  var barco=(c.barco||[]).map(function(x){return '<div class="row"><div class="l">'+esc(x.texto)+'</div></div>'}).join('');
+  var ofrecidos=(c.ofrecidos||[]).map(function(x){return '<div class="row"><div class="l">'+esc(x.texto)+'<small>'+esc(x.precio||L.consult)+'</small></div><div class="r"><a class="copy" href="'+waUrl(L.askMsg(x.texto))+'" rel="noopener">'+esc(L.ask)+'</a></div></div>'}).join('');
   var sBase='<section id="s-base"><h2>'+esc(L.base)+'</h2><div class="rows">'+baseRows+'</div>'+
-    (trip?'<h2>'+esc(L.crewTitle)+'</h2><div class="rows">'+trip+'</div>':'')+
+    (trip?'<h2>'+esc(L.crewTitle)+'</h2><div class="rows">'+trip+'</div>':(v.patron==='si'?'<div class="card"><div class="top"><span class="pill grey">'+esc(L.pending)+'</span><div><div class="what">'+esc(L.skTbd)+'</div><div class="when">'+esc(L.skTbdTxt)+'</div></div></div></div>':''))+
+    (barco?'<h2>'+esc(L.boat)+'</h2><div class="rows">'+barco+'</div>':'')+
+    '<h2>'+esc(L.whatif)+'</h2>'+
+    '<details><summary>'+esc(L.early)+'</summary><div class="in">'+esc(L.earlyA)+'</div></details><details><summary>'+esc(L.swap)+'</summary><div class="in">'+esc(L.swapA)+'</div></details><details><summary>'+esc(L.incident)+'</summary><div class="in">'+esc(L.incidentA)+'</div></details>'+
     '<details><summary>'+esc(L.late)+'</summary><div class="in">'+esc(L.lateA)+'</div></details><details><summary>'+esc(L.bring)+'</summary><div class="in">'+esc(L.bringA)+'</div></details>'+
     (extras?'<h2>'+esc(L.extras)+'</h2><div class="rows">'+extras+'</div>':'')+
+    (ofrecidos?'<h2>'+esc(L.offered)+'</h2><div class="rows">'+ofrecidos+'</div>':'')+
     (docs?'<h2>'+esc(L.docs)+'</h2>'+(directe?'':'<div class="note">'+L.payNote+'</div>')+'<div class="rows">'+docs+'</div><details><summary>'+esc(L.whyOwner)+'</summary><div class="in">'+esc(L.whyOwnerA)+'</div></details>':'')+'</section>';
 
   var sHelp='<section id="s-ayuda"><h2>'+esc(L.help)+'</h2><div class="rows"><div class="row"><div class="l">'+esc(L.helpL)+'<small>'+esc(L.helpS)+'</small></div><div class="r"><a class="copy mono" href="'+waUrl()+'" rel="noopener">'+WA_SHOW+'</a></div></div>'+
     '<div class="row"><div class="l">Email</div><div class="r"><a class="copy" href="mailto:'+MAIL+'">'+MAIL+'</a></div></div></div>'+
-    '<div class="foot"><button class="btn ghost" data-share>'+esc(L.share)+'</button>'+(D.actualizado?'<div>'+esc(L.updated)+' '+esc(D.actualizado)+'</div>':'')+'</div></section>';
+    '<div class="foot"><button class="btn ghost" data-share>'+esc(L.share)+'</button><div class="lang" aria-label="'+esc(L.langLabel)+'">'+['es','en'].map(function(k){return '<button class="copy" data-lang="'+k+'" aria-pressed="'+(L===T[k])+'">'+k.toUpperCase()+'</button>'}).join('')+'</div>'+(D.actualizado?'<div>'+esc(L.updated)+' '+esc(D.actualizado)+'</div>':'')+'</div></section>';
 
-  $('#app').innerHTML=sTasks+sPrep+sPay+sBase+sHelp;
+  var sDatos=D.titular?'<section id="s-datos"><h2>'+esc(L.myData)+'</h2><div class="priv"><div class="when">'+esc(L.myDataSub)+'</div>'+
+    '<label class="field">'+esc(L.fName)+'<input id="f-name" autocomplete="name"></label><label class="field">'+esc(L.fAddr)+'<input id="f-addr" autocomplete="street-address"></label><label class="field">'+esc(L.fDoc)+'<input id="f-doc" autocomplete="off"></label><div class="when">'+esc(L.forInvoice)+'</div>'+
+    '<label class="check"><input type="checkbox" id="f-wa"><span>'+esc(L.waCheck)+'</span></label><label class="field">'+esc(L.fPhone)+'<input id="f-phone" type="tel" autocomplete="tel"></label>'+
+    '<label class="check"><input type="checkbox" id="f-nl"><span>'+esc(L.nlCheck)+'</span></label>'+
+    '<button class="btn" data-save>'+esc(L.save)+'</button><div class="when">'+esc(L.preview)+'</div></div></section>':'';
+  $('#app').innerHTML=sTasks+sPrep+sPay+sBase+sDatos+sHelp;
   var ids=['s-viaje','s-preparar','s-pagos','s-base','s-ayuda'];
   $('#nav .wrap').innerHTML=L.nav.map(function(n,i){return '<button data-go="'+ids[i]+'">'+esc(n)+'</button>'}).join('');
 }
@@ -328,10 +432,12 @@ function render(){
 document.addEventListener('click',function(e){
   var b=e.target.closest('button'); if(!b) return; var d=b.dataset;
   if('retry' in d) load();
+  else if(d.lang){ui.lang=d.lang;L=T[d.lang]||T.en;document.documentElement.lang=d.lang;render()}
+  else if('save' in d) toast(L.preview);
   else if(d.go){var el=document.getElementById(d.go); if(el) el.scrollIntoView({block:'start'})}
   else if('card' in d){ui.card=!!d.card;render();var el2=document.getElementById('s-pagos'); if(el2) el2.scrollIntoView({block:'start'})}
   else if('share' in d){
-    var url=location.href, txt=L.shareTxt;
+    var url=(D&&https(D.enlaceGrupo))||location.href, txt=L.shareTxt;
     if(navigator.share) navigator.share({title:document.title,text:txt,url:url}).catch(function(){});
     else (navigator.clipboard?navigator.clipboard.writeText(url):Promise.reject()).then(function(){toast(L.linkCopied)}).catch(function(){toast(url)});
   }
