@@ -97,6 +97,7 @@ nav button:hover{color:var(--ink)}
 .state .btn{align-self:center;background:var(--sun);color:#06181F}
 .ring{width:54px;height:54px;border-radius:50%;border:1.5px solid rgba(201,154,114,.3);border-top-color:var(--sun)}
 @media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}.ring{animation:spin 1.1s linear infinite}main>section{animation:rise .5s both}main>section:nth-child(2){animation-delay:.06s}main>section:nth-child(3){animation-delay:.12s}main>section:nth-child(4){animation-delay:.18s}}
+main.still>section{animation:none}
 @keyframes spin{to{transform:rotate(360deg)}}
 @keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 @media (min-width:720px){.hero .wrap{padding-top:40px}.hero h1{font-size:44px}main.wrap{padding-top:26px}}
@@ -114,6 +115,16 @@ nav button:hover{color:var(--ink)}
 .acts .btn{align-self:auto}
 .field{display:flex;flex-direction:column;gap:4px;font-size:13px;color:var(--muted)}
 .field input{font:inherit;font-size:15px;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:10px 12px}
+.field textarea,.field select{font:inherit;font-size:15px;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:10px 12px;min-height:44px}
+.field textarea{min-height:76px;resize:vertical}
+.form{display:flex;flex-direction:column;gap:10px;border-top:1px solid var(--line);padding-top:12px;margin-top:4px}
+.form .ft{font-weight:600}
+.sumlines{display:flex;flex-direction:column;gap:4px;font-size:14px}
+.sumlines small{color:var(--muted)}
+.sentbox{display:flex;flex-direction:column;gap:6px;border:1px solid var(--line);border-radius:12px;padding:12px;font-size:14px}
+.sentbox .copy{align-self:flex-start}
+.radio{display:flex;gap:16px;flex-wrap:wrap;font-size:14px}
+.radio label{display:flex;gap:6px;align-items:center}
 .check{display:flex;gap:10px;align-items:flex-start;font-size:14px}
 .check input{margin-top:3px;width:18px;height:18px;flex:none}
 .priv{border:1px dashed var(--bronze);border-radius:16px;padding:16px;display:flex;flex-direction:column;gap:14px;background:var(--bronze-soft)}
@@ -140,6 +151,8 @@ nav button:hover{color:var(--ink)}
 var API='https://script.google.com/macros/s/AKfycbz3pp6h_6JozTxGfAr7klB_wD0N7ejjjJafGsrTdfNG4BYZW7gQQagEQkIBs9F9672q/exec';
 var WA='34662969099', WA_SHOW='+34 662 96 90 99', MAIL='info@sunsetluxuryyacht.com';
 var CARD_FEE=1.5;
+/* Asseguradores: només les que tenen enllaç verificat. */
+var INS=[{n:'Pantaenius',u:'https://pantaenius.com/es-es/seguros/charter/'},{n:'EIS',u:''}];
 
 var T={
 es:{locale:'es-ES',loading:'Cargando tu viaje…',
@@ -155,15 +168,15 @@ es:{locale:'es-ES',loading:'Cargando tu viaje…',
  tCrew:'Lista de tripulantes: los datos de cada pasajero',tCrewCta:'Completar la lista',tPref:'Preference list: comida, bebida y preferencias a bordo',tPrefCta:'Ver cómo enviarla',
  prep:'Preparar el viaje',crew:'Lista de tripulantes',
  crewLink:'Se rellena en la plataforma del armador. Cada pasajero puede entrar desde aquí y poner sus datos.',crewOpen:'Abrir la lista de tripulantes',
- crewNo:'Te enviaremos el formulario del armador. Si ya lo tienes, devuélvenoslo completado por correo o WhatsApp.',crewDone:'El armador ya tiene la lista completa.',crewWait:'La habéis rellenado; falta que el armador la confirme.',
- crewFaq:'¿Puedo cambiar un pasajero?',crewFaqA:'Sí: vuelve a entrar y cámbialo hasta la fecha límite. Después, escríbenos y lo gestionamos con el armador.',
- pref:'Preference list',prefTxt:'La tripulación la necesita para hacer la compra y preparar el barco a vuestro gusto. Envíanosla por correo o WhatsApp.',prefDone:'Recibida. La tripulación ya la tiene.',
+ crewNo:'Te enviaremos el formulario del armador. Si ya lo tienes, devuélvenoslo completado por correo.',crewDone:'El armador ya tiene la lista completa.',crewWait:'La habéis rellenado; falta que el armador la confirme.',
+ crewFaq:'¿Puedo cambiar un pasajero?',crewFaqA:'Sí: vuelve a entrar y cámbialo hasta la fecha límite. Después, pídelo en «Cambios en la reserva».',
+ pref:'Preference list',prefTxt:'La tripulación la necesita para hacer la compra y preparar el barco a vuestro gusto. Envíanosla por correo a info@sunsetluxuryyacht.com.',prefDone:'Recibida. La tripulación ya la tiene.',
  pays:'Pagos',total:'Total del chárter',
  direct:'En esta reserva los pagos se hacen directamente al propietario del barco, según el contrato. Si tienes dudas sobre un importe o una fecha, escríbenos.',
  byTransfer:'Pagar por transferencia',holder:'Titular',bank:'Banco',concept:'Concepto',copy:'Copiar',copied:'Copiado',selectCopy:'Seleccionado: cópialo',
  anyone:'Puede pagar cualquier persona del grupo. Cuando llegue a nuestra cuenta lo verás aquí como «Recibido».',
  sent:'Ya he hecho la transferencia',sentMsg:function(v){return 'Hola, ya he hecho la transferencia del pago de '+v+'.'},
- byCard:'Pagar con tarjeta',cardAsk:'Quiero pagar con tarjeta',cardInfo:function(a,b){return '<strong>Con tarjeta: '+a+'</strong> ('+b+' + '+String(CARD_FEE).replace('.',',')+' %). Al confirmar nos lo pides por WhatsApp y te enviamos el enlace de pago seguro en un máximo de 48 h.'},
+ byCard:'Pagar con tarjeta',cardAsk:'Quiero pagar con tarjeta',cardInfo:function(a,b){return '<strong>Con tarjeta: '+a+'</strong> ('+b+' + '+String(CARD_FEE).replace('.',',')+' %). Al confirmar preparamos el enlace de pago seguro. Aparecerá aquí en un máximo de 48 h y te avisaremos.'},
  confirm:'Confirmar',cancel:'Cancelar',cardMsg:function(v,a){return 'Hola, quiero pagar con tarjeta el pago de '+v+'. Importe con tarjeta: '+a+'.'},
  atBase:'Se paga en la base',deposit:'¿Qué es la fianza?',depositA:'En el check-in el armador bloquea el importe en una, dos o hasta tres tarjetas (si la fianza es alta puede hacer falta más de una). No se cobra: solo se bloquea. Al terminar el chárter, si no hay daños, se libera. El desbloqueo puede tardar hasta 10 días: es normal. Si pasados 10 días sigue bloqueada, escríbenos y lo gestionamos directamente con el armador.',
  base:'La base',route:'Cómo llegar',emb:'Embarque',dis:'Desembarque',contact:'Contacto en la base',
@@ -179,12 +192,13 @@ es:{locale:'es-ES',loading:'Cargando tu viaje…',
  left2pay:'Qué te queda por pagar',toSunset:'A Sunset',toOwner:'Al propietario',atBaseSum:'En la base, al embarcar',nothingPending:'Nada pendiente',
  depositLine:'Fianza: se bloquea en tarjeta, no se cobra',
  early:'¿Y si llegamos antes de la hora?',earlyA:'El barco se entrega a la hora indicada. Si queréis embarcar antes, pedídnoslo con tiempo: depende de la base.',
- swap:'¿Y si cambia un pasajero?',swapA:'Actualizad la lista de tripulantes antes de la fecha límite. Después, escribidnos y lo gestionamos con el armador.',
+ swap:'¿Y si cambia un pasajero?',swapA:'Actualizad la lista de tripulantes antes de la fecha límite. Después, pedidlo en «Cambios en la reserva» y se lo pasamos al armador.',
  incident:'¿Y si hay una incidencia a bordo?',incidentA:'Llamad primero al contacto de la base: es quien puede enviar ayuda. Y escribidnos por WhatsApp: estamos disponibles las 24 h durante el viaje.',
  whatif:'Qué pasa si…',boat:'El barco',
- skTbd:'Patrón: por asignar',skTbdTxt:'El armador suele asignar al patrón entre una y tres semanas antes del embarque. Te avisaremos en cuanto tengamos su nombre y su teléfono.',
+ skTbd:'Patrón: por asignar',skTbdTxt:'El armador suele asignar al patrón entre una y tres semanas antes del embarque. Te avisaremos en cuanto tengamos su nombre y su contacto.',
+ hoTbd:'Azafata: por asignar',hoTbdTxt:'El armador la asigna unas semanas antes del embarque. Te avisaremos en cuanto tengamos su nombre.',
  offered:'Extras que ofrece el armador',ask:'Pedir',consult:'Consultar',askMsg:function(x){return 'Hola, querría añadir este extra a nuestra reserva: '+x+'.'},
- transfer:'Traslado',transferTxt:'¿Queréis traslado desde el aeropuerto? Lo organiza el armador; nosotros le pasamos vuestros datos.',transferCta:'Pedir traslado',
+ transfer:'Traslado',transferTxt:'¿Queréis traslado desde el aeropuerto o desde el hotel? Lo organiza el armador: rellenad los datos y se los enviamos.',transferCta:'Pedir traslado',
  transferMsg:'Hola, queremos traslado.\nVuelo: \nHora de llegada: \nPersonas: \nMaletas: \nSillas infantiles: ',
  crewDoneCta:'Ya la hemos completado',crewDoneMsg:'Hola, ya hemos completado la lista de tripulantes.',
  changes:'Cambios en la reserva',chPax:'Cambiar un pasajero',chExtra:'Añadir un extra',chEarly:'Pedir early check-in',
@@ -194,7 +208,18 @@ es:{locale:'es-ES',loading:'Cargando tu viaje…',
  fName:'Nombre completo',fAddr:'Dirección postal',fDoc:'Número de DNI o pasaporte',fPhone:'Tu número de WhatsApp',
  waCheck:'Quiero recibir por WhatsApp consejos, avisos de última hora de mi reserva y ayuda 24 h durante el chárter.',
  nlCheck:'Quiero enterarme antes que nadie de las mejores ofertas de Sunset: early booking, last minute y los barcos que quedan libres en las mejores fechas. Me doy de baja con un clic cuando quiera.',
- save:'Guardar',preview:'Vista previa: todavía no guarda nada.',langLabel:'Idioma'},
+ save:'Guardar',preview:'Vista previa: todavía no guarda nada.',langLabel:'Idioma',
+ next:'Continuar',review:'Revisa antes de enviar',send:'Confirmar y enviar',edit:'Corregir',sentOk:'Solicitud registrada',undo:'Anular',
+ undoNote:'Puedes anularla mientras no se haya enviado.',toOwnerNote:'Se envía al armador, que es quien lo organiza. Su respuesta aparecerá aquí.',toSunsetNote:'Nos llega al momento y lo comprobamos.',
+ need:'Rellena los campos obligatorios',previewSend:'Vista previa: todavía no se envía nada.',
+ fFlight:'Número de vuelo o dirección del hotel',fArr:'Día y hora de llegada',fPax:'Número de pasajeros',fNote:'Comentarios',
+ fOut:'Pasajero que sale',fIn:'Pasajero que entra (nombre completo)',fTime:'Hora a la que querríais embarcar',
+ fPaidDate:'Fecha de la transferencia',fPayer:'Nombre del ordenante',pick:'Elige los extras',
+ chPaxLink:'Los pasajeros se cambian en la lista de tripulantes del armador.',
+ paidTitle:'Confirmar que el pago está hecho',paidIntro:function(v){return 'Pago de '+v+'. En cuanto lo veamos en la cuenta aparecerá aquí como «Recibido».'},
+ cardReady:'Tu enlace de pago con tarjeta está listo.',cardPay:'Pagar con tarjeta ahora',
+ notify:'¿Cómo quieres que te avisemos?',nEmail:'Por correo',nWa:'Por WhatsApp',nPhone:'Tu número de WhatsApp (solo si eliges WhatsApp)',
+ ins:'Seguro',insTxt:'Opcional. Cancelación, fianza o responsabilidad del patrón: se contrata directamente con una aseguradora especializada en chárter.',insOpen:'Ver seguros'},
 en:{locale:'en-GB',loading:'Loading your trip…',
  badTitle:'This link is not available',badText:'It may have expired or be incomplete. Message us and we will send you the right link.',write:'Message Sunset',
  netTitle:'We could not load your trip',netText:'Check your connection and try again.',retry:'Try again',
@@ -208,15 +233,15 @@ en:{locale:'en-GB',loading:'Loading your trip…',
  tCrew:'Crew list: the details of each guest',tCrewCta:'Complete the list',tPref:'Preference list: food, drinks and wishes on board',tPrefCta:'See how to send it',
  prep:'Prepare the trip',crew:'Crew list',
  crewLink:'It is filled in on the owner\'s platform. Every guest can open it from here and enter their details.',crewOpen:'Open the crew list',
- crewNo:'We will send you the owner\'s form. If you already have it, return it completed by email or WhatsApp.',crewDone:'The owner already has the complete list.',crewWait:'You have filled it in; the owner still has to confirm it.',
- crewFaq:'Can I change a guest?',crewFaqA:'Yes: open it again and change it until the deadline. After that, message us and we will sort it out with the owner.',
- pref:'Preference list',prefTxt:'The crew needs it to do the shopping and prepare the yacht the way you like. Send it to us by email or WhatsApp.',prefDone:'Received. The crew already has it.',
+ crewNo:'We will send you the owner\'s form. If you already have it, return it completed by email.',crewDone:'The owner already has the complete list.',crewWait:'You have filled it in; the owner still has to confirm it.',
+ crewFaq:'Can I change a guest?',crewFaqA:'Yes: go back in and change it until the deadline. After that, request it under “Changes to the booking”.',
+ pref:'Preference list',prefTxt:'The crew needs it to do the provisioning and prepare the boat to your taste. Send it to us by email at info@sunsetluxuryyacht.com.',prefDone:'Received. The crew already has it.',
  pays:'Payments',total:'Charter total',
  direct:'For this booking, payments are made directly to the yacht owner, as stated in the contract. If you have any doubt about an amount or a date, message us.',
  byTransfer:'Pay by bank transfer',holder:'Account holder',bank:'Bank',concept:'Reference',copy:'Copy',copied:'Copied',selectCopy:'Selected: copy it',
  anyone:'Anyone in the group can pay. Once it reaches our account you will see it here as “Received”.',
  sent:'I have made the transfer',sentMsg:function(v){return 'Hello, I have made the transfer for the payment of '+v+'.'},
- byCard:'Pay by card',cardAsk:'I want to pay by card',cardInfo:function(a,b){return '<strong>By card: '+a+'</strong> ('+b+' + '+CARD_FEE+'%). When you confirm, you ask us by WhatsApp and we send you the secure payment link within 48 h.'},
+ byCard:'Pay by card',cardAsk:'I want to pay by card',cardInfo:function(a,b){return '<strong>By card: '+a+'</strong> ('+b+' + '+CARD_FEE+'%). When you confirm, we prepare the secure payment link. It will appear here within 48 h and we will let you know.'},
  confirm:'Confirm',cancel:'Cancel',cardMsg:function(v,a){return 'Hello, I would like to pay by card the payment of '+v+'. Card amount: '+a+'.'},
  atBase:'Paid at the base',deposit:'What is the security deposit?',depositA:'At check-in the owner blocks the amount on one, two or even three cards (a high deposit may need more than one). It is not charged: it is only blocked. At the end of the charter, if there is no damage, it is released. The release can take up to 10 days: this is normal. If it is still blocked after 10 days, message us and we will deal with the owner directly.',
  base:'The base',route:'Directions',emb:'Boarding',dis:'Disembarking',contact:'Contact at the base',
@@ -232,12 +257,13 @@ en:{locale:'en-GB',loading:'Loading your trip…',
  left2pay:'What you still have to pay',toSunset:'To Sunset',toOwner:'To the owner',atBaseSum:'At the base, at boarding',nothingPending:'Nothing pending',
  depositLine:'Security deposit: blocked on a card, not charged',
  early:'What if we arrive early?',earlyA:'The yacht is handed over at the stated time. If you would like to board earlier, ask us in good time: it depends on the base.',
- swap:'What if a guest changes?',swapA:'Update the crew list before the deadline. After that, message us and we will sort it out with the owner.',
+ swap:'What if a guest changes?',swapA:'Update the crew list before the deadline. After that, request it under “Changes to the booking” and we pass it on to the owner.',
  incident:'What if something goes wrong on board?',incidentA:'Call the contact at the base first: they are the ones who can send help. And message us on WhatsApp: we are available 24 h during the trip.',
  whatif:'What if…',boat:'The yacht',
- skTbd:'Skipper: to be assigned',skTbdTxt:'Owners usually assign the skipper between one and three weeks before boarding. We will let you know as soon as we have their name and phone number.',
+ skTbd:'Skipper: to be assigned',skTbdTxt:'The owner usually assigns the skipper one to three weeks before boarding. We will let you know as soon as we have the name and contact details.',
+ hoTbd:'Hostess: to be assigned',hoTbdTxt:'The owner assigns her a few weeks before boarding. We will let you know as soon as we have the name.',
  offered:'Extras offered by the owner',ask:'Request',consult:'On request',askMsg:function(x){return 'Hello, we would like to add this extra to our booking: '+x+'.'},
- transfer:'Transfer',transferTxt:'Would you like a transfer from the airport? The owner arranges it; we pass on your details.',transferCta:'Request a transfer',
+ transfer:'Transfer',transferTxt:'Would you like a transfer from the airport or from your hotel? The owner arranges it: fill in the details and we send them on.',transferCta:'Request a transfer',
  transferMsg:'Hello, we would like a transfer.\nFlight: \nArrival time: \nGuests: \nBags: \nChild seats: ',
  crewDoneCta:'We have completed it',crewDoneMsg:'Hello, we have completed the crew list.',
  changes:'Changes to the booking',chPax:'Change a guest',chExtra:'Add an extra',chEarly:'Request early check-in',
@@ -247,16 +273,27 @@ en:{locale:'en-GB',loading:'Loading your trip…',
  fName:'Full name',fAddr:'Postal address',fDoc:'ID or passport number',fPhone:'Your WhatsApp number',
  waCheck:'I would like to receive tips, last-minute notices about my booking and 24 h help during the charter by WhatsApp.',
  nlCheck:'I want to be the first to hear about Sunset\'s best offers: early booking, last minute and the yachts that become free on the best dates. I can unsubscribe with one click at any time.',
- save:'Save',preview:'Preview: nothing is saved yet.',langLabel:'Language'}
+ save:'Save',preview:'Preview: nothing is saved yet.',langLabel:'Language',
+ next:'Continue',review:'Check before sending',send:'Confirm and send',edit:'Edit',sentOk:'Request registered',undo:'Withdraw',
+ undoNote:'You can withdraw it until it has been sent.',toOwnerNote:'It goes to the owner, who arranges it. The reply will appear here.',toSunsetNote:'It reaches us straight away and we check it.',
+ need:'Please fill in the required fields',previewSend:'Preview: nothing is sent yet.',
+ fFlight:'Flight number or hotel address',fArr:'Arrival day and time',fPax:'Number of passengers',fNote:'Comments',
+ fOut:'Guest leaving',fIn:'Guest joining (full name)',fTime:'Time you would like to board',
+ fPaidDate:'Date of the transfer',fPayer:'Name of the payer',pick:'Choose the extras',
+ chPaxLink:'Guests are changed in the owner\'s crew list.',
+ paidTitle:'Confirm that the payment has been made',paidIntro:function(v){return 'Payment of '+v+'. As soon as we see it in the account it will show here as “Received”.'},
+ cardReady:'Your card payment link is ready.',cardPay:'Pay by card now',
+ notify:'How would you like us to notify you?',nEmail:'By email',nWa:'By WhatsApp',nPhone:'Your WhatsApp number (only if you choose WhatsApp)',
+ ins:'Insurance',insTxt:'Optional. Cancellation, deposit or skipper liability cover: taken out directly with an insurer specialised in charter.',insOpen:'See insurance'}
 };
 
 var $=function(s){return document.querySelector(s)};
-var L=T.en, D=null, ui={};
+var L=T.en, D=null, ui={form:null,sent:{}};
 function iso(days){var d=new Date(Date.now()+days*864e5);return d.getFullYear()+'-'+('0'+(d.getMonth()+1)).slice(-2)+'-'+('0'+d.getDate()).slice(-2)}
 function demoData(titular){
-  var d={ok:true,v:1,demo:true,estado:'activo',idioma:'es',viaje:{barco:'Lagoon 42 «Alisio»',base:'Lefkada (ejemplo)',inicio:iso(150),fin:iso(157),patron:'si',personas:'8'},pagoDirecto:false,
+  var d={ok:true,v:1,demo:true,estado:'activo',idioma:'es',viaje:{barco:'Lagoon 42 «Alisio»',base:'Lefkada (ejemplo)',inicio:iso(150),fin:iso(157),patron:'si',azafata:'si',personas:'8'},pagoDirecto:false,
    pagos:[{n:1,estado:'recibido',importe:4250,vence:iso(-20)},{n:2,estado:'pendiente',importe:4250,vence:iso(105)}],
-   crew:{estado:'pendiente',url:'https://example.com/crew'},pref:{necesaria:false,recibida:false},
+   crew:{estado:'pendiente',url:titular?'':'https://example.com/crew'},pref:{necesaria:false,recibida:false},
    tareas:[{clave:'pago',n:2,vence:iso(105),importe:4250},{clave:'crew',vence:iso(129)}],
    contenido:{baseDireccion:'Marina de Lefkada, pantalán D',baseMapa:'https://maps.google.com/?q=38.8303,20.7120',baseContacto:'Oficina del armador (ejemplo)',baseTelefono:'+30 000 000 000',checkin:'17:00',checkout:'09:00',
     extras:[{texto:'2 paddle surf',donde:'Se pagan en la base',estado:'contratado'}],
@@ -280,6 +317,40 @@ function fw(d){return f(d,{weekday:'long',day:'numeric',month:'long'})}
 function eur(n){return Number(n).toLocaleString('de-DE',{minimumFractionDigits:2,maximumFractionDigits:2})+' €'}
 function cap(s){return s?s.charAt(0).toUpperCase()+s.slice(1):s}
 function waUrl(msg){return 'https://wa.me/'+WA+(msg?'?text='+encodeURIComponent(msg):'')}
+function keep(fn){var y=window.scrollY;document.getElementById('app').classList.add('still');fn();window.scrollTo({top:y,behavior:'instant'})}
+function val(id){var e=document.getElementById(id);return e?String(e.value||'').trim():''}
+/* Formularis de sol·licitud. Vista prèvia: no envien res fins que hi hagi l'endpoint d'escriptura revisat. */
+function defs(){
+  var c=D.contenido||{}, of=c.ofrecidos||[];
+  return {
+   transfer:{t:L.transfer,to:'o',nt:1,f:[['a',L.fFlight,1],['b',L.fArr,1],['n',L.fPax,1,'number'],['x',L.fNote,0,'area']]},
+   pax:{t:L.chPax,to:'o',f:[['a',L.fOut,1],['b',L.fIn,1],['x',L.fNote,0,'area']]},
+   extra:{t:L.chExtra,to:'o',opts:of.map(function(x){return x.texto+(x.precio?' · '+x.precio:'')}),f:[['x',L.fNote,of.length?0:1,'area']]},
+   early:{t:L.chEarly,to:'o',f:[['a',L.fTime,1],['x',L.fNote,0,'area']]},
+   paid:{t:L.paidTitle,to:'s',f:[['a',L.fPaidDate,1,'date'],['b',L.fPayer,1]]},
+   card:{t:L.byCard,to:'s',nt:1,notify:1,f:[]}
+  };
+}
+function formBox(k,cta,intro,primary){
+  var df=defs()[k], F=ui.form, sent=ui.sent[k];
+  if(sent) return '<div class="sentbox"><strong>✓ '+esc(L.sentOk)+' · '+esc(df.t)+'</strong><div class="sumlines">'+sent.map(function(x){return '<div><small>'+esc(x[0])+'</small> '+esc(x[1])+'</div>'}).join('')+'</div><div class="when">'+esc(df.to==='o'?L.toOwnerNote:L.toSunsetNote)+' '+esc(L.undoNote)+'</div><button class="copy" data-undo="'+k+'">'+esc(L.undo)+'</button></div>';
+  if(!F||F.k!==k) return '<button class="btn'+(primary?'':' ghost')+'" data-open="'+k+'">'+esc(cta)+'</button>';
+  if(F.step===2) return '<div class="form"><div class="ft">'+esc(L.review)+'</div>'+(intro?'<div class="when">'+intro+'</div>':'')+'<div class="sumlines">'+F.lines.map(function(x){return '<div><small>'+esc(x[0])+'</small> '+esc(x[1])+'</div>'}).join('')+'</div><div class="when">'+esc(df.to==='o'?L.toOwnerNote:L.toSunsetNote)+'</div><div class="choice"><button class="go" data-send="'+k+'">'+esc(L.send)+'</button><button data-back>'+esc(L.edit)+'</button></div></div>';
+  var v=F.vals||{}, h='<div class="form">'+(df.nt?'':'<div class="ft">'+esc(df.t)+'</div>')+(intro?'<div class="when">'+intro+'</div>':'');
+  if(df.opts&&df.opts.length) h+='<div class="when">'+esc(L.pick)+'</div>'+df.opts.map(function(o,i){return '<label class="check"><input type="checkbox" id="q-o'+i+'"'+((F.picks||[]).indexOf(i)>-1?' checked':'')+'><span>'+esc(o)+'</span></label>'}).join('');
+  h+=df.f.map(function(x){var id='q-'+x[0], vv=esc(v[x[0]]||'');
+    return '<label class="field">'+esc(x[1])+(x[2]?' *':'')+(x[3]==='area'?'<textarea id="'+id+'">'+vv+'</textarea>':'<input id="'+id+'" type="'+(x[3]||'text')+'"'+(x[3]==='number'?' min="1" inputmode="numeric"':'')+' value="'+vv+'">')+'</label>'}).join('');
+  if(df.notify) h+='<div class="when">'+esc(L.notify)+'</div><div class="radio"><label><input type="radio" name="q-nt" value="email"'+(v.nt==='wa'?'':' checked')+'>'+esc(L.nEmail)+'</label><label><input type="radio" name="q-nt" value="wa"'+(v.nt==='wa'?' checked':'')+'>'+esc(L.nWa)+'</label></div><label class="field">'+esc(L.nPhone)+'<input id="q-ph" type="tel" autocomplete="tel" value="'+esc(v.ph||'')+'"></label>';
+  return h+'<div class="choice"><button class="go" data-next="'+k+'">'+esc(L.next)+'</button><button data-close>'+esc(L.cancel)+'</button></div></div>';
+}
+function collect(k){
+  var df=defs()[k], F=ui.form, v={}, lines=[], ok=true, picks=[];
+  (df.opts||[]).forEach(function(o,i){var e=document.getElementById('q-o'+i); if(e&&e.checked){picks.push(i);lines.push(['·',o])}});
+  df.f.forEach(function(x){var t=val('q-'+x[0]); v[x[0]]=t; if(x[2]&&!t) ok=false; if(t) lines.push([x[1]+':',t])});
+  if(df.opts&&df.opts.length&&!picks.length&&!v.x) ok=false;
+  if(df.notify){var r=document.querySelector('input[name="q-nt"]:checked'); v.nt=r?r.value:'email'; v.ph=val('q-ph'); if(v.nt==='wa'&&tel(v.ph).length<8) ok=false; lines.push([L.notify,v.nt==='wa'?L.nWa+' · '+v.ph:L.nEmail])}
+  F.vals=v; F.picks=picks; F.lines=lines; return ok;
+}
 function toast(t){var e=$('#toast');e.textContent=t;e.hidden=false;clearTimeout(toast.t);toast.t=setTimeout(function(){e.hidden=true},3200)}
 
 function code(){
@@ -292,7 +363,7 @@ function state(kind){
   var head='<div class="brand">Sunset Luxury Yacht</div>';
   if(kind==='load') s.innerHTML=head+'<div class="ring" role="status" aria-label="'+esc(L.loading)+'"></div>';
   else if(kind==='net') s.innerHTML=head+'<h1>'+esc(L.netTitle)+'</h1><p>'+esc(L.netText)+'</p><button class="btn" data-retry>'+esc(L.retry)+'</button>';
-  else s.innerHTML=head+'<h1>'+esc(L.badTitle)+'</h1><p>'+esc(L.badText)+'</p><a class="btn" href="'+waUrl()+'" rel="noopener">'+esc(L.write)+'</a>';
+  else s.innerHTML=head+'<h1>'+esc(L.badTitle)+'</h1><p>'+esc(L.badText)+'</p><a class="btn" href="mailto:'+MAIL+'">'+esc(L.write)+'</a><p class="mono">'+MAIL+'</p>';
 }
 function load(){
   var nav=(navigator.language||'en').slice(0,2).toLowerCase(); L=T[nav]||T.en;
@@ -360,11 +431,14 @@ function render(){
   var cr=D.crew||{}, cu=https(cr.url);
   var cst=cr.estado==='completa'?['green',L.complete,L.crewDone]:cr.estado==='por_confirmar'?['grey',L.toConfirm,L.crewWait]:['amber',L.pending,cu?L.crewLink:L.crewNo];
   var crewBlock='<div class="card"><div class="top"><span class="pill '+cst[0]+'">'+esc(cst[1])+'</span><div><div class="what">'+esc(L.crew)+'</div><div class="when">'+esc(cst[2])+'</div></div></div>'+
-    (cu&&cr.estado!=='completa'?'<a class="btn" href="'+esc(cu)+'" target="_blank" rel="noopener noreferrer">'+esc(L.crewOpen)+'</a>'+(cr.estado==='pendiente'?'<a class="btn ghost" href="'+waUrl(L.crewDoneMsg)+'" rel="noopener">'+esc(L.crewDoneCta)+'</a>':'')+'<details><summary>'+esc(L.crewFaq)+'</summary><div class="in">'+esc(L.crewFaqA)+'</div></details>':'')+'</div>';
-  var pf=D.pref||{}, prefBlock=pf.necesaria?'<div class="card"><div class="top"><span class="pill '+(pf.recibida?'green':'amber')+'">'+esc(pf.recibida?L.received:L.pending)+'</span><div><div class="what">'+esc(L.pref)+'</div><div class="when">'+esc(pf.recibida?L.prefDone:L.prefTxt)+'</div></div></div>'+(pf.recibida?'':'<a class="btn ghost" href="'+waUrl()+'" rel="noopener">'+esc(L.wa)+'</a>')+'</div>':'';
+    (cu&&cr.estado!=='completa'?'<a class="btn" href="'+esc(cu)+'" target="_blank" rel="noopener noreferrer">'+esc(L.crewOpen)+'</a>'+'<details><summary>'+esc(L.crewFaq)+'</summary><div class="in">'+esc(L.crewFaqA)+'</div></details>':'')+'</div>';
+  var pf=D.pref||{}, prefBlock=pf.necesaria?'<div class="card"><div class="top"><span class="pill '+(pf.recibida?'green':'amber')+'">'+esc(pf.recibida?L.received:L.pending)+'</span><div><div class="what">'+esc(L.pref)+'</div><div class="when">'+esc(pf.recibida?L.prefDone:L.prefTxt)+'</div></div></div>'+'</div>':'';
+  var insL=INS.filter(function(x){return https(x.u)}).map(function(x){return '<a class="btn ghost" href="'+esc(x.u)+'" target="_blank" rel="noopener noreferrer">'+esc(x.n)+'</a>'}).join('');
   var sPrep='<section id="s-preparar"><h2>'+esc(L.prep)+'</h2>'+crewBlock+prefBlock+
-    '<div class="card"><div class="what">'+esc(L.transfer)+'</div><div class="when">'+esc(L.transferTxt)+'</div><a class="btn ghost" href="'+waUrl(L.transferMsg)+'" rel="noopener">'+esc(L.transferCta)+'</a></div>'+
-    '<div class="card"><div class="what">'+esc(L.changes)+'</div><div class="acts"><a class="btn ghost" href="'+waUrl(L.chPaxMsg)+'" rel="noopener">'+esc(L.chPax)+'</a><a class="btn ghost" href="'+waUrl(L.chExtraMsg)+'" rel="noopener">'+esc(L.chExtra)+'</a><a class="btn ghost" href="'+waUrl(L.chEarlyMsg)+'" rel="noopener">'+esc(L.chEarly)+'</a></div></div>'+
+    '<div class="card"><div class="what">'+esc(L.transfer)+'</div><div class="when">'+esc(L.transferTxt)+'</div>'+formBox('transfer',L.transferCta)+'</div>'+
+    '<div class="card"><div class="what">'+esc(L.changes)+'</div>'+(cu?'<div class="when">'+esc(L.chPaxLink)+'</div><a class="btn ghost" href="'+esc(cu)+'" target="_blank" rel="noopener noreferrer">'+esc(L.chPax)+'</a>':formBox('pax',L.chPax))+
+      ((c.ofrecidos||[]).length?'<button class="btn ghost" data-open="extra" data-jump="s-extras">'+esc(L.chExtra)+'</button>':formBox('extra',L.chExtra))+formBox('early',L.chEarly)+'</div>'+
+    (insL?'<div class="card"><div class="what">'+esc(L.ins)+'</div><div class="when">'+esc(L.insTxt)+'</div><div class="acts">'+insL+'</div></div>':'')+
     '</section>';
 
   /* Pagaments */
@@ -378,10 +452,10 @@ function render(){
   else if(next&&bk){
     payHow='<div class="card"><div class="what">'+esc(L.byTransfer)+'</div><div class="rows" style="box-shadow:none">'+brow(L.holder,'b-tit',bk.titular||'',false)+brow('IBAN','b-iban',bk.iban,true)+
       (bk.bic||bk.banco?brow('BIC / SWIFT'+(bk.banco?' · '+bk.banco:''),'b-bic',bk.bic||'',!!bk.bic):'')+brow(L.concept,'b-ref',ref,true)+'</div>'+
-      '<div class="when">'+esc(L.anyone)+'</div><a class="btn ghost" href="'+waUrl(L.sentMsg(eur(next.importe)+' ('+ref+')'))+'" rel="noopener">'+esc(L.sent)+'</a></div>'+
+      '<div class="when">'+esc(L.anyone)+'</div>'+formBox('paid',L.sent,esc(L.paidIntro(eur(next.importe)+' ('+ref+')')))+'</div>'+
       '<div class="card"><div class="what">'+esc(L.byCard)+'</div>'+
-      (ui.card?'<div class="when">'+L.cardInfo(eur(Math.round(next.importe*(100+CARD_FEE))/100),eur(next.importe))+'</div><div class="choice"><a class="go" href="'+waUrl(L.cardMsg(eur(next.importe)+' ('+ref+')',eur(Math.round(next.importe*(100+CARD_FEE))/100)))+'" rel="noopener">'+esc(L.confirm)+'</a><button data-card="">'+esc(L.cancel)+'</button></div>'
-       :'<button class="btn ghost" data-card="1">'+esc(L.cardAsk)+'</button>')+'</div>';
+      (https(next.enlaceTarjeta)?'<div class="when">'+esc(L.cardReady)+'</div><a class="btn" href="'+esc(next.enlaceTarjeta)+'" target="_blank" rel="noopener noreferrer">'+esc(L.cardPay)+' · '+eur(Math.round(next.importe*(100+CARD_FEE))/100)+'</a>'
+       :formBox('card',L.cardAsk,L.cardInfo(eur(Math.round(next.importe*(100+CARD_FEE))/100),eur(next.importe))))+'</div>';
   }
   var enBase=(c.enBase||[]).map(function(x){return '<div class="row"><div class="l">'+esc(x.texto)+'<small>'+esc(L.atBase)+'</small></div><div class="r">'+esc(x.importe||'—')+'</div></div>'}).join('');
   var pend=pagos.filter(function(p){return p.estado!=='recibido'&&p.importe}).reduce(function(s,p){return s+p.importe},0);
@@ -404,16 +478,16 @@ function render(){
   var extras=(c.extras||[]).map(function(x){return '<div class="row"><div class="l">'+esc(x.texto)+(x.donde?'<small>'+esc(x.donde)+'</small>':'')+'</div>'+(x.estado?'<div class="r"><span class="pill green">'+esc(cap(x.estado))+'</span></div>':'')+'</div>'}).join('');
   var docs=(c.docs||[]).filter(function(x){return https(x.url)}).map(function(x){return '<div class="row"><div class="l">'+esc(x.titulo)+'</div><div class="r"><a class="copy" href="'+esc(x.url)+'" target="_blank" rel="noopener noreferrer">'+esc(L.open)+'</a></div></div>'}).join('');
   var barco=(c.barco||[]).map(function(x){return '<div class="row"><div class="l">'+esc(x.texto)+'</div></div>'}).join('');
-  var ofrecidos=(c.ofrecidos||[]).map(function(x){return '<div class="row"><div class="l">'+esc(x.texto)+'<small>'+esc(x.precio||L.consult)+'</small></div><div class="r"><a class="copy" href="'+waUrl(L.askMsg(x.texto))+'" rel="noopener">'+esc(L.ask)+'</a></div></div>'}).join('');
+  var ofrecidos=(c.ofrecidos||[]).map(function(x,i){return '<div class="row"><div class="l">'+esc(x.texto)+'<small>'+esc(x.precio||L.consult)+'</small></div><div class="r"><button class="copy" data-open="extra" data-pick="'+i+'">'+esc(L.ask)+'</button></div></div>'}).join('');
   var sBase='<section id="s-base"><h2>'+esc(L.base)+'</h2><div class="rows">'+baseRows+'</div>'+
-    (trip?'<h2>'+esc(L.crewTitle)+'</h2><div class="rows">'+trip+'</div>':(v.patron==='si'?'<div class="card"><div class="top"><span class="pill grey">'+esc(L.pending)+'</span><div><div class="what">'+esc(L.skTbd)+'</div><div class="when">'+esc(L.skTbdTxt)+'</div></div></div></div>':''))+
+    (trip?'<h2>'+esc(L.crewTitle)+'</h2><div class="rows">'+trip+'</div>':(v.patron==='si'?'<div class="card"><div class="top"><span class="pill grey">'+esc(L.pending)+'</span><div><div class="what">'+esc(L.skTbd)+'</div><div class="when">'+esc(L.skTbdTxt)+'</div></div></div></div>':'')+(v.azafata==='si'?'<div class="card"><div class="top"><span class="pill grey">'+esc(L.pending)+'</span><div><div class="what">'+esc(L.hoTbd)+'</div><div class="when">'+esc(L.hoTbdTxt)+'</div></div></div></div>':''))+
     (barco?'<h2>'+esc(L.boat)+'</h2><div class="rows">'+barco+'</div>':'')+
     '<h2>'+esc(L.whatif)+'</h2>'+
     '<details><summary>'+esc(L.early)+'</summary><div class="in">'+esc(L.earlyA)+'</div></details><details><summary>'+esc(L.swap)+'</summary><div class="in">'+esc(L.swapA)+'</div></details><details><summary>'+esc(L.incident)+'</summary><div class="in">'+esc(L.incidentA)+'</div></details>'+
     '<details><summary>'+esc(L.late)+'</summary><div class="in">'+esc(L.lateA)+'</div></details><details><summary>'+esc(L.bring)+'</summary><div class="in">'+esc(L.bringA)+'</div></details>'+
     (extras?'<h2>'+esc(L.extras)+'</h2><div class="rows">'+extras+'</div>':'')+
-    (ofrecidos?'<h2>'+esc(L.offered)+'</h2><div class="rows">'+ofrecidos+'</div>':'')+
-    (docs?'<h2>'+esc(L.docs)+'</h2>'+(directe?'':'<div class="note">'+L.payNote+'</div>')+'<div class="rows">'+docs+'</div><details><summary>'+esc(L.whyOwner)+'</summary><div class="in">'+esc(L.whyOwnerA)+'</div></details>':'')+'</section>';
+    (ofrecidos?'<h2 id="s-extras">'+esc(L.offered)+'</h2><div class="rows">'+ofrecidos+'</div>'+((ui.form&&ui.form.k==='extra')||ui.sent.extra?'<div class="card">'+formBox('extra',L.chExtra)+'</div>':''):'')+
+    (docs?'<h2>'+esc(L.docs)+'</h2><div class="rows">'+docs+'</div><details><summary>'+esc(L.whyOwner)+'</summary><div class="in">'+esc(L.whyOwnerA)+'</div></details>':'')+'</section>';
 
   var sHelp='<section id="s-ayuda"><h2>'+esc(L.help)+'</h2><div class="rows"><div class="row"><div class="l">'+esc(L.helpL)+'<small>'+esc(L.helpS)+'</small></div><div class="r"><a class="copy mono" href="'+waUrl()+'" rel="noopener">'+WA_SHOW+'</a></div></div>'+
     '<div class="row"><div class="l">Email</div><div class="r"><a class="copy" href="mailto:'+MAIL+'">'+MAIL+'</a></div></div></div>'+
@@ -432,10 +506,15 @@ function render(){
 document.addEventListener('click',function(e){
   var b=e.target.closest('button'); if(!b) return; var d=b.dataset;
   if('retry' in d) load();
-  else if(d.lang){ui.lang=d.lang;L=T[d.lang]||T.en;document.documentElement.lang=d.lang;render()}
+  else if(d.lang){ui.lang=d.lang;L=T[d.lang]||T.en;document.documentElement.lang=d.lang;keep(render)}
+  else if(d.open){ui.form={k:d.open,step:1,vals:{},picks:d.pick!=null?[+d.pick]:[]};keep(render); if(d.jump){var ej=document.getElementById(d.jump); if(ej) ej.scrollIntoView({block:'start'})}}
+  else if('close' in d){ui.form=null;keep(render)}
+  else if(d.next){ if(collect(d.next)){ui.form.step=2;keep(render)} else toast(L.need)}
+  else if('back' in d){ui.form.step=1;keep(render)}
+  else if(d.send){ui.sent[d.send]=ui.form.lines;ui.form=null;keep(render);toast(L.previewSend)}
+  else if(d.undo){delete ui.sent[d.undo];keep(render)}
   else if('save' in d) toast(L.preview);
   else if(d.go){var el=document.getElementById(d.go); if(el) el.scrollIntoView({block:'start'})}
-  else if('card' in d){ui.card=!!d.card;render();var el2=document.getElementById('s-pagos'); if(el2) el2.scrollIntoView({block:'start'})}
   else if('share' in d){
     var url=(D&&https(D.enlaceGrupo))||location.href, txt=L.shareTxt;
     if(navigator.share) navigator.share({title:document.title,text:txt,url:url}).catch(function(){});
