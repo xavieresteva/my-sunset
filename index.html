@@ -205,7 +205,7 @@ es:{locale:'es-ES',loading:'Cargando tu viaje…',
  chPaxMsg:'Hola, necesitamos cambiar un pasajero.\nSale: \nEntra: ',chExtraMsg:'Hola, querríamos añadir un extra: ',chEarlyMsg:'Hola, querríamos embarcar antes. Hora aproximada: ',
  similar:'Quiero un viaje parecido',similarMsg:function(b,base){return 'Hola, me gustaría un viaje parecido al del '+b+' en '+base+'.'},
  myData:'Mis datos',myDataSub:'Solo los ves tú. El enlace que compartes con el grupo no muestra este apartado.',forInvoice:'Los necesitamos para el contrato y para tu factura.',
- fName:'Nombre completo',fAddr:'Dirección postal',fDoc:'Número de DNI o pasaporte',fPhone:'Tu número de WhatsApp',
+ fName:'Nombre completo',fAddr:'Dirección postal',fDoc:'Número de DNI o pasaporte',fPhone:'Tu número de WhatsApp, con prefijo de país (+34…)',
  waCheck:'Quiero recibir por WhatsApp consejos, avisos de última hora de mi reserva y ayuda 24 h durante el chárter.',
  nlCheck:'Quiero enterarme antes que nadie de las mejores ofertas de Sunset: early booking, last minute y los barcos que quedan libres en las mejores fechas. Me doy de baja con un clic cuando quiera.',
  save:'Guardar',preview:'Vista previa: todavía no guarda nada.',langLabel:'Idioma',
@@ -214,11 +214,11 @@ es:{locale:'es-ES',loading:'Cargando tu viaje…',
  need:'Rellena los campos obligatorios',previewSend:'Vista previa: todavía no se envía nada.',
  fFlight:'Número de vuelo o dirección del hotel',fArr:'Día y hora de llegada',fPax:'Número de pasajeros',fNote:'Comentarios',
  fOut:'Pasajero que sale',fIn:'Pasajero que entra (nombre completo)',fTime:'Hora a la que querríais embarcar',
- fPaidDate:'Fecha de la transferencia',fPayer:'Nombre del ordenante',pick:'Elige los extras',
+ fPaidDate:'Fecha de la transferencia',fPayer:'Nombre de quien ha hecho la transferencia (solo si no eres tú)',pick:'Elige los extras',
  chPaxLink:'Los pasajeros se cambian en la lista de tripulantes del armador.',
  paidTitle:'Confirmar que el pago está hecho',paidIntro:function(v){return 'Pago de '+v+'. En cuanto lo veamos en la cuenta aparecerá aquí como «Recibido».'},
  cardReady:'Tu enlace de pago con tarjeta está listo.',cardPay:'Pagar con tarjeta ahora',
- notify:'¿Cómo quieres que te avisemos?',nEmail:'Por correo',nWa:'Por WhatsApp',nPhone:'Tu número de WhatsApp (solo si eliges WhatsApp)',
+ notify:'¿Cómo quieres que te avisemos?',nEmail:'Por correo',nWa:'Por WhatsApp',nPhone:'Tu número de WhatsApp con prefijo de país, p. ej. +34 600 000 000 (solo si eliges WhatsApp)',needPrefix:'Escribe el número con el prefijo de tu país (+34, +49, +1…)',
  ins:'Seguro',insTxt:'Opcional. Seguro de cancelación, de fianza o de responsabilidad del patrón: se contrata directamente con la aseguradora. Consulta las coberturas, exclusiones y condiciones de cada una.',insOpen:'Ver seguros'},
 en:{locale:'en-GB',loading:'Loading your trip…',
  badTitle:'This link is not available',badText:'It may have expired or be incomplete. Message us and we will send you the right link.',write:'Message Sunset',
@@ -279,11 +279,11 @@ en:{locale:'en-GB',loading:'Loading your trip…',
  need:'Please fill in the required fields',previewSend:'Preview: nothing is sent yet.',
  fFlight:'Flight number or hotel address',fArr:'Arrival day and time',fPax:'Number of passengers',fNote:'Comments',
  fOut:'Guest leaving',fIn:'Guest joining (full name)',fTime:'Time you would like to board',
- fPaidDate:'Date of the transfer',fPayer:'Name of the payer',pick:'Choose the extras',
+ fPaidDate:'Date of the transfer',fPayer:'Name of the person who made the transfer (only if it was not you)',pick:'Choose the extras',
  chPaxLink:'Guests are changed in the owner\'s crew list.',
  paidTitle:'Confirm that the payment has been made',paidIntro:function(v){return 'Payment of '+v+'. As soon as we see it in the account it will show here as “Received”.'},
  cardReady:'Your card payment link is ready.',cardPay:'Pay by card now',
- notify:'How would you like us to notify you?',nEmail:'By email',nWa:'By WhatsApp',nPhone:'Your WhatsApp number (only if you choose WhatsApp)',
+ notify:'How would you like us to notify you?',nEmail:'By email',nWa:'By WhatsApp',nPhone:'Your WhatsApp number with country code, e.g. +44 7000 000000 (only if you choose WhatsApp)',needPrefix:'Enter the number with your country code (+44, +49, +1…)',
  ins:'Insurance',insTxt:'Optional. Cancellation, deposit or skipper liability cover: taken out directly with the insurer. Check the cover, exclusions and conditions of each one.',insOpen:'See insurance'}
 };
 
@@ -327,7 +327,7 @@ function defs(){
    pax:{t:L.chPax,to:'o',f:[['a',L.fOut,1],['b',L.fIn,1],['x',L.fNote,0,'area']]},
    extra:{t:L.chExtra,to:'o',opts:of.map(function(x){return x.texto+(x.precio?' · '+x.precio:'')}),f:[['x',L.fNote,of.length?0:1,'area']]},
    early:{t:L.chEarly,to:'o',f:[['a',L.fTime,1],['x',L.fNote,0,'area']]},
-   paid:{t:L.paidTitle,to:'s',f:[['a',L.fPaidDate,1,'date'],['b',L.fPayer,1]]},
+   paid:{t:L.paidTitle,to:'s',f:[['b',L.fPayer,0]]},
    card:{t:L.byCard,to:'s',nt:1,notify:1,f:[]}
   };
 }
@@ -348,8 +348,8 @@ function collect(k){
   (df.opts||[]).forEach(function(o,i){var e=document.getElementById('q-o'+i); if(e&&e.checked){picks.push(i);lines.push(['·',o])}});
   df.f.forEach(function(x){var t=val('q-'+x[0]); v[x[0]]=t; if(x[2]&&!t) ok=false; if(t) lines.push([x[1]+':',t])});
   if(df.opts&&df.opts.length&&!picks.length&&!v.x) ok=false;
-  if(df.notify){var r=document.querySelector('input[name="q-nt"]:checked'); v.nt=r?r.value:'email'; v.ph=val('q-ph'); if(v.nt==='wa'&&tel(v.ph).length<8) ok=false; lines.push([L.notify,v.nt==='wa'?L.nWa+' · '+v.ph:L.nEmail])}
-  F.vals=v; F.picks=picks; F.lines=lines; return ok;
+  if(df.notify){var r=document.querySelector('input[name="q-nt"]:checked'); v.nt=r?r.value:'email'; v.ph=val('q-ph'); if(v.nt==='wa'&&!/^\+\d{8,15}$/.test(tel(v.ph))){ok=false;F.err=L.needPrefix} lines.push([L.notify,v.nt==='wa'?L.nWa+' · '+v.ph:L.nEmail])}
+  F.vals=v; F.picks=picks; F.lines=lines; if(ok) F.err=''; return ok;
 }
 function toast(t){var e=$('#toast');e.textContent=t;e.hidden=false;clearTimeout(toast.t);toast.t=setTimeout(function(){e.hidden=true},3200)}
 
@@ -507,9 +507,10 @@ document.addEventListener('click',function(e){
   var b=e.target.closest('button'); if(!b) return; var d=b.dataset;
   if('retry' in d) load();
   else if(d.lang){ui.lang=d.lang;L=T[d.lang]||T.en;document.documentElement.lang=d.lang;keep(render)}
-  else if(d.open){ui.form={k:d.open,step:1,vals:{},picks:d.pick!=null?[+d.pick]:[]};keep(render); if(d.jump){var ej=document.getElementById(d.jump); if(ej) ej.scrollIntoView({block:'start'})}}
+  else if(d.open){var pv=(ui.form&&ui.form.k===d.open&&ui.form.step===1)?(collect(d.open),ui.form):null, pk=pv?pv.picks.slice():[]; if(d.pick!=null&&pk.indexOf(+d.pick)<0) pk.push(+d.pick);
+    ui.form={k:d.open,step:1,vals:pv?pv.vals:{},picks:pk};keep(render); if(d.jump){var ej=document.getElementById(d.jump); if(ej) ej.scrollIntoView({block:'start'})}}
   else if('close' in d){ui.form=null;keep(render)}
-  else if(d.next){ if(collect(d.next)){ui.form.step=2;keep(render)} else toast(L.need)}
+  else if(d.next){ if(collect(d.next)){ui.form.step=2;keep(render)} else {toast(ui.form.err||L.need);ui.form.err=''}}
   else if('back' in d){ui.form.step=1;keep(render)}
   else if(d.send){ui.sent[d.send]=ui.form.lines;ui.form=null;keep(render);toast(L.previewSend)}
   else if(d.undo){delete ui.sent[d.undo];keep(render)}
