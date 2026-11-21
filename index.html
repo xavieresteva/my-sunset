@@ -194,7 +194,7 @@ es:{locale:'es-ES',loading:'Cargando tu viaje…',
  early:'¿Y si llegamos antes de la hora?',earlyA:'El barco se entrega a la hora indicada. Si queréis embarcar antes, pedídnoslo con tiempo: depende de la base.',
  swap:'¿Y si cambia un pasajero?',swapA:'Actualizad la lista de tripulantes antes de la fecha límite. Después, pedidlo en «Cambios en la reserva» y se lo pasamos al armador.',
  incident:'¿Y si hay una incidencia a bordo?',incidentA:'Llamad primero al contacto de la base: es quien puede enviar ayuda. Y escribidnos por WhatsApp: estamos disponibles las 24 h durante el viaje.',
- whatif:'Qué pasa si…',boat:'El barco',
+ whatif:'Qué pasa si…',boat:'El barco',boatSheet:'Ver la ficha completa del barco',transferPlat:'El traslado se pide en la misma lista de tripulantes del armador: así no lo rellenáis dos veces.',
  skTbd:'Patrón: por asignar',skTbdTxt:'El armador suele asignar al patrón entre una y tres semanas antes del embarque. Te avisaremos en cuanto tengamos su nombre y su contacto.',
  hoTbd:'Azafata: por asignar',hoTbdTxt:'El armador la asigna unas semanas antes del embarque. Te avisaremos en cuanto tengamos su nombre.',
  offered:'Extras que ofrece el armador',ask:'Pedir',consult:'Consultar',askMsg:function(x){return 'Hola, querría añadir este extra a nuestra reserva: '+x+'.'},
@@ -259,7 +259,7 @@ en:{locale:'en-GB',loading:'Loading your trip…',
  early:'What if we arrive early?',earlyA:'The yacht is handed over at the stated time. If you would like to board earlier, ask us in good time: it depends on the base.',
  swap:'What if a guest changes?',swapA:'Update the crew list before the deadline. After that, request it under “Changes to the booking” and we pass it on to the owner.',
  incident:'What if something goes wrong on board?',incidentA:'Call the contact at the base first: they are the ones who can send help. And message us on WhatsApp: we are available 24 h during the trip.',
- whatif:'What if…',boat:'The yacht',
+ whatif:'What if…',boat:'The yacht',boatSheet:'See the full yacht sheet',transferPlat:'The transfer is requested in the owner\'s crew list itself, so you do not fill it in twice.',
  skTbd:'Skipper: to be assigned',skTbdTxt:'The owner usually assigns the skipper one to three weeks before boarding. We will let you know as soon as we have the name and contact details.',
  hoTbd:'Hostess: to be assigned',hoTbdTxt:'The owner assigns her a few weeks before boarding. We will let you know as soon as we have the name.',
  offered:'Extras offered by the owner',ask:'Request',consult:'On request',askMsg:function(x){return 'Hello, we would like to add this extra to our booking: '+x+'.'},
@@ -293,13 +293,13 @@ function iso(days){var d=new Date(Date.now()+days*864e5);return d.getFullYear()+
 function demoData(titular){
   var d={ok:true,v:1,demo:true,estado:'activo',idioma:'es',viaje:{barco:'Lagoon 42 «Alisio»',base:'Lefkada (ejemplo)',inicio:iso(150),fin:iso(157),patron:'si',azafata:'si',personas:'8'},pagoDirecto:false,
    pagos:[{n:1,estado:'recibido',importe:4250,vence:iso(-20)},{n:2,estado:'pendiente',importe:4250,vence:iso(105)}],
-   crew:{estado:'pendiente',url:titular?'':'https://example.com/crew'},pref:{necesaria:false,recibida:false},
+   crew:{estado:'pendiente',url:titular?'':'https://example.com/crew',incluye:titular?[]:['traslado']},pref:{necesaria:false,recibida:false},
    tareas:[{clave:'pago',n:2,vence:iso(105),importe:4250},{clave:'crew',vence:iso(129)}],
    contenido:{baseDireccion:'Marina de Lefkada, pantalán D',baseMapa:'https://maps.google.com/?q=38.8303,20.7120',baseContacto:'Oficina del armador (ejemplo)',baseTelefono:'+30 000 000 000',checkin:'17:00',checkout:'09:00',
     extras:[{texto:'2 paddle surf',donde:'Se pagan en la base',estado:'contratado'}],
     ofrecidos:[{texto:'Motor fueraborda para el auxiliar',precio:'90 € / semana'},{texto:'Kayak doble',precio:'120 € / semana'},{texto:'Early check-in (13:00)',precio:''}],
     enBase:[{texto:'Paquete obligatorio (limpieza, ropa de cama, gas)',importe:'350 €'},{texto:'Patrón',importe:'1.400 €'},{texto:'Fianza',importe:'3.000 €'}],
-    barco:[{texto:'4 cabinas dobles y 4 baños'},{texto:'Aire acondicionado y generador'},{texto:'Ropa de cama y toallas incluidas'},{texto:'Wi-Fi a bordo'}],
+    barco:[{texto:'Catamarán · 2022 · 12,80 m'},{texto:'4 cabinas dobles y 4 baños'},{texto:'Aire acondicionado'},{texto:'Generador'},{texto:'Potabilizadora'}],barcoFicha:'https://example.com/ficha-barco',
     docs:[{titulo:'Contrato del armador (copia sin datos bancarios)',url:'https://example.com/contrato'},{titulo:'Itinerario Sunset · Jónico sur',url:'https://example.com/itinerario'}]},
    actualizado:'ejemplo',banco:{titular:'Sunset (ejemplo)',iban:'ES00 0000 0000 0000 0000 0000',bic:'XXXXESXXXXX',banco:'Banco de ejemplo'}};
   if(titular){d.titular={};d.enlaceGrupo=location.href.replace(/#.*$/,'')+'#demo-grupo'}
@@ -433,9 +433,10 @@ function render(){
   var crewBlock='<div class="card"><div class="top"><span class="pill '+cst[0]+'">'+esc(cst[1])+'</span><div><div class="what">'+esc(L.crew)+'</div><div class="when">'+esc(cst[2])+'</div></div></div>'+
     (cu&&cr.estado!=='completa'?'<a class="btn" href="'+esc(cu)+'" target="_blank" rel="noopener noreferrer">'+esc(L.crewOpen)+'</a>'+'<details><summary>'+esc(L.crewFaq)+'</summary><div class="in">'+esc(L.crewFaqA)+'</div></details>':'')+'</div>';
   var pf=D.pref||{}, prefBlock=pf.necesaria?'<div class="card"><div class="top"><span class="pill '+(pf.recibida?'green':'amber')+'">'+esc(pf.recibida?L.received:L.pending)+'</span><div><div class="what">'+esc(L.pref)+'</div><div class="when">'+esc(pf.recibida?L.prefDone:L.prefTxt)+'</div></div></div>'+'</div>':'';
+  var platT=cu&&(cr.incluye||[]).indexOf('traslado')>-1;
   var insL=INS.filter(function(x){return https(x.u)}).map(function(x){return '<a class="btn ghost" href="'+esc(x.u)+'" target="_blank" rel="noopener noreferrer">'+esc(x.n)+'</a>'}).join('');
   var sPrep='<section id="s-preparar"><h2>'+esc(L.prep)+'</h2>'+crewBlock+prefBlock+
-    '<div class="card"><div class="what">'+esc(L.transfer)+'</div><div class="when">'+esc(L.transferTxt)+'</div>'+formBox('transfer',L.transferCta)+'</div>'+
+    '<div class="card"><div class="what">'+esc(L.transfer)+'</div><div class="when">'+esc(platT?L.transferPlat:L.transferTxt)+'</div>'+(platT?'<a class="btn ghost" href="'+esc(cu)+'" target="_blank" rel="noopener noreferrer">'+esc(L.transferCta)+'</a>':formBox('transfer',L.transferCta))+'</div>'+
     '<div class="card"><div class="what">'+esc(L.changes)+'</div>'+(cu?'<div class="when">'+esc(L.chPaxLink)+'</div><a class="btn ghost" href="'+esc(cu)+'" target="_blank" rel="noopener noreferrer">'+esc(L.chPax)+'</a>':formBox('pax',L.chPax))+
       ((c.ofrecidos||[]).length?'<button class="btn ghost" data-open="extra" data-jump="s-extras">'+esc(L.chExtra)+'</button>':formBox('extra',L.chExtra))+formBox('early',L.chEarly)+'</div>'+
     (insL?'<div class="card"><div class="what">'+esc(L.ins)+'</div><div class="when">'+esc(L.insTxt)+'</div><div class="acts">'+insL+'</div></div>':'')+
@@ -477,11 +478,11 @@ function render(){
   var trip=(c.tripulacion||[]).map(function(p){var t=tel(p.telefono);return '<div class="row"><div class="l">'+esc(p.rol||'')+(p.nombre?': '+esc(p.nombre):'')+(p.idiomas?'<small>'+esc(p.idiomas)+'</small>':'')+'</div>'+(t?'<div class="r"><a class="copy mono" href="tel:'+esc(t)+'">'+esc(p.telefono)+'</a></div>':'')+'</div>'}).join('');
   var extras=(c.extras||[]).map(function(x){return '<div class="row"><div class="l">'+esc(x.texto)+(x.donde?'<small>'+esc(x.donde)+'</small>':'')+'</div>'+(x.estado?'<div class="r"><span class="pill green">'+esc(cap(x.estado))+'</span></div>':'')+'</div>'}).join('');
   var docs=(c.docs||[]).filter(function(x){return https(x.url)}).map(function(x){return '<div class="row"><div class="l">'+esc(x.titulo)+'</div><div class="r"><a class="copy" href="'+esc(x.url)+'" target="_blank" rel="noopener noreferrer">'+esc(L.open)+'</a></div></div>'}).join('');
-  var barco=(c.barco||[]).map(function(x){return '<div class="row"><div class="l">'+esc(x.texto)+'</div></div>'}).join('');
+  var barco=(c.barco||[]).slice(0,6).map(function(x){return '<div class="row"><div class="l">'+esc(x.texto)+'</div></div>'}).join('');
   var ofrecidos=(c.ofrecidos||[]).map(function(x,i){return '<div class="row"><div class="l">'+esc(x.texto)+'<small>'+esc(x.precio||L.consult)+'</small></div><div class="r"><button class="copy" data-open="extra" data-pick="'+i+'">'+esc(L.ask)+'</button></div></div>'}).join('');
   var sBase='<section id="s-base"><h2>'+esc(L.base)+'</h2><div class="rows">'+baseRows+'</div>'+
     (trip?'<h2>'+esc(L.crewTitle)+'</h2><div class="rows">'+trip+'</div>':(v.patron==='si'?'<div class="card"><div class="top"><span class="pill grey">'+esc(L.pending)+'</span><div><div class="what">'+esc(L.skTbd)+'</div><div class="when">'+esc(L.skTbdTxt)+'</div></div></div></div>':'')+(v.azafata==='si'?'<div class="card"><div class="top"><span class="pill grey">'+esc(L.pending)+'</span><div><div class="what">'+esc(L.hoTbd)+'</div><div class="when">'+esc(L.hoTbdTxt)+'</div></div></div></div>':''))+
-    (barco?'<h2>'+esc(L.boat)+'</h2><div class="rows">'+barco+'</div>':'')+
+    (barco?'<h2>'+esc(L.boat)+'</h2><div class="rows">'+barco+'</div>'+(https(c.barcoFicha)?'<a class="btn ghost" href="'+esc(c.barcoFicha)+'" target="_blank" rel="noopener noreferrer">'+esc(L.boatSheet)+'</a>':''):'')+
     '<h2>'+esc(L.whatif)+'</h2>'+
     '<details><summary>'+esc(L.early)+'</summary><div class="in">'+esc(L.earlyA)+'</div></details><details><summary>'+esc(L.swap)+'</summary><div class="in">'+esc(L.swapA)+'</div></details><details><summary>'+esc(L.incident)+'</summary><div class="in">'+esc(L.incidentA)+'</div></details>'+
     '<details><summary>'+esc(L.late)+'</summary><div class="in">'+esc(L.lateA)+'</div></details><details><summary>'+esc(L.bring)+'</summary><div class="in">'+esc(L.bringA)+'</div></details>'+
