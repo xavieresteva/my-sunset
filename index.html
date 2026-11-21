@@ -293,7 +293,7 @@ function iso(days){var d=new Date(Date.now()+days*864e5);return d.getFullYear()+
 function demoData(titular){
   var d={ok:true,v:1,demo:true,estado:'activo',idioma:'es',viaje:{barco:'Lagoon 42 «Alisio»',base:'Lefkada (ejemplo)',inicio:iso(150),fin:iso(157),patron:'si',azafata:'si',personas:'8'},pagoDirecto:false,
    pagos:[{n:1,estado:'recibido',importe:4250,vence:iso(-20)},{n:2,estado:'pendiente',importe:4250,vence:iso(105)}],
-   crew:{estado:'pendiente',url:titular?'':'https://example.com/crew',incluye:titular?[]:['traslado']},pref:{necesaria:false,recibida:false},
+   crew:{estado:'pendiente',url:titular?'':'https://example.com/crew',incluye:titular?[]:['traslado','extras']},pref:{necesaria:false,recibida:false},
    tareas:[{clave:'pago',n:2,vence:iso(105),importe:4250},{clave:'crew',vence:iso(129)}],
    contenido:{baseDireccion:'Marina de Lefkada, pantalán D',baseMapa:'https://maps.google.com/?q=38.8303,20.7120',baseContacto:'Oficina del armador (ejemplo)',baseTelefono:'+30 000 000 000',checkin:'17:00',checkout:'09:00',
     extras:[{texto:'2 paddle surf',donde:'Se pagan en la base',estado:'contratado'}],
@@ -480,7 +480,7 @@ function render(){
   var extras=(c.extras||[]).map(function(x){return '<div class="row"><div class="l">'+esc(x.texto)+(x.donde?'<small>'+esc(x.donde)+'</small>':'')+'</div>'+(x.estado?'<div class="r"><span class="pill green">'+esc(cap(x.estado))+'</span></div>':'')+'</div>'}).join('');
   var docs=(c.docs||[]).filter(function(x){return https(x.url)}).map(function(x){return '<div class="row"><div class="l">'+esc(x.titulo)+'</div><div class="r"><a class="copy" href="'+esc(x.url)+'" target="_blank" rel="noopener noreferrer">'+esc(L.open)+'</a></div></div>'}).join('');
   var barco=(c.barco||[]).slice(0,6).map(function(x){return '<div class="row"><div class="l">'+esc(x.texto)+'</div></div>'}).join('');
-  var ofrecidos=(c.ofrecidos||[]).map(function(x,i){return '<div class="row"><div class="l">'+esc(x.texto)+'<small>'+esc(x.precio||L.consult)+'</small></div><div class="r"><button class="copy" data-open="extra" data-pick="'+i+'">'+esc(L.ask)+'</button></div></div>'}).join('');
+  var ofrecidos=(c.ofrecidos||[]).map(function(x,i){return '<div class="row"><div class="l">'+esc(x.texto)+'<small>'+esc(x.precio||L.consult)+'</small></div><div class="r">'+(platE?'<a class="copy" href="'+esc(cu)+'" target="_blank" rel="noopener noreferrer">'+esc(L.ask)+'</a>':'<button class="copy" data-open="extra" data-pick="'+i+'">'+esc(L.ask)+'</button>')+'</div></div>'}).join('');
   var sBase='<section id="s-base"><h2>'+esc(L.base)+'</h2><div class="rows">'+baseRows+'</div>'+
     (trip?'<h2>'+esc(L.crewTitle)+'</h2><div class="rows">'+trip+'</div>':(v.patron==='si'?'<div class="card"><div class="top"><span class="pill grey">'+esc(L.pending)+'</span><div><div class="what">'+esc(L.skTbd)+'</div><div class="when">'+esc(L.skTbdTxt)+'</div></div></div></div>':'')+(v.azafata==='si'?'<div class="card"><div class="top"><span class="pill grey">'+esc(L.pending)+'</span><div><div class="what">'+esc(L.hoTbd)+'</div><div class="when">'+esc(L.hoTbdTxt)+'</div></div></div></div>':''))+
     (barco?'<h2>'+esc(L.boat)+'</h2><div class="rows">'+barco+'</div>'+(https(c.barcoFicha)?'<a class="btn ghost" href="'+esc(c.barcoFicha)+'" target="_blank" rel="noopener noreferrer">'+esc(L.boatSheet)+'</a>':''):'')+
