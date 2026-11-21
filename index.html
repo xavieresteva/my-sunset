@@ -434,11 +434,12 @@ function render(){
     (cu&&cr.estado!=='completa'?'<a class="btn" href="'+esc(cu)+'" target="_blank" rel="noopener noreferrer">'+esc(L.crewOpen)+'</a>'+'<details><summary>'+esc(L.crewFaq)+'</summary><div class="in">'+esc(L.crewFaqA)+'</div></details>':'')+'</div>';
   var pf=D.pref||{}, prefBlock=pf.necesaria?'<div class="card"><div class="top"><span class="pill '+(pf.recibida?'green':'amber')+'">'+esc(pf.recibida?L.received:L.pending)+'</span><div><div class="what">'+esc(L.pref)+'</div><div class="when">'+esc(pf.recibida?L.prefDone:L.prefTxt)+'</div></div></div>'+'</div>':'';
   var platT=cu&&(cr.incluye||[]).indexOf('traslado')>-1;
+  var platE=cu&&(cr.incluye||[]).indexOf('extras')>-1;
   var insL=INS.filter(function(x){return https(x.u)}).map(function(x){return '<a class="btn ghost" href="'+esc(x.u)+'" target="_blank" rel="noopener noreferrer">'+esc(x.n)+'</a>'}).join('');
   var sPrep='<section id="s-preparar"><h2>'+esc(L.prep)+'</h2>'+crewBlock+prefBlock+
     '<div class="card"><div class="what">'+esc(L.transfer)+'</div><div class="when">'+esc(platT?L.transferPlat:L.transferTxt)+'</div>'+(platT?'<a class="btn ghost" href="'+esc(cu)+'" target="_blank" rel="noopener noreferrer">'+esc(L.transferCta)+'</a>':formBox('transfer',L.transferCta))+'</div>'+
     '<div class="card"><div class="what">'+esc(L.changes)+'</div>'+(cu?'<div class="when">'+esc(L.chPaxLink)+'</div><a class="btn ghost" href="'+esc(cu)+'" target="_blank" rel="noopener noreferrer">'+esc(L.chPax)+'</a>':formBox('pax',L.chPax))+
-      ((c.ofrecidos||[]).length?'<button class="btn ghost" data-open="extra" data-jump="s-extras">'+esc(L.chExtra)+'</button>':formBox('extra',L.chExtra))+formBox('early',L.chEarly)+'</div>'+
+      (platE?'<a class="btn ghost" href="'+esc(cu)+'" target="_blank" rel="noopener noreferrer">'+esc(L.chExtra)+'</a>':(c.ofrecidos||[]).length?'<button class="btn ghost" data-open="extra" data-jump="s-extras">'+esc(L.chExtra)+'</button>':formBox('extra',L.chExtra))+formBox('early',L.chEarly)+'</div>'+
     (insL?'<div class="card"><div class="what">'+esc(L.ins)+'</div><div class="when">'+esc(L.insTxt)+'</div><div class="acts">'+insL+'</div></div>':'')+
     '</section>';
 
