@@ -151,6 +151,8 @@ main.still>section{animation:none}
 var API='https://script.google.com/macros/s/AKfycbz3pp6h_6JozTxGfAr7klB_wD0N7ejjjJafGsrTdfNG4BYZW7gQQagEQkIBs9F9672q/exec';
 var WA='34662969099', WA_SHOW='+34 662 96 90 99', MAIL='info@sunsetluxuryyacht.com';
 var CARD_FEE=1.5;
+/* Els formularis només es mostren a la demo fins que hi hagi el circuit d'enviament revisat. */
+var LIVE=false;
 /* Asseguradores: només les que tenen enllaç verificat. */
 var INS=[{n:'Pantaenius',u:'https://pantaenius.com/es-es/seguros/charter/'},{n:'EIS',u:''}];
 
@@ -332,6 +334,7 @@ function defs(){
   };
 }
 function formBox(k,cta,intro,primary){
+  if(!D.demo&&!LIVE) return '';
   var df=defs()[k], F=ui.form, sent=ui.sent[k];
   if(sent) return '<div class="sentbox"><strong>✓ '+esc(L.sentOk)+' · '+esc(df.t)+'</strong><div class="sumlines">'+sent.map(function(x){return '<div><small>'+esc(x[0])+'</small> '+esc(x[1])+'</div>'}).join('')+'</div><div class="when">'+esc(df.to==='o'?L.toOwnerNote:L.toSunsetNote)+' '+esc(L.undoNote)+'</div><button class="copy" data-undo="'+k+'">'+esc(L.undo)+'</button></div>';
   if(!F||F.k!==k) return '<button class="btn'+(primary?'':' ghost')+'" data-open="'+k+'">'+esc(cta)+'</button>';
@@ -433,14 +436,15 @@ function render(){
   var crewBlock='<div class="card"><div class="top"><span class="pill '+cst[0]+'">'+esc(cst[1])+'</span><div><div class="what">'+esc(L.crew)+'</div><div class="when">'+esc(cst[2])+'</div></div></div>'+
     (cu&&cr.estado!=='completa'?'<a class="btn" href="'+esc(cu)+'" target="_blank" rel="noopener noreferrer">'+esc(L.crewOpen)+'</a>'+'<details><summary>'+esc(L.crewFaq)+'</summary><div class="in">'+esc(L.crewFaqA)+'</div></details>':'')+'</div>';
   var pf=D.pref||{}, prefBlock=pf.necesaria?'<div class="card"><div class="top"><span class="pill '+(pf.recibida?'green':'amber')+'">'+esc(pf.recibida?L.received:L.pending)+'</span><div><div class="what">'+esc(L.pref)+'</div><div class="when">'+esc(pf.recibida?L.prefDone:L.prefTxt)+'</div></div></div>'+'</div>':'';
+  var FORMS=!!D.demo||LIVE;
   var platT=cu&&(cr.incluye||[]).indexOf('traslado')>-1;
   var platE=cu&&(cr.incluye||[]).indexOf('extras')>-1;
   var insL=INS.filter(function(x){return https(x.u)}).map(function(x){return '<a class="btn ghost" href="'+esc(x.u)+'" target="_blank" rel="noopener noreferrer">'+esc(x.n)+'</a>'}).join('');
   var sPrep='<section id="s-preparar"><h2>'+esc(L.prep)+'</h2>'+crewBlock+prefBlock+
-    '<div class="card"><div class="what">'+esc(L.transfer)+'</div><div class="when">'+esc(platT?L.transferPlat:L.transferTxt)+'</div>'+(platT?'<a class="btn ghost" href="'+esc(cu)+'" target="_blank" rel="noopener noreferrer">'+esc(L.transferCta)+'</a>':formBox('transfer',L.transferCta))+'</div>'+
-    '<div class="card"><div class="what">'+esc(L.changes)+'</div>'+(cu?'<div class="when">'+esc(L.chPaxLink)+'</div><a class="btn ghost" href="'+esc(cu)+'" target="_blank" rel="noopener noreferrer">'+esc(L.chPax)+'</a>':formBox('pax',L.chPax))+
+    '<div class="card"'+(platT||FORMS?'':' hidden')+'><div class="what">'+esc(L.transfer)+'</div><div class="when">'+esc(platT?L.transferPlat:L.transferTxt)+'</div>'+(platT?'<a class="btn ghost" href="'+esc(cu)+'" target="_blank" rel="noopener noreferrer">'+esc(L.transferCta)+'</a>':formBox('transfer',L.transferCta))+'</div>'+
+    '<div class="card"'+(cu||FORMS?'':' hidden')+'><div class="what">'+esc(L.changes)+'</div>'+(cu?'<div class="when">'+esc(L.chPaxLink)+'</div><a class="btn ghost" href="'+esc(cu)+'" target="_blank" rel="noopener noreferrer">'+esc(L.chPax)+'</a>':formBox('pax',L.chPax))+
       (platE?'<a class="btn ghost" href="'+esc(cu)+'" target="_blank" rel="noopener noreferrer">'+esc(L.chExtra)+'</a>':(c.ofrecidos||[]).length?'<button class="btn ghost" data-open="extra" data-jump="s-extras">'+esc(L.chExtra)+'</button>':formBox('extra',L.chExtra))+formBox('early',L.chEarly)+'</div>'+
-    (insL?'<div class="card"><div class="what">'+esc(L.ins)+'</div><div class="when">'+esc(L.insTxt)+'</div><div class="acts">'+insL+'</div></div>':'')+
+    (insL&&FORMS?'<div class="card"><div class="what">'+esc(L.ins)+'</div><div class="when">'+esc(L.insTxt)+'</div><div class="acts">'+insL+'</div></div>':'')+
     '</section>';
 
   /* Pagaments */
@@ -455,7 +459,7 @@ function render(){
     payHow='<div class="card"><div class="what">'+esc(L.byTransfer)+'</div><div class="rows" style="box-shadow:none">'+brow(L.holder,'b-tit',bk.titular||'',false)+brow('IBAN','b-iban',bk.iban,true)+
       (bk.bic||bk.banco?brow('BIC / SWIFT'+(bk.banco?' · '+bk.banco:''),'b-bic',bk.bic||'',!!bk.bic):'')+brow(L.concept,'b-ref',ref,true)+'</div>'+
       '<div class="when">'+esc(L.anyone)+'</div>'+formBox('paid',L.sent,esc(L.paidIntro(eur(next.importe)+' ('+ref+')')))+'</div>'+
-      '<div class="card"><div class="what">'+esc(L.byCard)+'</div>'+
+      '<div class="card"'+(https(next.enlaceTarjeta)||FORMS?'':' hidden')+'><div class="what">'+esc(L.byCard)+'</div>'+
       (https(next.enlaceTarjeta)?'<div class="when">'+esc(L.cardReady)+'</div><a class="btn" href="'+esc(next.enlaceTarjeta)+'" target="_blank" rel="noopener noreferrer">'+esc(L.cardPay)+' · '+eur(Math.round(next.importe*(100+CARD_FEE))/100)+'</a>'
        :formBox('card',L.cardAsk,L.cardInfo(eur(Math.round(next.importe*(100+CARD_FEE))/100),eur(next.importe))))+'</div>';
   }
@@ -480,7 +484,7 @@ function render(){
   var extras=(c.extras||[]).map(function(x){return '<div class="row"><div class="l">'+esc(x.texto)+(x.donde?'<small>'+esc(x.donde)+'</small>':'')+'</div>'+(x.estado?'<div class="r"><span class="pill green">'+esc(cap(x.estado))+'</span></div>':'')+'</div>'}).join('');
   var docs=(c.docs||[]).filter(function(x){return https(x.url)}).map(function(x){return '<div class="row"><div class="l">'+esc(x.titulo)+'</div><div class="r"><a class="copy" href="'+esc(x.url)+'" target="_blank" rel="noopener noreferrer">'+esc(L.open)+'</a></div></div>'}).join('');
   var barco=(c.barco||[]).slice(0,6).map(function(x){return '<div class="row"><div class="l">'+esc(x.texto)+'</div></div>'}).join('');
-  var ofrecidos=(c.ofrecidos||[]).map(function(x,i){return '<div class="row"><div class="l">'+esc(x.texto)+'<small>'+esc(x.precio||L.consult)+'</small></div><div class="r">'+(platE?'<a class="copy" href="'+esc(cu)+'" target="_blank" rel="noopener noreferrer">'+esc(L.ask)+'</a>':'<button class="copy" data-open="extra" data-pick="'+i+'">'+esc(L.ask)+'</button>')+'</div></div>'}).join('');
+  var ofrecidos=(c.ofrecidos||[]).map(function(x,i){return '<div class="row"><div class="l">'+esc(x.texto)+'<small>'+esc(x.precio||L.consult)+'</small></div><div class="r">'+(platE?'<a class="copy" href="'+esc(cu)+'" target="_blank" rel="noopener noreferrer">'+esc(L.ask)+'</a>':FORMS?'<button class="copy" data-open="extra" data-pick="'+i+'">'+esc(L.ask)+'</button>':'')+'</div></div>'}).join('');
   var sBase='<section id="s-base"><h2>'+esc(L.base)+'</h2><div class="rows">'+baseRows+'</div>'+
     (trip?'<h2>'+esc(L.crewTitle)+'</h2><div class="rows">'+trip+'</div>':(v.patron==='si'?'<div class="card"><div class="top"><span class="pill grey">'+esc(L.pending)+'</span><div><div class="what">'+esc(L.skTbd)+'</div><div class="when">'+esc(L.skTbdTxt)+'</div></div></div></div>':'')+(v.azafata==='si'?'<div class="card"><div class="top"><span class="pill grey">'+esc(L.pending)+'</span><div><div class="what">'+esc(L.hoTbd)+'</div><div class="when">'+esc(L.hoTbdTxt)+'</div></div></div></div>':''))+
     (barco?'<h2>'+esc(L.boat)+'</h2><div class="rows">'+barco+'</div>'+(https(c.barcoFicha)?'<a class="btn ghost" href="'+esc(c.barcoFicha)+'" target="_blank" rel="noopener noreferrer">'+esc(L.boatSheet)+'</a>':''):'')+
