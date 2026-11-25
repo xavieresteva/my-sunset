@@ -152,7 +152,7 @@ var API='https://script.google.com/macros/s/AKfycbyC6CUGe2sP-fqjGjejFflOtRxLcjYg
 var WA='34662969099', WA_SHOW='+34 662 96 90 99', MAIL='info@sunsetluxuryyacht.com';
 var CARD_FEE=1.5;
 /* Els formularis només es mostren a la demo fins que hi hagi el circuit d'enviament revisat. */
-var LIVE=false;
+var LIVE=true;
 /* Asseguradores: només les que tenen enllaç verificat. */
 var INS=[{n:'Pantaenius',u:'https://pantaenius.com/es-es/seguros/charter/'},{n:'EIS',u:''}];
 
@@ -211,7 +211,7 @@ es:{locale:'es-ES',loading:'Cargando tu viaje…',
  waCheck:'Quiero recibir por WhatsApp consejos, avisos de última hora de mi reserva y ayuda 24 h durante el chárter.',
  nlCheck:'Quiero enterarme antes que nadie de las mejores ofertas de Sunset: early booking, last minute y los barcos que quedan libres en las mejores fechas. Me doy de baja con un clic cuando quiera.',
  save:'Guardar',preview:'Vista previa: todavía no guarda nada.',langLabel:'Idioma',
- next:'Continuar',review:'Revisa antes de enviar',send:'Confirmar y enviar',edit:'Corregir',sentOk:'Solicitud registrada',undo:'Anular',
+ next:'Continuar',review:'Revisa antes de enviar',send:'Confirmar y enviar',edit:'Corregir',sentOk:'Solicitud registrada',undo:'Anular',sendFail:'No se ha podido enviar. Inténtalo de nuevo en un momento o escríbenos.',sendLimit:'Hoy ya hemos recibido varias solicitudes de esta reserva. Para algo más, escríbenos.',sending:'Enviando…',
  undoNote:'Puedes anularla mientras no se haya enviado; después, la anulación se pide al armador.',toOwnerNote:'Se envía al armador, que es quien lo organiza. Su respuesta aparecerá aquí.',toSunsetNote:'Aviso recibido. Lo comprobamos nosotros; el pago sigue pendiente hasta que lo verifiquemos.',
  need:'Rellena los campos obligatorios',previewSend:'Vista previa: todavía no se envía nada.',
  fFlight:'Número de vuelo o dirección del hotel',fArr:'Día y hora de llegada',fPax:'Número de pasajeros',fNote:'Comentarios',
@@ -276,7 +276,7 @@ ca:{locale:'ca-ES',loading:'Carregant el teu viatge…',
  waCheck:'Vull rebre per WhatsApp consells, avisos d\'última hora de la meva reserva i ajuda 24 h durant el xàrter.',
  nlCheck:'Vull assabentar-me abans que ningú de les millors ofertes de Sunset: early booking, last minute i els barcos que queden lliures en les millors dates. Em dono de baixa amb un clic quan vulgui.',
  save:'Desar',preview:'Vista prèvia: encara no desa res.',langLabel:'Idioma',
- next:'Continuar',review:'Revisa abans d\'enviar',send:'Confirmar i enviar',edit:'Corregir',sentOk:'Sol·licitud registrada',undo:'Anul·lar',
+ next:'Continuar',review:'Revisa abans d\'enviar',send:'Confirmar i enviar',edit:'Corregir',sentOk:'Sol·licitud registrada',undo:'Anul·lar',sendFail:'No s\'ha pogut enviar. Torna-ho a provar d\'aquí a un moment o escriu-nos.',sendLimit:'Avui ja hem rebut diverses sol·licituds d\'aquesta reserva. Per a res més, escriu-nos.',sending:'Enviant…',
  undoNote:'Pots anul·lar-la mentre no s\'hagi enviat; després, l\'anul·lació es demana a l\'armador.',toOwnerNote:'S\'envia a l\'armador, que és qui ho organitza. La seva resposta apareixerà aquí.',toSunsetNote:'Avís rebut. Ho comprovem nosaltres; el pagament continua pendent fins que el verifiquem.',
  need:'Omple els camps obligatoris',previewSend:'Vista prèvia: encara no s\'envia res.',
  fFlight:'Número de vol o adreça de l\'hotel',fArr:'Dia i hora d\'arribada',fPax:'Nombre de passatgers',fNote:'Comentaris',
@@ -341,7 +341,7 @@ en:{locale:'en-GB',loading:'Loading your trip…',
  waCheck:'I would like to receive tips, last-minute notices about my booking and 24 h help during the charter by WhatsApp.',
  nlCheck:'I want to be the first to hear about Sunset\'s best offers: early booking, last minute and the yachts that become free on the best dates. I can unsubscribe with one click at any time.',
  save:'Save',preview:'Preview: nothing is saved yet.',langLabel:'Language',
- next:'Continue',review:'Check before sending',send:'Confirm and send',edit:'Edit',sentOk:'Request registered',undo:'Withdraw',
+ next:'Continue',review:'Check before sending',send:'Confirm and send',edit:'Edit',sentOk:'Request registered',undo:'Withdraw',sendFail:'It could not be sent. Please try again in a moment or write to us.',sendLimit:'We have already received several requests for this booking today. For anything else, please write to us.',sending:'Sending…',
  undoNote:'You can withdraw it until it has been sent; after that, the withdrawal is requested from the owner.',toOwnerNote:'It goes to the owner, who arranges it. The reply will appear here.',toSunsetNote:'Notice received. We check it; the payment stays pending until we verify it.',
  need:'Please fill in the required fields',previewSend:'Preview: nothing is sent yet.',
  fFlight:'Flight number or hotel address',fArr:'Arrival day and time',fPax:'Number of passengers',fNote:'Comments',
@@ -406,7 +406,7 @@ fr:{locale:'fr-FR',loading:'Chargement de votre voyage…',
  waCheck:'Je souhaite recevoir par WhatsApp des conseils, les avis de dernière minute sur ma réservation et une aide 24 h/24 pendant la location.',
  nlCheck:'Je veux être informé avant tout le monde des meilleures offres Sunset : early booking, last minute et les bateaux encore libres aux meilleures dates. Je me désabonne en un clic quand je veux.',
  save:'Enregistrer',preview:'Aperçu : rien n\'est encore enregistré.',langLabel:'Langue',
- next:'Continuer',review:'Vérifiez avant d\'envoyer',send:'Confirmer et envoyer',edit:'Corriger',sentOk:'Demande enregistrée',undo:'Annuler',
+ next:'Continuer',review:'Vérifiez avant d\'envoyer',send:'Confirmer et envoyer',edit:'Corriger',sentOk:'Demande enregistrée',undo:'Annuler',sendFail:'L\'envoi a échoué. Réessayez dans un instant ou écrivez-nous.',sendLimit:'Nous avons déjà reçu plusieurs demandes pour cette réservation aujourd\'hui. Pour autre chose, écrivez-nous.',sending:'Envoi…',
  undoNote:'Vous pouvez l\'annuler tant qu\'elle n\'a pas été envoyée ; ensuite, l\'annulation se demande à l\'armateur.',toOwnerNote:'Envoyée à l\'armateur, qui s\'en occupe. Sa réponse apparaîtra ici.',toSunsetNote:'Avis reçu. Nous vérifions ; le paiement reste en attente jusqu\'à notre vérification.',
  need:'Remplissez les champs obligatoires',previewSend:'Aperçu : rien n\'est encore envoyé.',
  fFlight:'Numéro de vol ou adresse de l\'hôtel',fArr:'Jour et heure d\'arrivée',fPax:'Nombre de passagers',fNote:'Commentaires',
@@ -471,7 +471,7 @@ de:{locale:'de-DE',loading:'Ihre Reise wird geladen…',
  waCheck:'Ich möchte per WhatsApp Tipps, kurzfristige Hinweise zu meiner Buchung und Hilfe rund um die Uhr während des Charters erhalten.',
  nlCheck:'Ich möchte als Erster von den besten Sunset-Angeboten erfahren: Early Booking, Last Minute und die Yachten, die zu den besten Terminen noch frei sind. Abmeldung jederzeit mit einem Klick.',
  save:'Speichern',preview:'Vorschau: Es wird noch nichts gespeichert.',langLabel:'Sprache',
- next:'Weiter',review:'Vor dem Senden prüfen',send:'Bestätigen und senden',edit:'Korrigieren',sentOk:'Anfrage erfasst',undo:'Zurücknehmen',
+ next:'Weiter',review:'Vor dem Senden prüfen',send:'Bestätigen und senden',edit:'Korrigieren',sentOk:'Anfrage erfasst',undo:'Zurücknehmen',sendFail:'Senden fehlgeschlagen. Bitte versuchen Sie es gleich noch einmal oder schreiben Sie uns.',sendLimit:'Wir haben heute bereits mehrere Anfragen zu dieser Buchung erhalten. Für Weiteres schreiben Sie uns bitte.',sending:'Wird gesendet…',
  undoNote:'Sie können sie zurücknehmen, solange sie nicht gesendet wurde; danach muss die Stornierung beim Vercharterer angefragt werden.',toOwnerNote:'Wird an den Vercharterer gesendet, der es organisiert. Seine Antwort erscheint hier.',toSunsetNote:'Hinweis erhalten. Wir prüfen es; die Zahlung bleibt offen, bis wir sie bestätigt haben.',
  need:'Füllen Sie die Pflichtfelder aus',previewSend:'Vorschau: Es wird noch nichts gesendet.',
  fFlight:'Flugnummer oder Hoteladresse',fArr:'Ankunftstag und -uhrzeit',fPax:'Anzahl der Passagiere',fNote:'Anmerkungen',
@@ -536,7 +536,7 @@ it:{locale:'it-IT',loading:'Caricamento del tuo viaggio…',
  waCheck:'Voglio ricevere su WhatsApp consigli, avvisi dell\'ultimo minuto sulla mia prenotazione e assistenza 24 ore su 24 durante il charter.',
  nlCheck:'Voglio sapere prima di tutti le migliori offerte Sunset: early booking, last minute e le barche ancora libere nelle date migliori. Mi cancello con un clic quando voglio.',
  save:'Salva',preview:'Anteprima: non salva ancora nulla.',langLabel:'Lingua',
- next:'Continua',review:'Controlla prima di inviare',send:'Conferma e invia',edit:'Correggi',sentOk:'Richiesta registrata',undo:'Annulla',
+ next:'Continua',review:'Controlla prima di inviare',send:'Conferma e invia',edit:'Correggi',sentOk:'Richiesta registrata',undo:'Annulla',sendFail:'Invio non riuscito. Riprova tra un momento o scrivici.',sendLimit:'Oggi abbiamo già ricevuto diverse richieste per questa prenotazione. Per altro, scrivici.',sending:'Invio…',
  undoNote:'Puoi annullarla finché non è stata inviata; dopo, l\'annullamento si chiede all\'armatore.',toOwnerNote:'Viene inviata all\'armatore, che se ne occupa. La sua risposta comparirà qui.',toSunsetNote:'Avviso ricevuto. Lo verifichiamo noi; il pagamento resta in sospeso finché non lo confermiamo.',
  need:'Compila i campi obbligatori',previewSend:'Anteprima: non viene inviato ancora nulla.',
  fFlight:'Numero del volo o indirizzo dell\'hotel',fArr:'Giorno e ora di arrivo',fPax:'Numero di passeggeri',fNote:'Commenti',
@@ -601,7 +601,7 @@ pt:{locale:'pt-BR',loading:'Carregando a sua viagem…',
  waCheck:'Quero receber pelo WhatsApp dicas, avisos de última hora sobre a minha reserva e ajuda 24 h durante o charter.',
  nlCheck:'Quero saber antes de todo mundo das melhores ofertas da Sunset: early booking, last minute e os barcos que ficam livres nas melhores datas. Cancelo com um clique quando quiser.',
  save:'Salvar',preview:'Pré-visualização: ainda não salva nada.',langLabel:'Idioma',
- next:'Continuar',review:'Revise antes de enviar',send:'Confirmar e enviar',edit:'Corrigir',sentOk:'Pedido registrado',undo:'Cancelar',
+ next:'Continuar',review:'Revise antes de enviar',send:'Confirmar e enviar',edit:'Corrigir',sentOk:'Pedido registrado',undo:'Cancelar',sendFail:'Não foi possível enviar. Tente de novo em instantes ou escreva para nós.',sendLimit:'Hoje já recebemos vários pedidos desta reserva. Para mais alguma coisa, escreva para nós.',sending:'Enviando…',
  undoNote:'Você pode cancelar enquanto não tiver sido enviado; depois, o cancelamento é pedido ao armador.',toOwnerNote:'É enviado ao armador, que é quem organiza. A resposta dele aparecerá aqui.',toSunsetNote:'Aviso recebido. Nós verificamos; o pagamento continua pendente até confirmarmos.',
  need:'Preencha os campos obrigatórios',previewSend:'Pré-visualização: ainda não envia nada.',
  fFlight:'Número do voo ou endereço do hotel',fArr:'Dia e hora de chegada',fPax:'Número de passageiros',fNote:'Comentários',
@@ -661,9 +661,9 @@ function defs(){
 function formBox(k,cta,intro,primary){
   if(!D.demo&&!LIVE) return '';
   var df=defs()[k], F=ui.form, sent=ui.sent[k];
-  if(sent) return '<div class="sentbox"><strong>✓ '+esc(L.sentOk)+' · '+esc(df.t)+'</strong><div class="sumlines">'+sent.map(function(x){return '<div><small>'+esc(x[0])+'</small> '+esc(x[1])+'</div>'}).join('')+'</div><div class="when">'+esc(df.to==='o'?L.toOwnerNote:L.toSunsetNote)+' '+esc(L.undoNote)+'</div><button class="copy" data-undo="'+k+'">'+esc(L.undo)+'</button></div>';
+  if(sent) return '<div class="sentbox"><strong>✓ '+esc(L.sentOk)+' · '+esc(df.t)+'</strong><div class="sumlines">'+sent.map(function(x){return '<div><small>'+esc(x[0])+'</small> '+esc(x[1])+'</div>'}).join('')+'</div><div class="when">'+esc(df.to==='o'?L.toOwnerNote:L.toSunsetNote)+(D.demo?' '+esc(L.undoNote):'')+'</div>'+(D.demo?'<button class="copy" data-undo="'+k+'">'+esc(L.undo)+'</button>':'')+'</div>';
   if(!F||F.k!==k) return '<button class="btn'+(primary?'':' ghost')+'" data-open="'+k+'">'+esc(cta)+'</button>';
-  if(F.step===2) return '<div class="form"><div class="ft">'+esc(L.review)+'</div>'+(intro?'<div class="when">'+intro+'</div>':'')+'<div class="sumlines">'+F.lines.map(function(x){return '<div><small>'+esc(x[0])+'</small> '+esc(x[1])+'</div>'}).join('')+'</div><div class="when">'+esc(df.to==='o'?L.toOwnerNote:L.toSunsetNote)+'</div><div class="choice"><button class="go" data-send="'+k+'">'+esc(L.send)+'</button><button data-back>'+esc(L.edit)+'</button></div></div>';
+  if(F.step===2) return '<div class="form"><div class="ft">'+esc(L.review)+'</div>'+(intro?'<div class="when">'+intro+'</div>':'')+'<div class="sumlines">'+F.lines.map(function(x){return '<div><small>'+esc(x[0])+'</small> '+esc(x[1])+'</div>'}).join('')+'</div><div class="when">'+esc(df.to==='o'?L.toOwnerNote:L.toSunsetNote)+'</div><div class="choice"><button class="go" data-send="'+k+'"'+(ui.busy?' disabled':'')+'>'+esc(ui.busy?L.sending:L.send)+'</button><button data-back>'+esc(L.edit)+'</button></div></div>';
   var v=F.vals||{}, h='<div class="form">'+(df.nt?'':'<div class="ft">'+esc(df.t)+'</div>')+(intro?'<div class="when">'+intro+'</div>':'');
   if(df.opts&&df.opts.length) h+='<div class="when">'+esc(L.pick)+'</div>'+df.opts.map(function(o,i){return '<label class="check"><input type="checkbox" id="q-o'+i+'"'+((F.picks||[]).indexOf(i)>-1?' checked':'')+'><span>'+esc(o)+'</span></label>'}).join('');
   h+=df.f.map(function(x){var id='q-'+x[0], vv=esc(v[x[0]]||'');
@@ -678,6 +678,21 @@ function collect(k){
   if(df.opts&&df.opts.length&&!picks.length&&!v.x) ok=false;
   if(df.notify){var r=document.querySelector('input[name="q-nt"]:checked'); v.nt=r?r.value:'email'; v.ph=val('q-ph'); if(v.nt==='wa'&&!/^\+\d{8,15}$/.test(tel(v.ph))){ok=false;F.err=L.needPrefix} lines.push([L.notify,v.nt==='wa'?L.nWa+' · '+v.ph:L.nEmail])}
   F.vals=v; F.picks=picks; F.lines=lines; if(ok) F.err=''; return ok;
+}
+/* Enviament real d'una petició (AEB-ZONA-16, fase A): el servidor la desa i avisa Sunset; res no surt cap a l'armador sense revisió. */
+function sentKey(){return 'zs:'+code().slice(0,16)}
+function sentLoad(){try{var o=JSON.parse(localStorage.getItem(sentKey())||'{}');if(o&&typeof o==='object')Object.keys(defs()).forEach(function(k){if(Array.isArray(o[k]))ui.sent[k]=o[k].filter(function(x){return Array.isArray(x)}).map(function(x){return [String(x[0]),String(x[1])]})})}catch(e){}}
+function sentSave(){try{localStorage.setItem(sentKey(),JSON.stringify(ui.sent))}catch(e){}}
+function sendReq(k){
+  var F=ui.form; if(!F||F.k!==k||ui.busy) return;
+  ui.busy=true; keep(render);
+  var ctl=new AbortController(), tm=setTimeout(function(){ctl.abort()},25000);
+  fetch(API,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({r:code(),k:k,v:F.vals||{},picks:F.picks||[]}),credentials:'omit',cache:'no-store',redirect:'follow',referrerPolicy:'no-referrer',signal:ctl.signal})
+   .then(function(r){return r.json()})
+   .then(function(j){clearTimeout(tm);ui.busy=false;
+     if(j&&j.ok===true){ui.sent[k]=F.lines;ui.form=null;sentSave();keep(render);toast(L.sentOk)}
+     else{keep(render);toast(j&&j.motivo==='limite'?L.sendLimit:L.sendFail)}})
+   .catch(function(){clearTimeout(tm);ui.busy=false;keep(render);toast(L.sendFail)});
 }
 function toast(t){var e=$('#toast');e.textContent=t;e.hidden=false;clearTimeout(toast.t);toast.t=setTimeout(function(){e.hidden=true},3200)}
 
@@ -702,7 +717,7 @@ function load(){
   var ctl=new AbortController(), to=setTimeout(function(){ctl.abort()},25000);
   fetch(API+'?r='+c,{credentials:'omit',cache:'no-store',redirect:'follow',referrerPolicy:'no-referrer',signal:ctl.signal})
     .then(function(r){if(!r.ok) throw new Error('http');return r.json()})
-    .then(function(j){clearTimeout(to); if(!j||j.ok!==true||!j.viaje){state('bad');return} D=j; L=T[ui.lang||j.idioma]||T.en; document.documentElement.lang=ui.lang||(T[j.idioma]?j.idioma:'en'); render()})
+    .then(function(j){clearTimeout(to); if(!j||j.ok!==true||!j.viaje){state('bad');return} D=j; sentLoad(); L=T[ui.lang||j.idioma]||T.en; document.documentElement.lang=ui.lang||(T[j.idioma]?j.idioma:'en'); render()})
     .catch(function(){clearTimeout(to);state('net')});
 }
 
@@ -769,7 +784,7 @@ function render(){
     '<div class="card"'+(platT||FORMS?'':' hidden')+'><div class="what">'+esc(L.transfer)+'</div><div class="when">'+esc(platT?L.transferPlat:L.transferTxt)+'</div>'+(platT?'<a class="btn ghost" href="'+esc(cu)+'" target="_blank" rel="noopener noreferrer">'+esc(L.transferCta)+'</a>':formBox('transfer',L.transferCta))+'</div>'+
     '<div class="card"'+(cu||FORMS?'':' hidden')+'><div class="what">'+esc(L.changes)+'</div>'+(cu?'<div class="when">'+esc(L.chPaxLink)+'</div><a class="btn ghost" href="'+esc(cu)+'" target="_blank" rel="noopener noreferrer">'+esc(L.chPax)+'</a>':formBox('pax',L.chPax))+
       (platE?'<a class="btn ghost" href="'+esc(cu)+'" target="_blank" rel="noopener noreferrer">'+esc(L.chExtra)+'</a>':(c.ofrecidos||[]).length?'<button class="btn ghost" data-open="extra" data-jump="s-extras">'+esc(L.chExtra)+'</button>':formBox('extra',L.chExtra))+formBox('early',L.chEarly)+'</div>'+
-    (insL&&FORMS?'<div class="card"><div class="what">'+esc(L.ins)+'</div><div class="when">'+esc(L.insTxt)+'</div><div class="acts">'+insL+'</div></div>':'')+
+    (insL&&D.demo?'<div class="card"><div class="what">'+esc(L.ins)+'</div><div class="when">'+esc(L.insTxt)+'</div><div class="acts">'+insL+'</div></div>':'')+
     '</section>';
 
   /* Pagaments */
@@ -843,7 +858,7 @@ document.addEventListener('click',function(e){
   else if('close' in d){ui.form=null;keep(render)}
   else if(d.next){ if(collect(d.next)){ui.form.step=2;keep(render)} else {toast(ui.form.err||L.need);ui.form.err=''}}
   else if('back' in d){ui.form.step=1;keep(render)}
-  else if(d.send){ui.sent[d.send]=ui.form.lines;ui.form=null;keep(render);toast(L.previewSend)}
+  else if(d.send){if(D.demo){ui.sent[d.send]=ui.form.lines;ui.form=null;keep(render);toast(L.previewSend)}else sendReq(d.send)}
   else if(d.undo){delete ui.sent[d.undo];keep(render)}
   else if('save' in d) toast(L.preview);
   else if(d.go){var el=document.getElementById(d.go); if(el) el.scrollIntoView({block:'start'})}
