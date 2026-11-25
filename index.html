@@ -790,7 +790,7 @@ function render(){
   }
   var enBase=(c.enBase||[]).map(function(x){return '<div class="row"><div class="l">'+esc(x.texto)+'<small>'+esc(L.atBase)+'</small></div><div class="r">'+esc(x.importe||'—')+'</div></div>'}).join('');
   var pend=pagos.filter(function(p){return p.estado!=='recibido'&&p.importe}).reduce(function(s,p){return s+p.importe},0);
-  var isDep=function(x){return /fianza|deposit|kaution|caution|cauzione/i.test(x.texto||'')};
+  var isDep=function(x){return /fianza|fiança|deposit|dipòsit|kaution|caution|cauzione|cauç|caução/i.test(x.texto||'')};
   var baseItems=(c.enBase||[]).filter(function(x){return !isDep(x)}), depItems=(c.enBase||[]).filter(isDep);
   var sumCard='<div class="sum"><div class="what">'+esc(L.left2pay)+'</div>'+
     '<div class="l2"><span>'+esc(directe?L.toOwner:L.toSunset)+'</span><span class="big">'+(pend?eur(pend):esc(L.nothingPending))+'</span></div>'+
