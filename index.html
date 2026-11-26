@@ -663,13 +663,13 @@ function defs(){
    early:{t:L.chEarly,to:'o',f:[['a',L.fTime,1],['x',L.fNote,0,'area']]},
    paid:{t:L.paidTitle,to:'s',f:[['b',L.fPayer,0]]},
    card:{t:L.byCard,to:'s',nt:1,notify:1,f:[]},
-   invoice:{t:L.invTitle,to:'s',okNote:L.invNote,f:[['a',L.fInvName,1],['b',L.fInvDoc,1],['c',L.fInvAddr,1],['d',L.fInvCountry,1],['x',L.fNote,0,'area']]}
+   invoice:{t:L.invTitle,to:'s',okNote:L.invNote,noEcho:1,f:[['a',L.fInvName,1],['b',L.fInvDoc,1],['c',L.fInvAddr,1],['d',L.fInvCountry,1],['x',L.fNote,0,'area']]}
   };
 }
 function formBox(k,cta,intro,primary){
   if(!D.demo&&!LIVE) return '';
   var df=defs()[k], F=ui.form, sent=ui.sent[k];
-  if(sent) return '<div class="sentbox"><strong>✓ '+esc(L.sentOk)+' · '+esc(df.t)+(ui.sentAt[k]?' · '+esc(f(new Date(ui.sentAt[k].d+'T12:00:00'))):'')+'</strong><div class="sumlines">'+sent.map(function(x){return '<div><small>'+esc(x[0])+'</small> '+esc(x[1])+'</div>'}).join('')+'</div><div class="when">'+esc(df.okNote||(df.to==='o'?L.toOwnerNote:L.toSunsetNote))+(D.demo?' '+esc(L.undoNote):'')+'</div>'+(D.demo?'<button class="copy" data-undo="'+k+'">'+esc(L.undo)+'</button>':'<button class="copy" data-again="'+k+'">'+esc(L.newReq)+'</button>')+'</div>';
+  if(sent) return '<div class="sentbox"><strong>✓ '+esc(L.sentOk)+' · '+esc(df.t)+(ui.sentAt[k]?' · '+esc(f(new Date(ui.sentAt[k].d+'T12:00:00'))):'')+'</strong>'+(df.noEcho?'':'<div class="sumlines">'+sent.map(function(x){return '<div><small>'+esc(x[0])+'</small> '+esc(x[1])+'</div>'}).join('')+'</div>')+'<div class="when">'+esc(df.okNote||(df.to==='o'?L.toOwnerNote:L.toSunsetNote))+(D.demo?' '+esc(L.undoNote):'')+'</div>'+(D.demo?'<button class="copy" data-undo="'+k+'">'+esc(L.undo)+'</button>':'<button class="copy" data-again="'+k+'">'+esc(L.newReq)+'</button>')+'</div>';
   if(!F||F.k!==k) return '<button class="btn'+(primary?'':' ghost')+'" data-open="'+k+'">'+esc(cta)+'</button>';
   if(F.step===2) return '<div class="form"><div class="ft">'+esc(L.review)+'</div>'+noStoreBox()+(intro?'<div class="when">'+intro+'</div>':'')+'<div class="sumlines">'+F.lines.map(function(x){return '<div><small>'+esc(x[0])+'</small> '+esc(x[1])+'</div>'}).join('')+'</div><div class="when">'+esc(k==='invoice'?L.invPriv:(df.to==='o'?L.toOwnerNote:L.toSunsetNote))+'</div><div class="choice"><button class="go" data-send="'+k+'"'+(ui.busy?' disabled':'')+'>'+esc(ui.busy?L.sending:L.send)+'</button><button data-back'+(ui.busy?' disabled':'')+'>'+esc(L.edit)+'</button></div></div>';
   var v=F.vals||{}, h='<div class="form">'+(df.nt?'':'<div class="ft">'+esc(df.t)+'</div>')+(intro?'<div class="when">'+intro+'</div>':'')+(df.note?'<div class="when">'+esc(L.reqNote)+'</div>':'')+noStoreBox();
@@ -734,7 +734,7 @@ function sendReq(k){
   fetch(API,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({r:c0,q:O.q,o:O.o,n:O.rev,k:k,v:vals,picks:picks}),credentials:'omit',cache:'no-store',redirect:'follow',referrerPolicy:'no-referrer',signal:ctl.signal})
    .then(function(r){return r.json()})
    .then(function(j){clearTimeout(tm);if(gen!==ui.gen||code()!==c0) return;ui.busy=false;
-     if(j&&j.ok===true){delete ui.ops[k];opsSave();ui.sent[k]=snap;ui.sentAt[k]={d:new Date().toISOString().slice(0,10),p:k==='paid'?payN():0};if(ui.form===F)ui.form=null;sentSave();keep(render);toast(L.sentOk)}
+     if(j&&j.ok===true){delete ui.ops[k];opsSave();ui.sent[k]=(defs()[k]||{}).noEcho?[]:snap;ui.sentAt[k]={d:new Date().toISOString().slice(0,10),p:k==='paid'?payN():0};if(ui.form===F)ui.form=null;sentSave();keep(render);toast(L.sentOk)}
      else if(j&&j.motivo==='oferta'){if(ui.form===F)ui.form=null;toast(L.offerChanged);refresh()}
      else{keep(render);toast(j&&j.motivo==='limite'?L.sendLimit:failTxt(),j&&j.motivo==='limite'||kept?0:9000)}})
    .catch(function(){clearTimeout(tm);if(gen!==ui.gen||code()!==c0) return;ui.busy=false;keep(render);toast(failTxt(),kept?0:9000)});
