@@ -615,7 +615,7 @@ pt:{locale:'pt-BR',loading:'Carregando a sua viagem…',
 };
 
 var $=function(s){return document.querySelector(s)};
-var L=T.en, D=null, ui={form:null,sent:{},sentAt:{}};
+var L=T.en, D=null, ui={form:null,sent:{},sentAt:{},ops:{}};
 function iso(days){var d=new Date(Date.now()+days*864e5);return d.getFullYear()+'-'+('0'+(d.getMonth()+1)).slice(-2)+'-'+('0'+d.getDate()).slice(-2)}
 function demoData(titular){
   var d={ok:true,v:1,demo:true,estado:'activo',idioma:'es',viaje:{barco:'Lagoon 42 «Alisio»',base:'Lefkada (ejemplo)',inicio:iso(150),fin:iso(157),patron:'si',azafata:'si',personas:'8'},pagoDirecto:false,
@@ -692,22 +692,23 @@ function refresh(){var gen=ui.gen;fetch(API+'?r='+code(),{credentials:'omit',cac
 function sendReq(k){
   var F=ui.form; if(!F||F.k!==k||ui.busy) return;
   var vals=Object.assign({},F.vals||{}); if((k==='paid'||k==='card')&&payN()) vals.p=String(payN());
-  /* Identitat de la petició. F.o (operació): una per formulari obert, no canvia mai mentre el client corregeix i reenvia.
-     F.q (clau): una per contingut exacte; un reintent idèntic la conserva. F.rev (revisió): puja cada cop que canvia el contingut.
-     El servidor, de cada operació, només en tramita la revisió més alta. */
+  /* Identitat de la petició. Es guarda per TIPUS de formulari a ui.ops (no a l'objecte del formulari), de manera que tancar-lo,
+     reobrir-lo o corregir-lo no la reinicia: només es descarta quan el servidor confirma (o en canviar de reserva).
+     O.o (operació): no canvia mentre la petició no s'hagi confirmat. O.q (clau): una per contingut exacte; un reintent idèntic
+     la conserva. O.rev (revisió): puja cada cop que canvia el contingut. El servidor, de cada operació, només en tramita la revisió més alta. */
   function rnd(){var a=new Uint8Array(18),A='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';crypto.getRandomValues(a);return Array.prototype.map.call(a,function(x){return A[x%62]}).join('')}
-  if(!F.o){F.o=rnd();F.rev=1}
-  var sig=JSON.stringify([k,vals,F.picks||[]]); if(F.q&&F.qSig!==sig){F.q='';F.rev=Math.min((F.rev||1)+1,999)}
-  if(!F.q){F.qSig=sig;F.q=rnd()}
+  var O=ui.ops[k]||(ui.ops[k]={o:rnd(),rev:1,q:'',sig:''});
+  var sig=JSON.stringify([k,vals,F.picks||[]]); if(O.q&&O.sig!==sig){O.q='';O.rev=Math.min(O.rev+1,999)}
+  if(!O.q){O.sig=sig;O.q=rnd()}
   /* Extres: s'envia el text i el preu que el client ha vist; si l'oferta ha canviat, el servidor ho rebutja. */
   var of=(D.contenido||{}).ofrecidos||[], picks=(F.picks||[]).map(function(i){var o=of[i]||{};var x={t:String(o.texto||'')};if(o.precio)x.p=String(o.precio);return x});
   var snap=(F.lines||[]).map(function(x){return [x[0],x[1]]}), c0=code(), gen=ui.gen;
   ui.busy=true; keep(render);
   var ctl=new AbortController(), tm=setTimeout(function(){ctl.abort()},25000);
-  fetch(API,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({r:c0,q:F.q,o:F.o,n:F.rev||1,k:k,v:vals,picks:picks}),credentials:'omit',cache:'no-store',redirect:'follow',referrerPolicy:'no-referrer',signal:ctl.signal})
+  fetch(API,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({r:c0,q:O.q,o:O.o,n:O.rev,k:k,v:vals,picks:picks}),credentials:'omit',cache:'no-store',redirect:'follow',referrerPolicy:'no-referrer',signal:ctl.signal})
    .then(function(r){return r.json()})
    .then(function(j){clearTimeout(tm);if(gen!==ui.gen||code()!==c0) return;ui.busy=false;
-     if(j&&j.ok===true){ui.sent[k]=snap;ui.sentAt[k]={d:new Date().toISOString().slice(0,10),p:k==='paid'?payN():0};if(ui.form===F)ui.form=null;sentSave();keep(render);toast(L.sentOk)}
+     if(j&&j.ok===true){delete ui.ops[k];ui.sent[k]=snap;ui.sentAt[k]={d:new Date().toISOString().slice(0,10),p:k==='paid'?payN():0};if(ui.form===F)ui.form=null;sentSave();keep(render);toast(L.sentOk)}
      else if(j&&j.motivo==='oferta'){if(ui.form===F)ui.form=null;toast(L.offerChanged);refresh()}
      else{keep(render);toast(j&&j.motivo==='limite'?L.sendLimit:L.sendFail)}})
    .catch(function(){clearTimeout(tm);if(gen!==ui.gen||code()!==c0) return;ui.busy=false;keep(render);toast(L.sendFail)});
@@ -727,7 +728,7 @@ function state(kind){
   else s.innerHTML=head+'<h1>'+esc(L.badTitle)+'</h1><p>'+esc(L.badText)+'</p><a class="btn" href="mailto:'+MAIL+'">'+esc(L.write)+'</a><p class="mono">'+MAIL+'</p>';
 }
 function load(){
-  ui.form=null;ui.sent={};ui.sentAt={};ui.busy=false;ui.gen=(ui.gen||0)+1;   /* canvi de reserva: res de l'anterior */
+  ui.form=null;ui.sent={};ui.sentAt={};ui.ops={};ui.busy=false;ui.gen=(ui.gen||0)+1;   /* canvi de reserva: res de l'anterior */
   var nav=(navigator.language||'en').slice(0,2).toLowerCase(); L=T[nav]||T.en;
   var hh=location.hash.replace(/^#/,'');
   if(hh==='demo-grupo'||hh==='demo-titular'){D=demoData(hh==='demo-titular');L=T[ui.lang||D.idioma]||T.en;document.documentElement.lang=ui.lang||D.idioma;render();scrollTo(0,0);return}
