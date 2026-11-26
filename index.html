@@ -694,14 +694,14 @@ function sendReq(k){
   var vals=Object.assign({},F.vals||{}); if((k==='paid'||k==='card')&&payN()) vals.p=String(payN());
   /* Clau de la petició: es crea un cop i es conserva en els reintents, perquè el servidor no la dupliqui. */
   /* La clau va lligada al contingut exacte: si després d'un intent es corregeix alguna cosa, és una petició nova amb clau nova. */
-  var sig=JSON.stringify([k,vals,F.picks||[]]); if(F.q&&F.qSig!==sig){F.c=F.q;F.q=''}   /* F.c: clau de l'intent anterior, perquè el servidor sàpiga que aquesta el corregeix */
+  var sig=JSON.stringify([k,vals,F.picks||[]]); if(F.q&&F.qSig!==sig){F.c=(F.c||[]).concat([F.q]).slice(-6);F.q=''}   /* F.c: claus de TOTS els intents anteriors d'aquest formulari, perquè el servidor sàpiga quins corregeix encara que algun no li hagi arribat */
   if(!F.q){F.qSig=sig;var a=new Uint8Array(18),A='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';crypto.getRandomValues(a);F.q=Array.prototype.map.call(a,function(x){return A[x%62]}).join('')}
   /* Extres: s'envia el text i el preu que el client ha vist; si l'oferta ha canviat, el servidor ho rebutja. */
   var of=(D.contenido||{}).ofrecidos||[], picks=(F.picks||[]).map(function(i){var o=of[i]||{};var x={t:String(o.texto||'')};if(o.precio)x.p=String(o.precio);return x});
   var snap=(F.lines||[]).map(function(x){return [x[0],x[1]]}), c0=code(), gen=ui.gen;
   ui.busy=true; keep(render);
   var ctl=new AbortController(), tm=setTimeout(function(){ctl.abort()},25000);
-  fetch(API,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(F.c?{r:c0,q:F.q,c:F.c,k:k,v:vals,picks:picks}:{r:c0,q:F.q,k:k,v:vals,picks:picks}),credentials:'omit',cache:'no-store',redirect:'follow',referrerPolicy:'no-referrer',signal:ctl.signal})
+  fetch(API,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(F.c&&F.c.length?{r:c0,q:F.q,c:F.c,k:k,v:vals,picks:picks}:{r:c0,q:F.q,k:k,v:vals,picks:picks}),credentials:'omit',cache:'no-store',redirect:'follow',referrerPolicy:'no-referrer',signal:ctl.signal})
    .then(function(r){return r.json()})
    .then(function(j){clearTimeout(tm);if(gen!==ui.gen||code()!==c0) return;ui.busy=false;
      if(j&&j.ok===true){ui.sent[k]=snap;ui.sentAt[k]={d:new Date().toISOString().slice(0,10),p:k==='paid'?payN():0};if(ui.form===F)ui.form=null;sentSave();keep(render);toast(L.sentOk)}
