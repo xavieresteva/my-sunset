@@ -685,6 +685,14 @@ function payN(){var q=(D&&D.pagos||[]).filter(function(x){return x.estado==='pen
 /* Al navegador només es desa QUÈ s'ha demanat i QUIN dia (i el número de pagament): cap nom, vol ni telèfon. */
 function sentLoad(){try{var o=JSON.parse(localStorage.getItem(sentKey())||'{}');if(!o||typeof o!=='object')return;Object.keys(defs()).forEach(function(k){var x=o[k];if(!x||typeof x!=='object'||!/^\d{4}-\d{2}-\d{2}$/.test(String(x.d)))return;if(k==='paid'&&Number(x.p)!==payN())return;ui.sentAt[k]={d:String(x.d),p:Number(x.p)||0};ui.sent[k]=[]})}catch(e){}}
 function sentSave(){try{localStorage.setItem(sentKey(),JSON.stringify(ui.sentAt))}catch(e){}}
+/* Operacions pendents de confirmar (resultat incert). Es desen per reserva i tipus perquè una recàrrega no les perdi:
+   només identificadors aleatoris, la revisió, una empremta del contingut (no el contingut) i l'hora. Caduquen al cap de 24 h. */
+function opsKey(){return 'zo:'+code().slice(0,16)}
+function sigH(t){var a=2166136261,b=5381,i,c;for(i=0;i<t.length;i++){c=t.charCodeAt(i);a=Math.imul(a^c,16777619)>>>0;b=(Math.imul(b,33)+c)>>>0}return a.toString(16)+'-'+b.toString(16)+'-'+t.length}
+function opsLoad(){ui.ops={};try{var o=JSON.parse(localStorage.getItem(opsKey())||'{}'),ID=/^[A-Za-z0-9]{18}$/;if(!o||typeof o!=='object')return;Object.keys(defs()).forEach(function(k){var x=o[k];if(!x||typeof x!=='object')return;var r=Number(x.rev);
+  if(!ID.test(String(x.o))||!(x.q===''||ID.test(String(x.q)))||!(r>=1&&r<=999&&r===Math.floor(r))||!(Date.now()-Number(x.t)<864e5)||!(Date.now()>=Number(x.t)))return;
+  ui.ops[k]={o:String(x.o),rev:r,q:String(x.q),h:String(x.h||'').slice(0,40),t:Number(x.t)}})}catch(e){}}
+function opsSave(){try{if(Object.keys(ui.ops).length)localStorage.setItem(opsKey(),JSON.stringify(ui.ops));else localStorage.removeItem(opsKey())}catch(e){}}
 /* Enllaç que es comparteix. Si la vista és la del titular, només un enllaç de grup propi, https i diferent del seu; si no n'hi ha, no es comparteix res. */
 function credOf(u){try{var x=new URL(u,location.href);return {o:x.origin,p:x.pathname,c:(x.hash.replace(/^#/,'')||x.searchParams.get('r')||'')}}catch(e){return null}}
 function shareUrl(){if(!D)return '';if(D.titular){var g=https(D.enlaceGrupo),x=g&&credOf(g),me=credOf(location.href);return x&&me&&x.o===me.o&&x.p===me.p&&/^[A-Za-z0-9]{32,128}$/.test(x.c)&&x.c!==code()&&g.indexOf(code())<0?g:''}return location.href}
@@ -692,14 +700,16 @@ function refresh(){var gen=ui.gen;fetch(API+'?r='+code(),{credentials:'omit',cac
 function sendReq(k){
   var F=ui.form; if(!F||F.k!==k||ui.busy) return;
   var vals=Object.assign({},F.vals||{}); if((k==='paid'||k==='card')&&payN()) vals.p=String(payN());
-  /* Identitat de la petició. Es guarda per TIPUS de formulari a ui.ops (no a l'objecte del formulari), de manera que tancar-lo,
-     reobrir-lo o corregir-lo no la reinicia: només es descarta quan el servidor confirma (o en canviar de reserva).
+  /* Identitat de la petició. Es guarda per TIPUS de formulari a ui.ops (no a l'objecte del formulari) i al navegador (opsSave),
+     de manera que tancar-lo, reobrir-lo, corregir-lo o RECARREGAR la pàgina no la reinicia: només es descarta quan el servidor
+     confirma, al cap de 24 h, o (a la memòria) en canviar de reserva; cada reserva té les seves.
      O.o (operació): no canvia mentre la petició no s'hagi confirmat. O.q (clau): una per contingut exacte; un reintent idèntic
      la conserva. O.rev (revisió): puja cada cop que canvia el contingut. El servidor, de cada operació, només en tramita la revisió més alta. */
   function rnd(){var a=new Uint8Array(18),A='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';crypto.getRandomValues(a);return Array.prototype.map.call(a,function(x){return A[x%62]}).join('')}
-  var O=ui.ops[k]||(ui.ops[k]={o:rnd(),rev:1,q:'',sig:''});
-  var sig=JSON.stringify([k,vals,F.picks||[]]); if(O.q&&O.sig!==sig){O.q='';O.rev=Math.min(O.rev+1,999)}
-  if(!O.q){O.sig=sig;O.q=rnd()}
+  var O=ui.ops[k]||(ui.ops[k]={o:rnd(),rev:1,q:'',h:'',t:Date.now()});
+  var sig=sigH(JSON.stringify([k,vals,F.picks||[]])); if(O.q&&O.h!==sig){O.q='';O.rev=Math.min(O.rev+1,999)}
+  if(!O.q){O.h=sig;O.q=rnd()}
+  opsSave();   /* abans d'enviar: si la resposta es perd i es recarrega, la correcció serà de la mateixa operació */
   /* Extres: s'envia el text i el preu que el client ha vist; si l'oferta ha canviat, el servidor ho rebutja. */
   var of=(D.contenido||{}).ofrecidos||[], picks=(F.picks||[]).map(function(i){var o=of[i]||{};var x={t:String(o.texto||'')};if(o.precio)x.p=String(o.precio);return x});
   var snap=(F.lines||[]).map(function(x){return [x[0],x[1]]}), c0=code(), gen=ui.gen;
@@ -708,7 +718,7 @@ function sendReq(k){
   fetch(API,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({r:c0,q:O.q,o:O.o,n:O.rev,k:k,v:vals,picks:picks}),credentials:'omit',cache:'no-store',redirect:'follow',referrerPolicy:'no-referrer',signal:ctl.signal})
    .then(function(r){return r.json()})
    .then(function(j){clearTimeout(tm);if(gen!==ui.gen||code()!==c0) return;ui.busy=false;
-     if(j&&j.ok===true){delete ui.ops[k];ui.sent[k]=snap;ui.sentAt[k]={d:new Date().toISOString().slice(0,10),p:k==='paid'?payN():0};if(ui.form===F)ui.form=null;sentSave();keep(render);toast(L.sentOk)}
+     if(j&&j.ok===true){delete ui.ops[k];opsSave();ui.sent[k]=snap;ui.sentAt[k]={d:new Date().toISOString().slice(0,10),p:k==='paid'?payN():0};if(ui.form===F)ui.form=null;sentSave();keep(render);toast(L.sentOk)}
      else if(j&&j.motivo==='oferta'){if(ui.form===F)ui.form=null;toast(L.offerChanged);refresh()}
      else{keep(render);toast(j&&j.motivo==='limite'?L.sendLimit:L.sendFail)}})
    .catch(function(){clearTimeout(tm);if(gen!==ui.gen||code()!==c0) return;ui.busy=false;keep(render);toast(L.sendFail)});
@@ -737,7 +747,7 @@ function load(){
   var ctl=new AbortController(), to=setTimeout(function(){ctl.abort()},25000);
   fetch(API+'?r='+c,{credentials:'omit',cache:'no-store',redirect:'follow',referrerPolicy:'no-referrer',signal:ctl.signal})
     .then(function(r){if(!r.ok) throw new Error('http');return r.json()})
-    .then(function(j){clearTimeout(to); if(gen!==ui.gen) return; if(!j||j.ok!==true||!j.viaje){state('bad');return} D=j; sentLoad(); L=T[ui.lang||j.idioma]||T.en; document.documentElement.lang=ui.lang||(T[j.idioma]?j.idioma:'en'); render()})
+    .then(function(j){clearTimeout(to); if(gen!==ui.gen) return; if(!j||j.ok!==true||!j.viaje){state('bad');return} D=j; sentLoad(); opsLoad(); L=T[ui.lang||j.idioma]||T.en; document.documentElement.lang=ui.lang||(T[j.idioma]?j.idioma:'en'); render()})
     .catch(function(){clearTimeout(to);if(gen===ui.gen)state('net')});
 }
 
