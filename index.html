@@ -707,11 +707,12 @@ function sendReq(k){
      la conserva. O.rev (revisió): puja cada cop que canvia el contingut. El servidor, de cada operació, només en tramita la revisió més alta. */
   function rnd(){var a=new Uint8Array(18),A='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';crypto.getRandomValues(a);return Array.prototype.map.call(a,function(x){return A[x%62]}).join('')}
   var O=ui.ops[k]||(ui.ops[k]={o:rnd(),rev:1,q:'',h:'',t:Date.now()});
-  var sig=sigH(JSON.stringify([k,vals,F.picks||[]])); if(O.q&&O.h!==sig){O.q='';O.rev=Math.min(O.rev+1,999)}
-  if(!O.q){O.h=sig;O.q=rnd()}
-  opsSave();   /* abans d'enviar: si la resposta es perd i es recarrega, la correcció serà de la mateixa operació */
   /* Extres: s'envia el text i el preu que el client ha vist; si l'oferta ha canviat, el servidor ho rebutja. */
   var of=(D.contenido||{}).ofrecidos||[], picks=(F.picks||[]).map(function(i){var o=of[i]||{};var x={t:String(o.texto||'')};if(o.precio)x.p=String(o.precio);return x});
+  /* L'empremta es fa sobre EXACTAMENT el que s'envia (tipus, camps i extres amb text i preu): si l'oferta canvia, és un contingut nou. */
+  var sig=sigH(JSON.stringify([k,vals,picks])); if(O.q&&O.h!==sig){O.q='';O.rev=Math.min(O.rev+1,999)}
+  if(!O.q){O.h=sig;O.q=rnd()}
+  opsSave();   /* abans d'enviar: si la resposta es perd i es recarrega, la correcció serà de la mateixa operació */
   var snap=(F.lines||[]).map(function(x){return [x[0],x[1]]}), c0=code(), gen=ui.gen;
   ui.busy=true; keep(render);
   var ctl=new AbortController(), tm=setTimeout(function(){ctl.abort()},25000);
