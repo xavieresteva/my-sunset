@@ -310,7 +310,7 @@ en:{locale:'en-GB',loading:'Loading your trip…',
  sent:'I have made the transfer',sentMsg:function(v){return 'Hello, I have made the transfer for the payment of '+v+'.'},
  byCard:'Pay by card',cardAsk:'I want to pay by card',cardInfo:function(a,b){return '<strong>By card: '+a+'</strong> ('+b+' + '+CARD_FEE+'%). When you confirm, we prepare the secure payment link. It will appear here within 48 h and we will let you know.'},
  confirm:'Confirm',cancel:'Cancel',cardMsg:function(v,a){return 'Hello, I would like to pay by card the payment of '+v+'. Card amount: '+a+'.'},
- atBase:'Paid at the base',deposit:'What is the security deposit?',depositA:'At check-in the owner usually blocks the amount on a credit card (with a high deposit more than one card may be needed). It is normally not charged: it is held and released at the end of the charter if there is no damage, and the release can take a few days. The exact terms are those of the owner\'s contract. If you have any doubt or the release takes long, write to us and we will sort it out with the owner.',
+ atBase:'Payable at the base',deposit:'What is the security deposit?',depositA:'At check-in the owner usually blocks the amount on a credit card (with a high deposit more than one card may be needed). It is normally not charged: it is held and released at the end of the charter if there is no damage, and the release can take a few days. The exact terms are those of the owner\'s contract. If you have any doubt or the release takes long, write to us and we will sort it out with the owner.',
  base:'The base',route:'Directions',emb:'Boarding',dis:'Disembarking',contact:'Contact at the base',
  crewTitle:'Your crew',late:'What if my flight is delayed?',lateA:'Tell the contact at the base: they organise your arrival. If they do not answer, message us.',
  bring:'What should we bring?',bringA:'Soft bags instead of hard suitcases, light-soled shoes and sun protection.',
@@ -691,9 +691,11 @@ function shareUrl(){if(!D)return '';if(D.titular){var g=https(D.enlaceGrupo),x=g
 function refresh(){var gen=ui.gen;fetch(API+'?r='+code(),{credentials:'omit',cache:'no-store',redirect:'follow',referrerPolicy:'no-referrer'}).then(function(r){return r.json()}).then(function(j){if(gen!==ui.gen)return;if(j&&j.ok===true&&j.viaje){D=j;keep(render)}}).catch(function(){if(gen===ui.gen)keep(render)})}
 function sendReq(k){
   var F=ui.form; if(!F||F.k!==k||ui.busy) return;
-  var vals=Object.assign({},F.vals||{}); if(k==='paid'&&payN()) vals.p=String(payN());
+  var vals=Object.assign({},F.vals||{}); if((k==='paid'||k==='card')&&payN()) vals.p=String(payN());
   /* Clau de la petició: es crea un cop i es conserva en els reintents, perquè el servidor no la dupliqui. */
-  if(!F.q){var a=new Uint8Array(18),A='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';crypto.getRandomValues(a);F.q=Array.prototype.map.call(a,function(x){return A[x%62]}).join('')}
+  /* La clau va lligada al contingut exacte: si després d'un intent es corregeix alguna cosa, és una petició nova amb clau nova. */
+  var sig=JSON.stringify([k,vals,F.picks||[]]); if(F.q&&F.qSig!==sig) F.q='';
+  if(!F.q){F.qSig=sig;var a=new Uint8Array(18),A='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';crypto.getRandomValues(a);F.q=Array.prototype.map.call(a,function(x){return A[x%62]}).join('')}
   /* Extres: s'envia el text i el preu que el client ha vist; si l'oferta ha canviat, el servidor ho rebutja. */
   var of=(D.contenido||{}).ofrecidos||[], picks=(F.picks||[]).map(function(i){var o=of[i]||{};var x={t:String(o.texto||'')};if(o.precio)x.p=String(o.precio);return x});
   var snap=(F.lines||[]).map(function(x){return [x[0],x[1]]}), c0=code(), gen=ui.gen;
