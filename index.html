@@ -724,10 +724,10 @@ function sendReq(k){
    .then(function(j){clearTimeout(tm);if(gen!==ui.gen||code()!==c0) return;ui.busy=false;
      if(j&&j.ok===true){delete ui.ops[k];opsSave();ui.sent[k]=snap;ui.sentAt[k]={d:new Date().toISOString().slice(0,10),p:k==='paid'?payN():0};if(ui.form===F)ui.form=null;sentSave();keep(render);toast(L.sentOk)}
      else if(j&&j.motivo==='oferta'){if(ui.form===F)ui.form=null;toast(L.offerChanged);refresh()}
-     else{keep(render);toast(j&&j.motivo==='limite'?L.sendLimit:failTxt())}})
-   .catch(function(){clearTimeout(tm);if(gen!==ui.gen||code()!==c0) return;ui.busy=false;keep(render);toast(failTxt())});
+     else{keep(render);toast(j&&j.motivo==='limite'?L.sendLimit:failTxt(),j&&j.motivo==='limite'||kept?0:9000)}})
+   .catch(function(){clearTimeout(tm);if(gen!==ui.gen||code()!==c0) return;ui.busy=false;keep(render);toast(failTxt(),kept?0:9000)});
 }
-function toast(t){var e=$('#toast');e.textContent=t;e.hidden=false;clearTimeout(toast.t);toast.t=setTimeout(function(){e.hidden=true},Math.max(3200,String(t).length*70))}
+function toast(t,ms){var e=$('#toast');e.textContent=t;e.hidden=false;clearTimeout(toast.t);toast.t=setTimeout(function(){e.hidden=true},ms||3200)}
 
 function code(){
   var h=location.hash.replace(/^#/,''), q=new URLSearchParams(location.search).get('r')||'';
